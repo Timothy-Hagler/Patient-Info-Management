@@ -1,24 +1,26 @@
 var mysql = require('mysql');
 
-var username = "defaultUser";
-var password = "defaultPass";
-var database = "defaultDatabase";
-var table = "defaultTable"
+var username = "root";
+var password = "PIMS";
+var database = "test_database";
+var schema = "test_schema";
+var table = "test_table";
 
 connection = null;
 
 if (connection == null){ connection = createConnection(username, password, database); } else return;
 
 connect(connection);
+print_table(connection, schema, table);
 disconnect(connection);
-// print_table(connection, table);
 
-function createConnection(username, password)
+function createConnection(username, password, database)
 { 
     return mysql.createConnection({
         host: "localhost",
         user: username,
-        password: password
+        password: password,
+        database: database
     });
 }
 
@@ -38,9 +40,9 @@ function disconnect(con)
     })
 }
 
-function print_table(con, table)
+function print_table(con, schema, table)
 {
-    query = "SELECT * FROM " + table;
+    query = "SELECT * FROM " + schema + "." + table;
     con.query(query, function (err, result, fields) {
         if (err) throw err;
         console.log(result);
