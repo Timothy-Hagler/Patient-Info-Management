@@ -18,7 +18,7 @@ if (connection == null){ connection = createConnection(username, password, datab
 connect(connection);
 
 print_table(connection, schema, table);
-//print_specific_data(connection, schema, table, test_selection, test_location, test_full_data);
+print_specific_data(connection, schema, table, test_selection, test_location, test_full_data);
 search_for_data(connection, schema, table, test_selection, test_location, test_partial_data);
 
 disconnect(connection);
