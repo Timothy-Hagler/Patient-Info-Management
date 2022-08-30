@@ -6,9 +6,10 @@ var database = "test_database";
 var schema = "test_schema";
 var table = "test_table";
 
-var test_selection = "FirstName";
-var test_location = "LastName";
-var test_data = "Hagler";
+var test_selection = "LastName";
+var test_location = "FirstName";
+var test_full_data = "Timmy";
+var test_partial_data = "Tim";
 
 connection = null;
 
@@ -17,7 +18,8 @@ if (connection == null){ connection = createConnection(username, password, datab
 connect(connection);
 
 print_table(connection, schema, table);
-print_specific_data(connection, schema, table, test_selection, test_location, test_data);
+//print_specific_data(connection, schema, table, test_selection, test_location, test_full_data);
+search_for_data(connection, schema, table, test_selection, test_location, test_partial_data);
 
 disconnect(connection);
 
@@ -64,6 +66,17 @@ function print_specific_data(connection, schema, table, selection, location, dat
 {
     query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " = " +  "'" + data +  "'");
+
+    connection.query(query, function (err, result, fields) {
+         if (err) throw err;
+         console.log(result);
+       });
+}
+
+function search_for_data(connection, schema, table, selection, location, data)
+{
+    query = ("SELECT " + selection + " FROM " + schema + "." + table 
+             + " WHERE " + location + " LIKE " +  "'" + data +  "%'");
 
     connection.query(query, function (err, result, fields) {
          if (err) throw err;
