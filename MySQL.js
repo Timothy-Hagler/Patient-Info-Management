@@ -20,11 +20,11 @@ if (connection == null){ connection = createConnection(username, password, datab
 
 connect(connection);
 
-//insert_row(connection, schema, table, test_insert_headers, test_insert_values);
+insert_row(connection, schema, table, test_insert_headers, test_insert_values);
 update_row(connection, schema, table, test_location, test_full_data, "Location", "'Huntsville'");
 print_table(connection, schema, table);
-//remove_row(connection, schema, table, test_location, test_full_data);
-//print_table(connection, schema, table);
+remove_row(connection, schema, table, test_location, test_full_data);
+print_table(connection, schema, table);
 
 print_specific_data(connection, schema, table, test_selection, test_location, test_full_data);
 search_for_data(connection, schema, table, test_selection, test_location, test_partial_data);
