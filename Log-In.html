@@ -5,18 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> iCARE Patient Care System </title>
+    <title> Patient Information Management System </title>
     <link hrel="Patient_Care_CSS.css" rel="stylesheet" type="text/css">
     <script src="Patient_Care.jsx" defer></script>
 </head>
 
 <body>
-    <h1>Log In</h1>
-    <div class="credentials">
-        <h2>Username: </h2>
-        <textarea class="username">
-        </textarea>
-        <button class="btn">Log In</button>  
+    <div class = "credentials">
+        <h1>Log in</h1>
+        <form>
+            <label for = "username"><p>Username</p></label>
+            <input type = "text" required />
+
+            <label for = "password"><p>Password</p></label>
+            <input type = "password" required />
+
+            <button type = "submit">Log in</button>
+        </form>
     </div>
 </body>
 
