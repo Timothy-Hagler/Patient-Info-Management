@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-
+<link rel='stylesheet', type = 'text/css' href = 'Patient_Care.css'>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,18 +11,20 @@
 </head>
 
 <body>
-    <div class = "credentials">
+    <section>
         <h1>Log in</h1>
-        <form>
-            <label for = "username"><p>Username</p></label>
-            <input type = "text" required />
+        <div class = "credentials">
+            <form class = "loginform">
+                <label for = "username"><p>Username</p></label>
+                <input type = "text" required />
 
-            <label for = "password"><p>Password</p></label>
-            <input type = "password" required />
+                <label for = "password"><p>Password</p></label>
+                <input type = "password" required />
 
-            <button type = "submit">Log in</button>
-        </form>
-    </div>
+                <button type = "submit" class = loginbtn>Log in</button>
+            </form>
+        </div>
+    </section>
 </body>
 
 </html>

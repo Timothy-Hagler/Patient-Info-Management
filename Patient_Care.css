@@ -1,23 +1,39 @@
 
-
-
 /* header 1 customization */
-h1{
-    font-family:'Courier New', Courier, monospace;
-    font-size: 23em;
-    font-weight: bold;
-    font-variant: small-caps;
-    text-align:center;
-    margin-top: 1.0em;
-    margin-bottom: 0.5em;
-    color:blueviolet;
+body {
+    font-family: sans-serif, monospace;
 }
 
-/* header 2 customization */
-/* h2{
+h1 {
+    font-family:sans-serif, monospace;
+    font-weight: bold;
+    font-variant: common-ligatures tabular-nums;
+    text-align: center;
+    color:rgb(0, 0, 0);
 
-} */
+}
+section {
+    position:relative;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
-.credentials{
+.credentials {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.loginbtn {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 3px;
     
 }
