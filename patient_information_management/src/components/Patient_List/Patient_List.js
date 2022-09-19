@@ -6,3 +6,5 @@ export default function Patient_List() {
     <h2>Patient List</h2>
   );
 }
+
+//commit 9/19/22
