@@ -1,34 +1,14 @@
 const mysql = require('mysql');
 
-var username = "user_timmy";
-var password = "passwordtimmy";
+var username = "test_user";
+var password = "passwordtest";
 var database = "anotherTest";
-var schema = "test_schema";
-var table = "patient_info";
-
-var test_selection = "LastName";
-var test_location = "FirstName";
-var test_full_data = "John";
-var test_partial_data = "Tim";
-
-var test_insert_headers = "(MobilePhone, FirstName, LastName)"
-var test_insert_values = "('123-456-7890', 'John', 'Doe')"
 
 connection = null;
 
 if (connection == null){ connection = createConnection(username, password, database); } else return;
 
 connect(connection);
-
-//insert_row(connection, schema, table, test_insert_headers, test_insert_values);
-//update_row(connection, schema, table, test_location, test_full_data, "Location", "'Huntsville'");
-//print_table(connection, schema, table);
-//remove_row(connection, schema, table, test_location, test_full_data);
-//print_table(connection, schema, table);
-//
-//print_specific_data(connection, schema, table, test_selection, test_location, test_full_data);
-//search_for_data(connection, schema, table, test_selection, test_location, test_partial_data);
-
 disconnect(connection);
 
 function createConnection(username, password, database)
@@ -95,7 +75,6 @@ function print_table(connection, schema, table)
         console.log(result);
       });
 }
-
 
 // Design Idea: Use this as a "private" method. We can have other functions that will
 // call this. i.e., get_patient_info_for_doctor could call this with specific info that
