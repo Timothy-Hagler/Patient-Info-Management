@@ -11,7 +11,7 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh 'ls -la'
-                sh 'npm --prefix .\patient_information_management\ test'
+                sh 'npm --prefix patient_information_management/ test'
                 sh 'a'
             }
         }
