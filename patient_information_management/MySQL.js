@@ -1,21 +1,8 @@
-var mysql = require('mysql');
-
-var username = "defaultUser";
-var password = "defaultPass";
-var database = "defaultDatabase";
-var table = "defaultTable"
-
-//connection = null;
-
-//if (connection == null){ connection = createConnection(username, password, database); } else return;
-
-//connect(connection);
-//disconnect(connection);
-// print_table(connection, table);
+import { createConnection as __createConnection } from 'mysql';
 
 function createConnection(username, password)
 { 
-    return mysql.createConnection({
+    return __createConnection({
         host: "24.42.199.116",
         user: username,
         password: password
@@ -36,13 +23,16 @@ function disconnect(con)
 
 function print_table(con, table)
 {
-    query = "SELECT * FROM " + table;
+    let query = "SELECT * FROM " + table;
     con.query(query, function (err, result, fields) {
         if (err) throw err;
         console.log(result);
       });
 }
 
-exports.createConnection = createConnection
-exports.connect = connect
-exports.disconnect = disconnect
+const _createConnection = createConnection;
+export { _createConnection as createConnection };
+const _connect = connect;
+export { _connect as connect };
+const _disconnect = disconnect;
+export { _disconnect as disconnect };

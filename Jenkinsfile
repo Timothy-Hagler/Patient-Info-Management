@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                // Move these out to the installer script and run it here instead
                 sh "npm install --save-dev react-scripts"
                 sh "npm install --save-dev jest"
                 sh "npm install --save-dev @testing-library/jest-dom"
