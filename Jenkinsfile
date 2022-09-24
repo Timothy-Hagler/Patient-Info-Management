@@ -15,7 +15,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'npm --prefix patient_information_management/ test a'
-                sh 'q'
             }
         }
         stage('Deploy') {
