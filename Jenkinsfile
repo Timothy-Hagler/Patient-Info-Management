@@ -11,7 +11,8 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh 'ls -la'
-               // sh 'cd patient_information_management_system'
+                sh 'cd patient_information_management'
+                sh 'ls -la'
                 sh 'npm test'
             }
         }
