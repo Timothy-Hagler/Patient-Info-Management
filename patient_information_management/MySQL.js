@@ -5,18 +5,18 @@ var password = "defaultPass";
 var database = "defaultDatabase";
 var table = "defaultTable"
 
-connection = null;
+//connection = null;
 
-if (connection == null){ connection = createConnection(username, password, database); } else return;
+//if (connection == null){ connection = createConnection(username, password, database); } else return;
 
-connect(connection);
-disconnect(connection);
+//connect(connection);
+//disconnect(connection);
 // print_table(connection, table);
 
 function createConnection(username, password)
 { 
     return mysql.createConnection({
-        host: "localhost",
+        host: "24.42.199.116",
         user: username,
         password: password
     });
@@ -26,16 +26,12 @@ function connect(con)
 {
     con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
 });
 }
 
 function disconnect(con)
 {
     con.end();
-    con.on('end', function() {
-        console.log("Disconnected from MySQL Server");
-    })
 }
 
 function print_table(con, table)
@@ -46,3 +42,7 @@ function print_table(con, table)
         console.log(result);
       });
 }
+
+exports.createConnection = createConnection
+exports.connect = connect
+exports.disconnect = disconnect
