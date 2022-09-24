@@ -5,9 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh "npm install react-scripts"
+                sh "npm install --save-dev react-scripts"
                 sh "npm install --save-dev jest"
                 sh "npm install --save-dev @testing-library/jest-dom"
+                sh "npm install --save-dev mysql"
             }
         }
         stage('Test') {
