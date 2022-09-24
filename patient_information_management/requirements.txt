@@ -1,2 +1,5 @@
 react
 react-scripts
+jest
+@testing-library/jest-dom
+mysql
