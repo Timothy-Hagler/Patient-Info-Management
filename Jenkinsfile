@@ -7,6 +7,7 @@ pipeline {
                 echo 'Building..'
                 sh "npm install react-scripts"
                 sh "npm install --save-dev jest"
+                sh "npm install --save-dev @testing-library/jest-dom"
             }
         }
         stage('Test') {
