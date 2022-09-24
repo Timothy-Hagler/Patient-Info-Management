@@ -11,9 +11,8 @@ pipeline {
             steps {
                 echo 'Testing..'
                 sh 'ls -la'
-                sh 'cd patient_information_management'
-                sh 'ls -la'
-                sh 'npm test'
+                sh 'npm --prefix .\patient_information_management\ test'
+                sh 'a'
             }
         }
         stage('Deploy') {
