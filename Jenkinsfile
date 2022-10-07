@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 // Move these out to the installer script and run it here instead
-                sh "./installer.sh"
+                sh "sudo ./installer.sh"
             }
         }
         stage('Test') {
