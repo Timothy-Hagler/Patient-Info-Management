@@ -6,7 +6,8 @@ pipeline {
             steps {
                 echo 'Building..'
                 // Move these out to the installer script and run it here instead
-                sh "sudo ./installer.sh"
+                sh "chmod u+x installer.sh"
+                sh "./installer.sh"
             }
         }
         stage('Test') {
