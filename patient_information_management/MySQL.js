@@ -22,15 +22,15 @@ init();
 async function init() {
     print_table_async(connection, "test_schema", "patient_info");
 
-    await sleep(10);
+    await sleep(0);
     let data = await print_specific_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
     console.log(data);
 
-    await sleep(10);
+    await sleep(0);
     data = await search_for_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
     console.log(data);
 
-    await sleep(10);
+    await sleep(0);
     disconnect(connection);
   }
   
