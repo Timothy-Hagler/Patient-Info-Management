@@ -13,9 +13,32 @@ connection = null;
 if (connection == null){ connection = createConnection("root", "PIMS", "test_schema"); } else return;
 
 connect(connection);
-search_for_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
-print_specific_data_async(connection, "test_schema", "patient_info", test_selection, "FirstName", test_data);
-print_table_async(connection, "test_schema", "patient_info");
+init();
+
+/*
+    So this is how we have to make calls to the functions so the data does not overwrite itself. This function won't remain here.
+    It is an example that we can use later. The sleep function will be moved to its own file since it may be needed elsewhere.
+*/
+async function init() {
+    print_table_async(connection, "test_schema", "patient_info");
+
+    await sleep(10);
+    let data = await print_specific_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
+    console.log(data);
+
+    await sleep(10);
+    data = await search_for_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
+    console.log(data);
+
+    await sleep(10);
+    disconnect(connection);
+  }
+  
+  function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
 
 //disconnect(connection);
 
@@ -76,8 +99,8 @@ function update_row(connection, schema, table, location, data, col_to_update, up
 }
 
 async function print_table_async(connection, schema, table)  {
-    let res3 = await print_table(connection, schema, table)
-    console.log(res3)
+    let res = await print_table(connection, schema, table)
+    console.log(res)
 }
 
 function print_table(connection, schema, table)
@@ -89,13 +112,13 @@ function print_table(connection, schema, table)
             if (err) throw err;
             resolve(result);
             });
-      }, 6000);
+      }, 0);
     });
 }
 
 async function print_specific_data_async(connection, schema, table, selection, location, data)  {
-    let res2 = await print_specific_data(connection, schema, table, selection, location, data)
-    console.log(res2)
+    let res = await print_specific_data(connection, schema, table, selection, location, data);
+    return res;
 }
 
 // Design Idea: Use this as a "private" method. We can have other functions that will
@@ -112,14 +135,13 @@ function print_specific_data(connection, schema, table, selection, location, dat
             if (err) throw err;
             resolve(result);
        });
-      }, 2000);
+      }, 0);
     });
 }
 
 async function search_for_data_async(connection, schema, table, selection, location, data)  {
-    let res1 = await search_for_data(connection, schema, table, selection, location, data)
-    console.log(res1)
-    return res1;
+    let res = await search_for_data(connection, schema, table, selection, location, data)
+    return res;
 }
 
 function search_for_data(connection, schema, table, selection, location, data)
@@ -133,7 +155,7 @@ function search_for_data(connection, schema, table, selection, location, data)
             if (err) throw err;
             resolve(result);
        });
-      }, 3000);
+      }, 0);
 
     });
 }
