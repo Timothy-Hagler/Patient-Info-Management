@@ -4,17 +4,25 @@ var username = "test_user";
 var password = "passwordtest";
 var database = "anotherTest";
 
+var test_selection = "FirstName";
+var test_location = "LastName";
+var test_data = "Doe";
+
 connection = null;
 
-if (connection == null){ connection = createConnection(username, password, database); } else return;
+if (connection == null){ connection = createConnection("root", "PIMS", "test_schema"); } else return;
 
 connect(connection);
-disconnect(connection);
+search_for_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
+print_specific_data_async(connection, "test_schema", "patient_info", test_selection, "FirstName", test_data);
+print_table_async(connection, "test_schema", "patient_info");
+
+//disconnect(connection);
 
 function createConnection(username, password, database)
 { 
     return mysql.createConnection({
-        host: "24.42.199.116",
+        host: "localhost",
         user: username,
         password: password,
         database: database
@@ -67,13 +75,27 @@ function update_row(connection, schema, table, location, data, col_to_update, up
        });
 }
 
+async function print_table_async(connection, schema, table)  {
+    let res3 = await print_table(connection, schema, table)
+    console.log(res3)
+}
+
 function print_table(connection, schema, table)
 {
     query = "SELECT * FROM " + schema + "." + table;
-    connection.query(query, function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-      });
+    return new Promise(resolve => {
+      setTimeout(() => {
+        connection.query(query, function (err, result) {
+            if (err) throw err;
+            resolve(result);
+            });
+      }, 6000);
+    });
+}
+
+async function print_specific_data_async(connection, schema, table, selection, location, data)  {
+    let res2 = await print_specific_data(connection, schema, table, selection, location, data)
+    console.log(res2)
 }
 
 // Design Idea: Use this as a "private" method. We can have other functions that will
@@ -84,13 +106,20 @@ function print_specific_data(connection, schema, table, selection, location, dat
     query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " = " +  "'" + data +  "'");
 
-    connection.query(query, function (err, result, fields) {
-         if (err) throw err;
-         console.log(result);
-
-         // Way to print out data without "RowDataPacket"
-        // console.log(result[0].LastName);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        connection.query(query, function (err, result) {
+            if (err) throw err;
+            resolve(result);
        });
+      }, 2000);
+    });
+}
+
+async function search_for_data_async(connection, schema, table, selection, location, data)  {
+    let res1 = await search_for_data(connection, schema, table, selection, location, data)
+    console.log(res1)
+    return res1;
 }
 
 function search_for_data(connection, schema, table, selection, location, data)
@@ -98,8 +127,13 @@ function search_for_data(connection, schema, table, selection, location, data)
     query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " LIKE " +  "'" + data +  "%'");
 
-    connection.query(query, function (err, result, fields) {
-         if (err) throw err;
-         console.log(result);
+    return new Promise(resolve => {
+      setTimeout(() => {
+        connection.query(query, function (err, result) {
+            if (err) throw err;
+            resolve(result);
        });
+      }, 3000);
+
+    });
 }
