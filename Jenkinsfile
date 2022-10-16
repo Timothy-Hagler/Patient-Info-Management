@@ -11,7 +11,7 @@ pipeline {
 //                sh "./installer.sh"
 //                sh "rm package.json"
 //                sh "rm package-lock.json"
-                sh "npm install -g --save-dev react"
+    //            sh "npm install -g --save-dev react"
 //                sh "cat requirements.txt | npm install -g --save-dev"
             }
         }
