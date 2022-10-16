@@ -11,7 +11,8 @@ pipeline {
 //                sh "./installer.sh"
 //                sh "rm package.json"
 //                sh "rm package-lock.json"
-                sh "cat requirements.txt | npm install -g --save-dev"
+                sh "npm install -g --save-dev react"
+//                sh "cat requirements.txt | npm install -g --save-dev"
             }
         }
         stage('Test') {
