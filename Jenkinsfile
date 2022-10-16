@@ -11,8 +11,8 @@ pipeline {
 //                sh "./installer.sh"
 //                sh "rm package.json"
 //                sh "rm package-lock.json"
-    //            sh "npm install -g --save-dev react"
-//                sh "cat requirements.txt | npm install -g --save-dev"
+                sh "sudo npm install -g --save-dev react --unsafe-perm=true --allow-root"
+                sh "cat requirements.txt | sudo npm install -g --save-dev --unsafe-perm=true --allow-root"
             }
         }
         stage('Test') {
