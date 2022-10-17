@@ -1,9 +1,9 @@
 import React from 'react';
 import './Patient_List.css';
 
-export default class Patient_List extends Component {
+function Patient_List() {
 
-  render(){
+ 
 
     return(
   
@@ -20,7 +20,7 @@ export default class Patient_List extends Component {
 
           </section>
     )   /* end return */
-  }
+  
 };
 //connect to SQL database to search for the patients dependent on the innerHTML string the user entered and is 
 // saved on the clicked enter button event 
@@ -31,29 +31,30 @@ const patients = [
 ];
 
 
-searchButton.addEventListener("clicked", () => {
+// searchButton.addEventListener("clicked", () => {
 
-});
+// });
 
-const searchInput = document.querySelector('.input')
+// const searchInput = document.querySelector('.input')
 
-searchInput.addEventListener("input", (e) => {
+// searchInput.addEventListener("input", (e) => {
 
-  let value  = e.target.value
+//   let value  = e.target.value
 
-  if(value && value.trim().length > 0){
-    value = value.trim().toLowerCase()
-  }else{
+//   if(value && value.trim().length > 0){
+//     value = value.trim().toLowerCase()
+//   }else{
 
-  }
-
-
-});
-
-const clearButton = document.getElementsByElementId('clear')
-
-clearButton.addEventListener("click", () => { // clears text in box when pressed
+//   }
 
 
-})
+// });
 
+// const clearButton = document.getElementsByElementId('clear')
+
+// clearButton.addEventListener("click", () => { // clears text in box when pressed
+
+
+// })
+
+export default Patient_List;
