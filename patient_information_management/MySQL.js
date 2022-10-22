@@ -10,7 +10,7 @@ var test_data = "Doe";
 
 connection = null;
 
-if (connection == null){ connection = createConnection("root", "PIMS", "test_schema"); } else return;
+if (connection == null){ connection = createConnection(username, password, database); } else return;
 
 connect(connection);
 init();
@@ -20,14 +20,14 @@ init();
     It is an example that we can use later. The sleep function will be moved to its own file since it may be needed elsewhere.
 */
 async function init() {
-    print_table_async(connection, "test_schema", "patient_info");
+    print_table_async(connection, database, "patient_info");
 
     await sleep(0);
-    let data = await print_specific_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
+    let data = await print_specific_data_async(connection, database, "patient_info", test_selection, test_location, test_data);
     console.log(data);
 
     await sleep(0);
-    data = await search_for_data_async(connection, "test_schema", "patient_info", test_selection, test_location, test_data);
+    data = await search_for_data_async(connection, database, "patient_info", test_selection, test_location, test_data);
     console.log(data);
 
     await sleep(0);
@@ -40,12 +40,10 @@ async function init() {
     });
   }
 
-//disconnect(connection);
-
 function createConnection(username, password, database)
 { 
     return mysql.createConnection({
-        host: "localhost",
+        host: "24.42.199.116",
         user: username,
         password: password,
         database: database
@@ -55,7 +53,7 @@ function createConnection(username, password, database)
 function connect(connection)
 {
     connection.connect(function(err) {
-    if (err) throw err;
+//    if (err) throw err;
     console.log("Connected!");
 });
 }
@@ -74,7 +72,7 @@ function insert_row(connection, schema, table, headers, values)
              + headers + " VALUES " + values);
 
     connection.query(query, function (err, result, fields) {
-         if (err) throw err;
+//         if (err) throw err;
        });
 }
 
@@ -84,7 +82,7 @@ function remove_row(connection, schema, table, location, data)
              + location + " = '" + data + "'");
 
     connection.query(query, function (err, result, fields) {
-         if (err) throw err;
+//         if (err) throw err;
        });
 }
 
@@ -94,7 +92,7 @@ function update_row(connection, schema, table, location, data, col_to_update, up
             + " WHERE "+ location + " = '" + data + "'");
 
     connection.query(query, function (err, result, fields) {
-         if (err) throw err;
+//         if (err) throw err;
        });
 }
 
@@ -109,7 +107,7 @@ function print_table(connection, schema, table)
     return new Promise(resolve => {
       setTimeout(() => {
         connection.query(query, function (err, result) {
-            if (err) throw err;
+//            if (err) throw err;
             resolve(result);
             });
       }, 0);
@@ -132,7 +130,7 @@ function print_specific_data(connection, schema, table, selection, location, dat
     return new Promise(resolve => {
       setTimeout(() => {
         connection.query(query, function (err, result) {
-            if (err) throw err;
+//            if (err) throw err;
             resolve(result);
        });
       }, 0);
@@ -152,7 +150,7 @@ function search_for_data(connection, schema, table, selection, location, data)
     return new Promise(resolve => {
       setTimeout(() => {
         connection.query(query, function (err, result) {
-            if (err) throw err;
+//            if (err) throw err;
             resolve(result);
        });
       }, 0);
