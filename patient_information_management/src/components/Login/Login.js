@@ -6,15 +6,15 @@ export default class Login extends Component {
     return(
         <section>
             <h1>Log in</h1>
-            <div class = "credentials">
-                <form class = "loginform">
-                    <label for = "username"><p>Username</p></label>
+            <div className = "credentials">
+                <form className = "loginform">
+                    <label htmlFor = "username"><p>Username</p></label>
                     <input type = "text" required />
 
-                    <label for = "password"><p>Password</p></label>
+                    <label htmlFor = "password"><p>Password</p></label>
                     <input type = "password" required />
 
-                    <button type = "submit" class = "loginbtn">Log in</button>
+                    <button type = "submit" className = "loginbtn">Log in</button>
                 </form>
             </div>
         </section>

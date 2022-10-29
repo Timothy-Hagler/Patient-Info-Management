@@ -8,7 +8,7 @@ import Patient_Information from '../Patient_Information/Patient_Information';
 
 function App() {
   return(
-    <div class = "app">
+    <div className = "app">
         <h1>Patient Information Management System</h1>
         <BrowserRouter>
           <Routes>   
