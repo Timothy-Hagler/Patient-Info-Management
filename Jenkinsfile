@@ -14,10 +14,12 @@ pipeline {
 //                sh "rm package-lock.json"
 //                sh "sudo npm install -g --save-dev react --unsafe-perm=true --allow-root"
 //                sh "cat requirements.txt | sudo npm install -g --save-dev --unsafe-perm=true --allow-root"
+                sh 'cd patient_information_management/ && npm install'
             }
         }
         stage('Test') {
             steps {
+                sh 'pwd'
                 sh 'cd patient_information_management/ && npm test a'
             }
         }
