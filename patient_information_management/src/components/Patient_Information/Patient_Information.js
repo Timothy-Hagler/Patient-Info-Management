@@ -1,5 +1,6 @@
 import React from 'react';
 import './Patient_Information.css';
+import {Link} from 'react-router-dom';
 
 export default function Patient_Information() {
   return(
