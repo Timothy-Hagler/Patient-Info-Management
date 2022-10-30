@@ -1,3 +1,5 @@
+import { useState } from "react";
+import React, { Component }  from 'react';
 const About_Us = () => {
   return (
     <>
