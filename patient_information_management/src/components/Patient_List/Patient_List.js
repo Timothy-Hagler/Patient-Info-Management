@@ -1,20 +1,33 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Patient_List.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+
 
 function Patient_List() {
     const [show, setShow] = useState(false);
+    const [person, setPerson] = useState({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: ''
+    });
+
     const handleCancel = () => setShow(false);
 
     const handleShow = () => {
-      // get patient data from MySQL and display it here
+      // default person
+      setPerson({firstName: 'John', lastName: 'Smith', address: '601 John Wright Dr', city: 'Huntsville'}) // Replace this with mysql call to the correct person from the search
       setShow(true);
     }
 
-    const handleSaveChanges = () => {
-      // Send updated changes to mySQL database here
+    const handleSubmitChanges = (event) => {
       setShow(false);
+      const form = event.currentTarget;
+      
     }
 
     return (
@@ -25,11 +38,31 @@ function Patient_List() {
 
       <Modal show={show} onHide={handleCancel}>
         <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Edit {person.firstName} {person.lastName}'s information </Modal.Title>
           </Modal.Header>
-          <Modal.Body>Modal time</Modal.Body>
+          <Modal.Body>
+            <Form>
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                <Form.Label column sm="2">
+                  First Name
+                </Form.Label>
+                <Col sm="10">
+                <Form.Control type="text" placeholder={person.firstName} />
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                <Form.Label column sm="2">
+                  Last Name
+                </Form.Label>
+                <Col>
+                  <Form.Control type="text" placeholder={person.lastName} />
+                </Col>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={handleSaveChanges}>
+            <Button variant="primary" onClick={handleSubmitChanges}>
               Save Changes
             </Button>
             <Button variant="secondary" onClick={handleCancel}>
@@ -39,14 +72,22 @@ function Patient_List() {
       </Modal>
 
           <section>
+
             <input id="searchbar"></input>
+            
+
             /* api to search the index for the user's inputted search bar text once search is pressed
             and then go search the database for the name and return all the patient information in a new textbox below 
             the searchbar */
+            /*
           </section>
       </>
     );
 };
+
+const testModal = [
+  {lastName: "Smith", firstName: "John"}
+]
 //connect to SQL database to search for the patients dependent on the innerHTML string the user entered and is 
 // saved on the clicked enter button event 
 const patients = [
@@ -83,3 +124,4 @@ const patients = [
 // })
 
 export default Patient_List;
+
