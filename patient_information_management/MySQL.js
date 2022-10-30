@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+import { createConnection as __createConnection } from 'mysql';
 
 var username = "test_user";
 var password = "passwordtest";
@@ -8,9 +8,9 @@ var test_selection = "FirstName";
 var test_location = "LastName";
 var test_data = "Doe";
 
-connection = null;
+var connection = null;
 
-if (connection == null){ connection = createConnection(username, password, database); } else return;
+if (connection == null){ connection = createConnection(username, password, database); }
 
 connect(connection);
 init();
@@ -42,7 +42,7 @@ async function init() {
 
 function createConnection(username, password, database)
 { 
-    return mysql.createConnection({
+    return __createConnection({
         host: "24.42.199.116",
         user: username,
         password: password,
@@ -53,7 +53,7 @@ function createConnection(username, password, database)
 function connect(connection)
 {
     connection.connect(function(err) {
-//    if (err) throw err;
+    if (err) throw err;
     console.log("Connected!");
 });
 }
@@ -68,31 +68,31 @@ function disconnect(connection)
 
 function insert_row(connection, schema, table, headers, values)
 {
-    query = ("INSERT INTO " + schema + "." + table + " "
+    let query = ("INSERT INTO " + schema + "." + table + " "
              + headers + " VALUES " + values);
 
     connection.query(query, function (err, result, fields) {
-//         if (err) throw err;
+         if (err) throw err;
        });
 }
 
 function remove_row(connection, schema, table, location, data)
 {
-    query = ("DELETE FROM " + schema + "." + table + " WHERE "
+    let query = ("DELETE FROM " + schema + "." + table + " WHERE "
              + location + " = '" + data + "'");
 
     connection.query(query, function (err, result, fields) {
-//         if (err) throw err;
+         if (err) throw err;
        });
 }
 
 function update_row(connection, schema, table, location, data, col_to_update, updated_info)
 {
-    query = ("UPDATE " + schema + "." + table + " SET " + col_to_update + " = " + updated_info 
+    let query = ("UPDATE " + schema + "." + table + " SET " + col_to_update + " = " + updated_info 
             + " WHERE "+ location + " = '" + data + "'");
 
     connection.query(query, function (err, result, fields) {
-//         if (err) throw err;
+         if (err) throw err;
        });
 }
 
@@ -103,11 +103,11 @@ async function print_table_async(connection, schema, table)  {
 
 function print_table(connection, schema, table)
 {
-    query = "SELECT * FROM " + schema + "." + table;
+    let query = "SELECT * FROM " + schema + "." + table;
     return new Promise(resolve => {
       setTimeout(() => {
         connection.query(query, function (err, result) {
-//            if (err) throw err;
+            if (err) throw err;
             resolve(result);
             });
       }, 0);
@@ -124,13 +124,13 @@ async function print_specific_data_async(connection, schema, table, selection, l
 // only the doctor can see
 function print_specific_data(connection, schema, table, selection, location, data)
 {
-    query = ("SELECT " + selection + " FROM " + schema + "." + table 
+    let query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " = " +  "'" + data +  "'");
 
     return new Promise(resolve => {
       setTimeout(() => {
         connection.query(query, function (err, result) {
-//            if (err) throw err;
+            if (err) throw err;
             resolve(result);
        });
       }, 0);
@@ -144,16 +144,23 @@ async function search_for_data_async(connection, schema, table, selection, locat
 
 function search_for_data(connection, schema, table, selection, location, data)
 {
-    query = ("SELECT " + selection + " FROM " + schema + "." + table 
+    let query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " LIKE " +  "'" + data +  "%'");
 
     return new Promise(resolve => {
       setTimeout(() => {
         connection.query(query, function (err, result) {
-//            if (err) throw err;
+            if (err) throw err;
             resolve(result);
        });
       }, 0);
 
     });
 }
+
+const _createConnection = createConnection;
+export { _createConnection as createConnection };
+const _connect = connect;
+export { _connect as connect };
+const _disconnect = disconnect;
+export { _disconnect as disconnect };

@@ -5,11 +5,12 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                sh 'cd patient_information_management/ && npm install'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                sh 'cd patient_information_management/ && npm test a'
             }
         }
         stage('Deploy') {
