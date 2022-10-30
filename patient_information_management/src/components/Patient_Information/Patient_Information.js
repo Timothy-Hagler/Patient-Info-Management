@@ -6,8 +6,8 @@ export default function Patient_Information() {
     <section>
       <h1>Patient Information</h1>
       <div class = 'links'>
-            <li><Link to="/">Login</Link></li>
-            <li><Link to="/patient-list">Patient List</Link></li>
+         {/*   <li><Link to="/">Login</Link></li>
+            <li><Link to="/patient-list">Patient List</Link></li> */}
             </div>
             <h1>Patient Information</h1>
             
