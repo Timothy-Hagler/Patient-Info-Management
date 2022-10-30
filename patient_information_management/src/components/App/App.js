@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import Patient_List from '../Patient_List/Patient_List';
 import Login from '../Login/Login';
 import Patient_Information from '../Patient_Information/Patient_Information';
+import About_Us from '../About_Us/About_Us';
 import logo from '../images/PIMS_emblem.png';
 
 
@@ -25,6 +26,9 @@ function App() {
                 <li class="nav-item">
                   <a class="nav-link" href="/patient-list">Patient List</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/about-us">About Us</a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -33,6 +37,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/patient-list" element ={<Patient_List />} />
             <Route path="/patient-information" element ={<Patient_Information />} />
+            <Route path="/about-us" element ={<About_Us />} />
           </Routes>
         </BrowserRouter>
     </div>
