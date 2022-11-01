@@ -1,29 +1,3 @@
-/*body {
-    font-family: sans-serif, monospace;
-}
-
-h1 {
-    font-family:sans-serif, monospace;
-    font-weight: bold;
-    font-variant: common-ligatures tabular-nums;
-    text-align: center;
-    color:rgb(0, 0, 0);
-}
-
-section {
-    margin: 40px;
-}
-
-
-
-.loginbtn {
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    padding: 3px;
-    
-}*/
 
 /* Remove the navbar's default margin-bottom and rounded borders */ 
 .navbar {
@@ -61,21 +35,6 @@ section {
   }
   
   /* On small screens, set height to 'auto' for sidenav and grid */
-  @media screen and (max-width: 767px) {
-    .sidenav {
-      height: auto;
-      padding: 15px;
-    }
-    .row.content {height:auto;} 
-
-    .cardthing {
-      min-width: 545px;
-      min-height: 545px;
-    }
-
-  }
-
-
 
 
   .instructions {
@@ -115,27 +74,6 @@ section {
   margin-left:0px;
   margin-top: 10px;
   padding-left:0px;
-}
-
-h2 {
-  font-family:sans-serif, monospace;
-    font-weight: bold;
-    font-variant: common-ligatures tabular-nums;
-  text-align: right;
-  font-size: 400%;
-}
-
-h3 {
-  text-align: center;
-}
-
-h4 {
-  text-align:right;
-}
-
-h5 {
-  font-size:medium;
-  text-align: right;
 }
 
 .loginbutton{
