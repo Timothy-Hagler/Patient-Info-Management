@@ -10,6 +10,12 @@ export default function Help_Page() {
         <h3>FAQ</h3>
         <section>
                 <Accordion defaultActiveKey="#">
+                <Accordion.Item eventKey="5">
+                    <Accordion.Header><b>How do I log on to the system?</b></Accordion.Header>
+                    <Accordion.Body>
+                    Go to the login page by clicking our logo on the top left of the screen. Enter your username and password. Click Login.
+                    </Accordion.Body>
+                </Accordion.Item>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header><b>How do I create an account?</b></Accordion.Header>
                     <Accordion.Body>
@@ -17,27 +23,30 @@ export default function Help_Page() {
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
-                    <Accordion.Header>Accordion Item #2</Accordion.Header>
+                    <Accordion.Header><b>How do I find a patient?</b></Accordion.Header>
                     <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
+                    Go to the Patient Information page. Enter information in the boxes and click Search. The patients who match your search should appear in a table.
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                    <Accordion.Header>Accordion Item #2</Accordion.Header>
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header><b>How do I edit a patient's information?</b></Accordion.Header>
                     <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
+                    Go to the Patient Information page and search for a patient. A table should appear with all of the patients that match your search. 
+                    Select one of the patients in the table by clicking anywhere in that row. A window should appear with boxes to edit patient information. 
+                    Click Save Changes once you are done.
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="3">
+                    <Accordion.Header><b>How do I delete a patient?</b></Accordion.Header>
+                    <Accordion.Body>
+                    Go to the Patient Information page and search for a patient. A table should appear with all of the patients that match your search. 
+                    Select one of the patients in the table by clicking anywhere in that row. A window should appear with that patient's information. Click Delete Patient.
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="4">
+                    <Accordion.Header><b>How do I add a patient?</b></Accordion.Header>
+                    <Accordion.Body>
+                    Go to the Patient Information page. Select the Add Patient button. A window will appear where you can fill out that patient's information. Click Submit changes once you are done.
                     </Accordion.Body>
                 </Accordion.Item>
                 </Accordion>
