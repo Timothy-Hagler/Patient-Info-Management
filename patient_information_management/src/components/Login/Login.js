@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Login.css';
 import Logo from './logo.png'; //change path once merged
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/cjs/Button.js';
+import Card from 'react-bootstrap/cjs/Card.js';
 
 
 export default class Login extends Component {
