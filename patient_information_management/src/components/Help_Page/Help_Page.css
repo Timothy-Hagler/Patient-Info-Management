@@ -1,3 +1,8 @@
 .Accordion.Header {
     background-color: lightgrey;
 }
+
+.containerHelpPage {
+    margin:20px;
+    padding-bottom:25px;
+}
