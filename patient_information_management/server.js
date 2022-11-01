@@ -12,17 +12,21 @@ connect(connection)
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
 
-app.post('/api/update', (req, res) => {
+app.post('/api/updateData', (req, res) => {
 
-   // let data = search_for_data_async(connection, "PIMS", "Patients", "*", "*", "*");
-    for (let i = 0; i < 10; i++)
-    {
-    res.send({
-  
-      token: i,
-   //   info: data
-    });
-  }
+    const schema = req.body.schema;
+    const table = req.body.table;
+    const col_to_update = req.body.col_to_update;
+    const updated_info = req.body.updated_info;
+    const location = req.body.location;
+    const data = req.body.data;
+
+    let query = ("UPDATE " + schema + "." + table + " SET " + col_to_update + " = " + updated_info 
+            + " WHERE "+ location + " = '" + data + "'");
+
+    connection.query(query, function (err, result, fields) {
+        if (err) throw err;
+      });
   
   });
 

@@ -8,21 +8,25 @@ const About_Us = () => {
     console.log(data.data)
     });
     },[])
-    function LikePost() {
-    Axios.post(`http://localhost:8080/api/update/`).then((response)=>{
-      alert("you liked a post")
-      console.log("here")
-    })
+
+    function UpdateData() {
+      Axios.post(`http://localhost:8080/api/updateData/`, {schema: "PIMS", table: "Patients", 
+      col_to_update: "LastName", updated_info: "'Smith'", location: "FirstName", data: "John"}).then((response)=>{
+        alert("you updated data")
+        console.log("here")
+      })
   }
+
     Axios.get(`http://localhost:8080/api/test/`).then((response)=>{
       //alert("you liked a post")
       console.log("test")
     })
+
   return (
     <>
     <div class="container">
         <center><h2><b>About Us</b></h2></center>
-        <button className="like_btn" onClick={(() => LikePost())}>Like</button>
+        <button className="like_btn" onClick={(() => UpdateData())}>Like</button>
         <div class="row">
         <div class="col-sm">
           <span class="d-md-block bg-info">
