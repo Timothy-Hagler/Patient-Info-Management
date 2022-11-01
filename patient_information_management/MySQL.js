@@ -149,3 +149,5 @@ const _connect = connect;
 export { _connect as connect };
 const _disconnect = disconnect;
 export { _disconnect as disconnect };
+const _search_for_data_async = search_for_data_async;
+export { _search_for_data_async as search_for_data_async };

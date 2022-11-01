@@ -1,10 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+//import Axios from 'axios'.default
+import Axios from 'axios'
 import React, { Component }  from 'react';
 const About_Us = () => {
+  useEffect(()=>{
+    Axios.get("http://localhost:8080/api/get").then((data)=>{
+    console.log(data.data)
+    });
+    },[])
+    function LikePost() {
+    Axios.post(`http://localhost:8080/api/update/`).then((response)=>{
+      alert("you liked a post")
+      console.log("here")
+    })
+  }
+    Axios.get(`http://localhost:8080/api/test/`).then((response)=>{
+      //alert("you liked a post")
+      console.log("test")
+    })
   return (
     <>
     <div class="container">
         <center><h2><b>About Us</b></h2></center>
+        <button className="like_btn" onClick={(() => LikePost())}>Like</button>
         <div class="row">
         <div class="col-sm">
           <span class="d-md-block bg-info">
