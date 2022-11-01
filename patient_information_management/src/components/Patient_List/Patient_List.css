@@ -24,3 +24,10 @@ input[type=text]:focus {
 .patients{
 display: list-item;	
 }
+
+.demoButton{
+	display:flex;
+    justify-content:center;
+    align-items :center;
+	margin: 15px;
+}
