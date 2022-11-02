@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import './Login.css';
-import Logo from './logo.png'; //change path once merged
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-
 
 export default class Login extends Component {
   render() {
@@ -12,7 +11,6 @@ export default class Login extends Component {
         <section>
         <h1>Login</h1>
          
-
       <div class="container-fluid text-center">
           <div class="row content">
            
@@ -47,7 +45,6 @@ export default class Login extends Component {
                       </Card>
                   </div>
                 </form>
-
               
                 
               </div>
@@ -65,7 +62,6 @@ export default class Login extends Component {
         </footer>
       </body>
       
-
 
     )
   }
