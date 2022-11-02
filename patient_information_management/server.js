@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'
-import { createConnection, connect, disconnect, search_for_data_async } from './MySQL.js';
+import { createConnection, connect, disconnect } from './MySQL.js';
 
 const app = express();
 
@@ -43,7 +43,24 @@ app.post('/api/insertRow', (req, res) => {
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
       });
-  
+
+  });
+
+
+app.post('/api/removeRow', (req, res) => {
+
+    const schema = req.body.schema;
+    const table = req.body.table;
+    const location = req.body.location;
+    const data = req.body.data;
+
+    let query = ("DELETE FROM " + schema + "." + table + " WHERE "
+             + location + " = '" + data + "'");
+
+    connection.query(query, function (err, result, fields) {
+        if (err) throw err;
+      });
+
   });
 
 app.get('/api/searchData/', (req, res) => {
@@ -76,28 +93,3 @@ app.get('/api/patientList/', (req, res) => {
       res.send(result)
   });
 });
-
-app.get('/api/get', (req, res) => {
-
-    res.send({
-      x: 'test123',
-      testData2: "i am some test data"
-    });
-  
-  });
-
-
-app.use("/api/test", (req,res)=>{
-  console.log("I AM THE SERVER")
-});
-
-
-app.get("/", (req,res)=>{
-  res.send('<h1>Test</h1>')
-});
-//console.log(connection)
-//connect(connection)
-console.log("Connection is")
-//console.log(connection)
-//print_table_async(connection, "PIMS", "Patients");
-//disconnect(connection)

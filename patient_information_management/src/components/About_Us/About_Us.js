@@ -11,6 +11,13 @@ const About_Us = () => {
       })
   }
 
+    function RemoveRow(schema, table, location, data) {
+      Axios.post(`http://localhost:8080/api/removeRow/`, {schema: schema, table: table,
+      location: location, data: data}).then((response)=>{
+        alert("you removed data")
+      })
+  }
+
     function UpdateData(schema, table, col_to_update, updated_info, location, new_data) {
       Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
       col_to_update: col_to_update, updated_info: updated_info, location: location, data: new_data}).then((response)=>{
@@ -53,6 +60,7 @@ const About_Us = () => {
         <button className="search_btn" onClick={(() => SearchData("*", "PIMS", "Patients", "LastName", "Do"))}>Search</button>
         <button className="patientList_btn" onClick={(() => ShowPatientList())}>Show Patient List</button>
         <button className="insertRow_btn" onClick={(() => InsertRow("PIMS", "Patients", "PersonID, LastName, FirstName, Address, City", "'6', 'Doe', 'Jane', '901 Explorer Blvd. NW', 'Huntsville'"))}>Insert Row</button>
+        <button className="removeRow_btn" onClick={(() => RemoveRow("PIMS", "Patients", "LastName", "Doe"))}>Remove Row</button>
         <div class="row">
         <div class="col-sm">
           <span class="d-md-block bg-info">
