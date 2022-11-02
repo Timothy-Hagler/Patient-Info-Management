@@ -30,12 +30,50 @@ app.post('/api/updateData', (req, res) => {
   
   });
 
+
+app.get('/api/searchData/?selection', (req, res) => {
+
+    const selection = req.body.selection;
+    const schema = req.body.schema;
+    const table = req.body.table;
+    const location = req.body.location;
+    const data = req.body.data;
+    console.log(req.params)
+    console.log(selection)
+
+
+    let query = ("SELECT " + selection + " FROM " + schema + "." + table 
+             + " WHERE " + location + " LIKE '" + data +  "%'");
+    //let query = ("SELECT " + "*" + " FROM " + "PIMS" + "." + "Patients" 
+    //         + " WHERE " + "LastName" + " LIKE '" + "Doe" +  "%'");
+
+    //connection.query(query, (err,result)=>{
+    //if(err) {
+    //console.log(err)
+    //} 
+    //res.send(result)
+  //});
+   // connection.query(query, function (err, result, fields) {
+   //     if (err) throw err;
+   //     console.log(result)
+   //   });
+
+  //    res.send(
+  //    //  "<h1>This is inside res.send</h1>"
+  //    connection.query(query, function (err, result, fields) {
+  //        if (err) throw err;
+  //        console.log(result)
+  //      })
+  //    )
+  
+  });
+
 app.get('/api/get', (req, res) => {
 
     //let data = search_for_data_async(connection, "PIMS", "Patients", "*", "*", "*");
     res.send({
   
-      token: 'test123',
+      x: 'test123',
       //info: data,
       testData2: "i am some test data"
     });
@@ -57,8 +95,8 @@ app.use("/api/test", (req,res)=>{
     });    });
 
 
-app.use("/", (req,res)=>{
-
+app.get("/", (req,res)=>{
+  res.send('<h1>Test</h1>')
 });
 //console.log(connection)
 //connect(connection)

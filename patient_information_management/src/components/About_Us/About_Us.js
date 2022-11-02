@@ -4,18 +4,33 @@ import Axios from 'axios'
 import React, { Component }  from 'react';
 const About_Us = () => {
   useEffect(()=>{
-    Axios.get("http://localhost:8080/api/get").then((data)=>{
-    console.log(data.data)
-    });
+    //Axios.get("http://localhost:8080/api/searchData", {selection: "*", schema: "PIMS", table: "Patients", location: "LastName", data: "Doe"}).then((data)=>{
+    Axios.get(`http://localhost:8080/api/searchData/:selection=*`, {selection: "*", schema: "PIMS", table: "Patients", location: "LastName", data: "Doe"}).then((response)=>{
+      alert("you searched data")
+      console.log("here")
+      console.log(response)
+    })
+   // console.log(data.data)
+   // });
     },[])
 
-    function UpdateData() {
+    function UpdateData(scheme, table, col_to_update, updated_info, location, new_data) {
       Axios.post(`http://localhost:8080/api/updateData/`, {schema: "PIMS", table: "Patients", 
       col_to_update: "LastName", updated_info: "'Smith'", location: "FirstName", data: "John"}).then((response)=>{
         alert("you updated data")
         console.log("here")
       })
   }
+
+    function SearchData(scheme, table, col_to_update, updated_info, location, new_data) {
+      console.log("top of searching")
+      Axios.get(`http://localhost:8080/api/searchData/?selection=*`, {selection: "*", schema: "PIMS", table: "Patients", location: "LastName", data: "Doe"}).then((response)=>{
+        alert("you searched data")
+        console.log("here")
+        console.log(response)
+      })
+  }
+
 
     Axios.get(`http://localhost:8080/api/test/`).then((response)=>{
       //alert("you liked a post")
@@ -27,6 +42,7 @@ const About_Us = () => {
     <div class="container">
         <center><h2><b>About Us</b></h2></center>
         <button className="like_btn" onClick={(() => UpdateData())}>Like</button>
+        <button className="search_btn" onClick={(() => SearchData())}>Search</button>
         <div class="row">
         <div class="col-sm">
           <span class="d-md-block bg-info">
