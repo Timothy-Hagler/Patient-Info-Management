@@ -31,50 +31,29 @@ app.post('/api/updateData', (req, res) => {
   });
 
 
-app.get('/api/searchData/?selection', (req, res) => {
+app.get('/api/searchData/', (req, res) => {
 
-    const selection = req.body.selection;
-    const schema = req.body.schema;
-    const table = req.body.table;
-    const location = req.body.location;
-    const data = req.body.data;
-    console.log(req.params)
-    console.log(selection)
-
+    const selection = req.query.selection;
+    const schema = req.query.schema;
+    const table = req.query.table;
+    const location = req.query.location;
+    const data = req.query.data;
 
     let query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " LIKE '" + data +  "%'");
-    //let query = ("SELECT " + "*" + " FROM " + "PIMS" + "." + "Patients" 
-    //         + " WHERE " + "LastName" + " LIKE '" + "Doe" +  "%'");
 
-    //connection.query(query, (err,result)=>{
-    //if(err) {
-    //console.log(err)
-    //} 
-    //res.send(result)
-  //});
-   // connection.query(query, function (err, result, fields) {
-   //     if (err) throw err;
-   //     console.log(result)
-   //   });
-
-  //    res.send(
-  //    //  "<h1>This is inside res.send</h1>"
-  //    connection.query(query, function (err, result, fields) {
-  //        if (err) throw err;
-  //        console.log(result)
-  //      })
-  //    )
-  
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
   });
+});
 
 app.get('/api/get', (req, res) => {
 
-    //let data = search_for_data_async(connection, "PIMS", "Patients", "*", "*", "*");
     res.send({
-  
       x: 'test123',
-      //info: data,
       testData2: "i am some test data"
     });
   
@@ -83,16 +62,7 @@ app.get('/api/get', (req, res) => {
 
 app.use("/api/test", (req,res)=>{
   console.log("I AM THE SERVER")
-  //print_table_async(connection, "PIMS", "Patients");
-  let data = search_for_data_async(connection, "PIMS", "Patients", "LastName", "LastName", "Smith");
-  connection.query("SELECT * FROM " + "PIMS" + "." + "Patients", (err,result)=>{
-      if(err) {
-      console.log(err)
-      console.log("THERE WAS AN ERROR")
-      //throw err;
-      } 
-  res.send({res: result, dat: data})
-    });    });
+});
 
 
 app.get("/", (req,res)=>{

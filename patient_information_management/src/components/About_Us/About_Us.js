@@ -3,46 +3,36 @@ import { useState, useEffect } from "react";
 import Axios from 'axios'
 import React, { Component }  from 'react';
 const About_Us = () => {
-  useEffect(()=>{
-    //Axios.get("http://localhost:8080/api/searchData", {selection: "*", schema: "PIMS", table: "Patients", location: "LastName", data: "Doe"}).then((data)=>{
-    Axios.get(`http://localhost:8080/api/searchData/:selection=*`, {selection: "*", schema: "PIMS", table: "Patients", location: "LastName", data: "Doe"}).then((response)=>{
-      alert("you searched data")
-      console.log("here")
-      console.log(response)
-    })
-   // console.log(data.data)
-   // });
-    },[])
 
-    function UpdateData(scheme, table, col_to_update, updated_info, location, new_data) {
-      Axios.post(`http://localhost:8080/api/updateData/`, {schema: "PIMS", table: "Patients", 
-      col_to_update: "LastName", updated_info: "'Smith'", location: "FirstName", data: "John"}).then((response)=>{
+    function UpdateData(schema, table, col_to_update, updated_info, location, new_data) {
+      Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
+      col_to_update: col_to_update, updated_info: updated_info, location: location, data: new_data}).then((response)=>{
         alert("you updated data")
         console.log("here")
       })
   }
 
-    function SearchData(scheme, table, col_to_update, updated_info, location, new_data) {
+    function SearchData(selection, schema, table, location, data) {
       console.log("top of searching")
-      Axios.get(`http://localhost:8080/api/searchData/?selection=*`, {selection: "*", schema: "PIMS", table: "Patients", location: "LastName", data: "Doe"}).then((response)=>{
-        alert("you searched data")
-        console.log("here")
-        console.log(response)
+      let url = (`http://localhost:8080/api/searchData/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
+      Axios.get(url).then((response)=>{
+        // this will print out each piece of data on each patient reaching the search criteria
+        for (let index in response.data)
+        {
+          for (let x in response.data[index])
+          {
+            console.log(x + ": " + response.data[index][x])
+          }
+        }
       })
   }
-
-
-    Axios.get(`http://localhost:8080/api/test/`).then((response)=>{
-      //alert("you liked a post")
-      console.log("test")
-    })
 
   return (
     <>
     <div class="container">
         <center><h2><b>About Us</b></h2></center>
-        <button className="like_btn" onClick={(() => UpdateData())}>Like</button>
-        <button className="search_btn" onClick={(() => SearchData())}>Search</button>
+        <button className="update_btn" onClick={(() => UpdateData("PIMS", "Patients", "LastName", "'Smith'", "FirstName", "John"))}>Update Data</button>
+        <button className="search_btn" onClick={(() => SearchData("*", "PIMS", "Patients", "LastName", "Do"))}>Search</button>
         <div class="row">
         <div class="col-sm">
           <span class="d-md-block bg-info">
