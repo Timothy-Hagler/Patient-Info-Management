@@ -74,17 +74,124 @@ function Patient_List() {
     const handleHideSave = () => setShowSave(false);
 
     return (
-      <>
-          <section>
+      
+          
 
-            <input id="searchbar"></input>
+     
+
+
+<>
+<div class="modal" tabindex="-1" role="dialog">
+   <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Patient Search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      {/* Insert the search bar here */}
+      {/* Add a tool that says they can just enter the first or last name and get results */}
+
+      <label for="First Name">First Name:</label>
+      <input type="text" id="FirstName" name="FirstName"></input>
+      <label for="Last Name">Last Name:</label>
+      <input type="text" id="FirstName" name="LastName"></input>
+      <label for="Age">Age:</label>
+      <input type="text" id="Age" age="Age"></input>
+
+      {/* Add radio buttons for male or female */}
+        <div class="container-fluid">
+       <div class="row p-2 pt-3 pb-3 d-flex align-items-center">
+           <div class="col-md-2">
+               <img class="d-none d-md-flex" src="https://i.imgur.com/R8QhGhk.png" width="100"> </img>
+           </div>
+           <div class="col-md-8">
+        <div class="d-flex form-inputs">
+        <input class="form-control" type="text" placeholder="Search for patients"></input>
+        <i class="bx bx-search"></i>
+        </div>
+        </div>     
+        </div>           
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+      
+        {/* Search Box */}
+        <input id="searchbar"></input>
+        <form name="form1" method="post" action="searchResults.php">
+            <input name="Search" type="text"size="40" maxlength="50"/></form>
+            <input type="submit" name="submit" value="Search"/> {/*little search button beside search input box*/}
+        <div className = "patient_info">
+          <div className = "personal_info">
+          </div>
+          <div className = "notes">
+            <label htmlFor = "doctors_notes"><p>Doctors' Notes</p></label>
+            <input type = "text" />
+            <label htmlFor = "nurse_notes"><p>Notes for Nurse</p></label>
+            <input type = "text" />
+          </div>
+        </div>
+
+         {/* Insert a table with <tr> tages and grab laurels information and display it in table format */}
+         {/* This table will populate the data from laurel's structure into each row using ids */}     
+        <h2>Patient Information</h2>
+        
+        <table style="width:100%">
+          <tr>
+            {/* This is the columns */}
+            <th>Firstname</th>
+            <th>Lastname</th> 
+            <th>Age</th>
+            <th>Sex</th>
+            <th>DOB</th>
+            <th></th>
+          </tr>
+          {/* This is the rows */}
+          <tr>
+            {/* first entry 3 rows */}
+            <td>Jill</td>
+            <td>Smith</td>
+            <td>26</td>
+            <td>Female</td>
+            <td>04041996</td>
+          </tr>
+          <tr>
+            {/* second entry 3 rows */}
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>94</td>
+            <td>Female</td>
+            <td>01181928</td>
+          </tr>
+          <tr>
+            {/* third entry 3 rows */}
+            <td>John</td>
+            <td>Doe</td>
+            <td>24</td>
+            <td>Male</td>
+            <td>10151998</td>
+          </tr>
+        </table>
+            
+
+           
             
 
             /* api to search the index for the user's inputted search bar text once search is pressed
             and then go search the database for the name and return all the patient information in a new textbox below 
             the searchbar */
             /*
-          </section>
+          
           <hr></hr>
       <div class = 'demoButton'>
         <Button onClick = {handleShow}> 
@@ -441,7 +548,13 @@ function Patient_List() {
           <Button variant="primary" onClick={handleHideSave}>Yes</Button>
         </Modal.Footer>
       </Modal>
-      </>
+</>
+
+
+
+
+
+
     );
 };
 
