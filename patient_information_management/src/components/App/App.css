@@ -5,3 +5,8 @@
 .navbar{
   background-color: rgb(230, 230, 230);
 }
+
+html, body {
+  height: 100%;
+  width: 100%;
+}

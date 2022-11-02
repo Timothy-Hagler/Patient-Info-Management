@@ -1,99 +1,35 @@
 
-/* Remove the navbar's default margin-bottom and rounded borders */ 
-.navbar {
-    margin-bottom: 0;
-    border-radius: 0;
-  }
-  
-  /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-  .row.content {
-    height: 1020px;
-    width: auto;
-    position: relative;
-    background-color: rgb(115, 147, 179);
-  }
-  
-  /* Set gray background color and 100% height */
-  .sidenav {
-    padding-top: 20px;
-    background-color: #f1f1f1;
-    height: 100%;
-    width:fit-content;
-    
-    color: #FFD700;
-    position: relative;
-  }
-  
-  /* Set black background color, white text and some padding */
-  footer {
-    background-color: rgb(15, 54, 101);
-    color: white;
-    
-    padding: 15px;
-    min-height: 100%;
-    max-height: 100%;
-  }
-  
-  /* On small screens, set height to 'auto' for sidenav and grid */
 
-
-  .instructions {
-    margin-top: 500px;
-    margin-left: 100px;
-    align-items: right;
-  }
-
-  .credentials {
-    margin-top:50px;
-    margin-left:100px;
-    display: flex;
-    align-items: left;
-    justify-content: right;
-    position:relative;
-    text-align:left;
-    
-
+h1 {
+    font-family:sans-serif, monospace;
+    font-weight: bold;
+    font-variant: common-ligatures tabular-nums;
+    text-align: center;
+    color:rgb(0, 0, 0);
 }
 
-.loginbtn {
-  margin-top: 25px;
-  margin-left: 125px;
-  margin-right: auto;
-  display: block;
-  padding: 3px 24px;
-  background-color: #8aba8b;
+section {
+    margin: 40px;
 }
 
-.username {
-  margin-left:0px;
-  margin-top: 10px;
-  padding-left:0px;
-}
-
-.password {
-  margin-left:0px;
-  margin-top: 10px;
-  padding-left:0px;
-}
-
-.loginbutton{
-  margin-left: 140px;
-  margin-top: 20px;
+.loginBody {
+  background-color:rgb(115, 147, 179);
+  position:fixed;
+  top: 60.3167px;
 }
 
 .CardPane {
   position:absolute;
-  margin-top:25%;
   left:50%;
+  margin-top:10%;
 }
 
-
-
-
-
-
-
-
-
-
-
+footer {
+  background-color: rgb(15, 54, 101);
+  color: white;
+  bottom:60.3167px;
+  position:absolute;
+  padding: 7px;
+  text-align: center;
+  height:40.3167px
+}
