@@ -14,24 +14,19 @@ section {
     margin: 40px;
 }
 
-.loginBody {
-  background-color:rgb(115, 147, 179);
-  position:fixed;
-  top: 60.3167px;
+.credentials {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.cardthing {
-  position:absolute;
-  left:50%;
-  margin-top:10%;
-}
-
-footer {
-  background-color: rgb(15, 54, 101);
-  color: white;
-  bottom:60.3167px;
-  position:absolute;
-  padding: 7px;
-  text-align: center;
-  height:40.3167px
+.loginbtn {
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    padding: 3px;
+    
 }
