@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
-import Alert from 'react-bootstrap/Alert';
+
 
 //async function required for login-authentication
 //to 8080 port where authentication server runs
@@ -83,6 +83,7 @@ export default function Login({ setToken }) {
   
   
     return(
+
     <>
       <div class="container-fluid text-center">
           <div class="row content"> 
@@ -121,6 +122,7 @@ export default function Login({ setToken }) {
         </footer>
     </>  
   )
+
 
 }
 

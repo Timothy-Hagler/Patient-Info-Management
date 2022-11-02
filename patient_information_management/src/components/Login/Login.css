@@ -1,4 +1,6 @@
-
+body {
+    font-family: sans-serif, monospace;
+}
 
 h1 {
     font-family:sans-serif, monospace;
@@ -12,10 +14,12 @@ section {
     margin: 40px;
 }
 
-.loginBody {
-  background-color:rgb(115, 147, 179);
-  position:fixed;
-  top: 60.3167px;
+.credentials {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .CardPane {
