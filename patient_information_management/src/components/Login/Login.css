@@ -31,9 +31,21 @@ section {
 footer {
   background-color: rgb(15, 54, 101);
   color: white;
-  bottom:60.3167px;
+  bottom:0px;
   position:absolute;
-  padding: 7px;
+  overflow:hidden;
   text-align: center;
   height:40.3167px
+}
+
+footer>p{
+  margin-top: 7px;
+  height: auto;
+}
+
+.loginBody {
+  background-color:rgb(115, 147, 179);
+  position:fixed;
+  top: 60.3167px;
+  bottom: 40.3167px;
 }
