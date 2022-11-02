@@ -30,6 +30,21 @@ app.post('/api/updateData', (req, res) => {
   
   });
 
+app.post('/api/insertRow', (req, res) => {
+
+    const schema = req.body.schema;
+    const table = req.body.table;
+    const headers = req.body.headers;
+    const values = req.body.values;
+
+    let query = ("INSERT INTO " + schema + "." + table + " ("
+             + headers + ") VALUES (" + values + ")");
+
+    connection.query(query, function (err, result, fields) {
+        if (err) throw err;
+      });
+  
+  });
 
 app.get('/api/searchData/', (req, res) => {
 
@@ -41,6 +56,18 @@ app.get('/api/searchData/', (req, res) => {
 
     let query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " LIKE '" + data +  "%'");
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
+
+app.get('/api/patientList/', (req, res) => {
+
+    let query = "SELECT * FROM PIMS.Patients"
 
     connection.query(query, (err,result)=>{
       if(err) {
