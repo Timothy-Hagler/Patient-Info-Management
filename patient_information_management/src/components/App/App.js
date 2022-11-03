@@ -26,8 +26,8 @@ function App() {
                 <li className="nav-item">
                   <a className="nav-link"  data-testid = 'patientList' href="/patient-list">Patient List</a>
                 </li>
-                <li className="nav-item">
-                  <a className="nav-link" data-testid = 'aboutUs' href="/about-us">About Us</a>
+                <li className="nav-item" data-testid = 'aboutUs'>
+                  <a className="nav-link"  href="/about-us">About Us</a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link"  data-testid = 'helpPage' href="/help-page">Help</a>
