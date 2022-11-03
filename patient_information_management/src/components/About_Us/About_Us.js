@@ -54,16 +54,16 @@ const About_Us = () => {
 
   return (
     <>
-    <div class="container">
+    <div className="container">
         <center><h2><b>About Us</b></h2></center>
         <button className="update_btn" onClick={(() => UpdateData("PIMS", "Patients", "LastName", "'Smith'", "FirstName", "John"))}>Update Data</button>
         <button className="search_btn" onClick={(() => SearchData("*", "PIMS", "Patients", "LastName", "Do"))}>Search</button>
         <button className="patientList_btn" onClick={(() => ShowPatientList())}>Show Patient List</button>
         <button className="insertRow_btn" onClick={(() => InsertRow("PIMS", "Patients", "PersonID, LastName, FirstName, Address, City", "'6', 'Doe', 'Jane', '901 Explorer Blvd. NW', 'Huntsville'"))}>Insert Row</button>
         <button className="removeRow_btn" onClick={(() => RemoveRow("PIMS", "Patients", "LastName", "Doe"))}>Remove Row</button>
-        <div class="row">
-        <div class="col-sm">
-          <span class="d-md-block bg-info">
+        <div className="row">
+        <div className="col-sm">
+          <span className="d-md-block bg-info">
           <center><h2>PIMS</h2></center>
           <p>The Patient Information Management System, also known as PIMS, will allow for doctors, nurses, office staff,
              and volunteers to access different levels of patient data based on their job. Doctors can access all patient
@@ -73,8 +73,8 @@ const About_Us = () => {
           </p>
           </span>
         </div>
-        <div class="col-sm">
-          <span class="d-md-block bg-info">
+        <div className="col-sm">
+          <span className="d-md-block bg-info">
           <center><h2>Administrators</h2></center>
           <p>The administrators of this project will need to be contacted in order to create a new user account. If any
             other issues arise, do not hesitate to contact the administrators.

@@ -10,10 +10,10 @@ export default class Login extends Component {
     return(
       <>
       
-      <div class="container-fluid text-center">
-          <div class="row content">
+      <div className="container-fluid text-center">
+          <div className="row content">
            
-            <div class="col-sm-8 text-left">
+            <div className="col-sm-8 text-left">
               
               
               <div className = "credentials">
@@ -54,7 +54,7 @@ export default class Login extends Component {
               </div>
             
           </div>
-        </div><footer class="container-fluid text-center">
+        </div><footer className="container-fluid text-center">
           <p>CS499 Team 3</p>
         </footer></>
 

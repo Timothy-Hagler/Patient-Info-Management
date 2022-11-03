@@ -59,8 +59,8 @@ export default function Help_Page() {
                 <p/><br/>
 
         <h3>Contact Us</h3>
-            <br/><h5 class="card-title">Emails</h5>
-            <p class="card-text"><b>Timothy Hagler: </b>trh0030@uah.edu<br/>
+            <br/><h5 className="card-title">Emails</h5>
+            <p className="card-text"><b>Timothy Hagler: </b>trh0030@uah.edu<br/>
             <b>Sydney Keller: </b>smk0023@uah.edu<br/>
             <b>Benjamin Stone: </b>bas0043@uah.edu<br/>
             <b>Laurel Strelzoff: </b>lcs0018@uah.edu<br/></p>
