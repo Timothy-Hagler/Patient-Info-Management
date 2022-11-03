@@ -1,6 +1,6 @@
 import React from 'react';
 import './Help_Page.css';
-import Accordion from 'react-bootstrap/Accordion';
+import Accordion from 'react-bootstrap/cjs/Accordion.js';
 import {Link} from 'react-router-dom';
 
 export default function Help_Page() {

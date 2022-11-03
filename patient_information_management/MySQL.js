@@ -1,20 +1,5 @@
 import { createConnection as __createConnection } from 'mysql';
 
-var username = "test_user";
-var password = "passwordtest";
-var database = "anotherTest";
-
-var test_selection = "FirstName";
-var test_location = "LastName";
-var test_data = "Doe";
-
-var connection = null;
-
-if (connection == null){ connection = createConnection(username, password, database); }
-
-connect(connection);
-init();
-
 /*
     So this is how we have to make calls to the functions so the data does not overwrite itself. This function won't remain here.
     It is an example that we can use later. The sleep function will be moved to its own file since it may be needed elsewhere.
@@ -164,3 +149,5 @@ const _connect = connect;
 export { _connect as connect };
 const _disconnect = disconnect;
 export { _disconnect as disconnect };
+const _search_for_data_async = search_for_data_async;
+export { _search_for_data_async as search_for_data_async };

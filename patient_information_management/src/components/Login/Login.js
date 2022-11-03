@@ -1,7 +1,8 @@
 import React, { Component, useState } from 'react';
 import './Login.css';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import logo from '../images/PIMS_emblem.png';
+import Button from 'react-bootstrap/cjs/Button.js';
+import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
@@ -10,7 +11,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 //to 8080 port where authentication server runs
 async function loginUser(credentials) {
 
-  return fetch('http://localhost:8080/login', {
+  return fetch('http://localhost:8080/api/login', {
  
     method: 'POST',
  
