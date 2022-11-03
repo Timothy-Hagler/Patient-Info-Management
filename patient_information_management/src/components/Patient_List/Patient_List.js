@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './Patient_List.css';
 import Button from 'react-bootstrap/cjs/Button.js';
 import Modal from 'react-bootstrap/cjs/Modal.js';
-import Col from 'react-bootstrap/cjs/Col.js';
+import Col from 'react-bootstrap/esm/Col.js';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 
