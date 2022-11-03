@@ -5,10 +5,10 @@ import {Link} from 'react-router-dom';
 
 export default function Help_Page() {
   return(
-    <div class = 'containerHelpPage'>
-        <h1 align = 'center'>User Guide</h1>
+    <section>
+        <h1>User Guide</h1>
         <h3>FAQ</h3>
-        <div class = 'containerHelpPage'>
+        <section>
                 <Accordion defaultActiveKey="#">
                 <Accordion.Item eventKey="5">
                     <Accordion.Header><b>How do I log on to the system?</b></Accordion.Header>
@@ -51,23 +51,19 @@ export default function Help_Page() {
                 </Accordion.Item>
                 </Accordion>
                 
-            </div>
-
+            </section>
 
         <h3>More information</h3>
-            <div class = 'containerHelpPage'>
                 <br/><p>For more information on this project, see the About Us page.</p>
                 <Link to="/about-us" className="btn btn-primary">About Us</Link>
-                <p/><br/></div>
+                <p/><br/>
 
         <h3>Contact Us</h3>
-            <div class = 'containerHelpPage'>
             <br/><h5 class="card-title">Emails</h5>
-                <p class="card-text"><b>Timothy Hagler: </b>trh0030@uah.edu<br/>
-                <b>Sydney Keller: </b>smk0023@uah.edu<br/>
-                <b>Benjamin Stone: </b>bas0043@uah.edu<br/>
-                <b>Laurel Strelzoff: </b>lcs0018@uah.edu<br/></p></div>
-
-    </div>
+            <p class="card-text"><b>Timothy Hagler: </b>trh0030@uah.edu<br/>
+            <b>Sydney Keller: </b>smk0023@uah.edu<br/>
+            <b>Benjamin Stone: </b>bas0043@uah.edu<br/>
+            <b>Laurel Strelzoff: </b>lcs0018@uah.edu<br/></p>
+    </section>
   );
 }
