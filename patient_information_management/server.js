@@ -91,6 +91,26 @@ app.get('/api/searchData/', (req, res) => {
   });
 });
 
+
+app.get('/api/getPatientInformation/', (req, res) => {
+
+    const selection = req.query.selection;
+    const schema = req.query.schema;
+    const table = req.query.table;
+    const location = req.query.location;
+    const data = req.query.data;
+
+    let query = ("SELECT " + selection + " FROM " + schema + "." + table
+             + " WHERE " + location + " = '" + data + "'");
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
+
 app.get('/api/patientList/', (req, res) => {
 
     let query = "SELECT * FROM PIMS.Patients"

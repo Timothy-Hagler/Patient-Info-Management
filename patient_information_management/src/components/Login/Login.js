@@ -72,7 +72,7 @@ export default function Login({ setToken }) {
     }
   
   const handleClick = event => {
-    if(username === "drhagler" && password === "password")
+    if(username.toLowerCase() === "drhagler".toLowerCase() && password === "password")
     {
       navigateToHelp();
     }
