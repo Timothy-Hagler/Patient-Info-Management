@@ -1,8 +1,8 @@
 import React, { Component, useState } from 'react';
 import './Login.css';
-import Logo from './logo.png'; //change path once merged
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import Logo from '../images/PIMS_emblem.png';
+import Button from 'react-bootstrap/cjs/Button.js';
+import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
