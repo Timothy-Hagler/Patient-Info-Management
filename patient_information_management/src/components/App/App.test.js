@@ -1,6 +1,6 @@
-
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import {App, LocationDisplay} from './App';
+import userEvent from '@testing-library/user-event';
 
 describe('Navigation Bar Tests', () => {
 
@@ -31,7 +31,7 @@ describe('Navigation Bar Tests', () => {
     expect(patientList).toHaveAttribute('href', '/help-page')
   });
   
-  test('renders nav bar help page hyperlink', () => {
+  test('renders nav bar login logo hyperlink', () => {
     render(<App />);
     const patientList = screen.getByTestId('logo')
     expect(patientList).toBeInTheDocument();
@@ -40,4 +40,25 @@ describe('Navigation Bar Tests', () => {
   
 });
 
+describe('BrowserRouter Tests', () => {
 
+  test('login page renders by default', () => {
+    render(<App />);
+    const header = screen.getByText('Login');
+    const note = screen.getByText('Credentials');
+    expect(header).toBeInTheDocument();
+    expect(note).toBeInTheDocument();
+  });
+
+  test('patient list renders',  async () => {
+    render(<App />);
+    const person = userEvent.setup();
+
+    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Credentials')).toBeInTheDocument();
+
+    await person.click(screen.GetByText('Patient List'));
+
+  });
+
+});

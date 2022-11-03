@@ -1,6 +1,7 @@
 import React, { Component, useState } from 'react';
 import './Login.css';
 
+import Logo from '../images/PIMS_emblem.png';
 import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
