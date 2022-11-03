@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-//import Axios from 'axios'.default
 import Axios from 'axios'
 import React, { Component }  from 'react';
-import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/cjs/Card.js';
 import './About_Us.css';
 const About_Us = () => {
 
@@ -57,14 +56,13 @@ const About_Us = () => {
   return (
     <>
     <div class="container">
-        <center><h2><b>About Us</b></h2></center>
+        <h2><b>About Us</b></h2>
         <button className="update_btn" onClick={(() => UpdateData("PIMS", "Patients", "LastName", "'Smith'", "FirstName", "John"))}>Update Data</button>
         <button className="search_btn" onClick={(() => SearchData("*", "PIMS", "Patients", "LastName", "Do"))}>Search</button>
         <button className="patientList_btn" onClick={(() => ShowPatientList())}>Show Patient List</button>
         <button className="insertRow_btn" onClick={(() => InsertRow("PIMS", "Patients", "PersonID, LastName, FirstName, Address, City", "'6', 'Doe', 'Jane', '901 Explorer Blvd. NW', 'Huntsville'"))}>Insert Row</button>
         <button className="removeRow_btn" onClick={(() => RemoveRow("PIMS", "Patients", "LastName", "Doe"))}>Remove Row</button>
         <br></br>
-        <h2><b>About Us</b></h2>
         <br></br>
         <hr />
         <br></br>
