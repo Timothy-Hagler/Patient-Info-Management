@@ -11,7 +11,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 //to 8080 port where authentication server runs
 async function loginUser(credentials) {
 
-  return fetch('http://localhost:8080/login', {
+  return fetch('http://localhost:8080/api/login', {
  
     method: 'POST',
  

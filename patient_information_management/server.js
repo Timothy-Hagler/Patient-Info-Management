@@ -12,6 +12,16 @@ connect(connection)
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
 
+app.use('/api/login', (req, res) => {
+
+  res.send({
+
+    token: 'test123'
+
+  });
+
+});
+
 app.post('/api/updateData', (req, res) => {
 
     const schema = req.body.schema;
@@ -45,7 +55,6 @@ app.post('/api/insertRow', (req, res) => {
       });
 
   });
-
 
 app.post('/api/removeRow', (req, res) => {
 
