@@ -52,7 +52,6 @@ function App() {
             <Route path="/help-page" element ={<Help_Page />} />
             <Route path="/about-us" element ={<About_Us />} />
           </Routes>
-        </BrowserRouter>  
     </div>
   );
 }
