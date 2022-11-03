@@ -24,13 +24,13 @@ function App() {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <a className="nav-link" href="/patient-list">Patient List</a>
+                  <a className="nav-link"  data-testid = 'patientList' href="/patient-list">Patient List</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/about-us">About Us</a>
+                  <a className="nav-link" data-testid = 'aboutUs' href="/about-us">About Us</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/help-page">Help</a>
+                  <a className="nav-link"  data-testid = 'helpPage' href="/help-page">Help</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/patient-search">Search</a>
@@ -44,7 +44,8 @@ function App() {
                 </li>
               </ul>
             </div>
-          </nav>
+         </nav>
+
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
