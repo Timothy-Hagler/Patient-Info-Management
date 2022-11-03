@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import {App, LocationDisplay} from './App';
+import App from './App';
 import userEvent from '@testing-library/user-event';
+import fireEvent from '@testing-library/user-event';
 
 describe('Navigation Bar Tests', () => {
 
@@ -26,16 +27,16 @@ describe('Navigation Bar Tests', () => {
 
   test('renders nav bar help page hyperlink', () => {
     render(<App />);
-    const patientList = screen.getByText('Help')
-    expect(patientList).toBeInTheDocument();
-    expect(patientList).toHaveAttribute('href', '/help-page')
+    const helpPage = screen.getByText('Help')
+    expect(helpPage).toBeInTheDocument();
+    expect(helpPage).toHaveAttribute('href', '/help-page')
   });
   
   test('renders nav bar login logo hyperlink', () => {
     render(<App />);
-    const patientList = screen.getByTestId('logo')
-    expect(patientList).toBeInTheDocument();
-    expect(patientList).toHaveAttribute('href', '/')
+    const logo = screen.getByTestId('logo')
+    expect(logo).toBeInTheDocument();
+    expect(logo).toHaveAttribute('href', '/')
   });
   
 });
@@ -50,15 +51,46 @@ describe('BrowserRouter Tests', () => {
     expect(note).toBeInTheDocument();
   });
 
-  test('patient list renders',  async () => {
+  test('about us renders', () => {
+    render(<App />);
+
+    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Credentials')).toBeInTheDocument();
+
+    const aboutUs = screen.getByTestId('aboutUs')
+
+    fireEvent.click(aboutUs);
+    expect(screen.getByText('Patient Information Management System')).toBeInTheDocument();
+
+  });
+
+});
+
+/*
+
+  test('help page renders', () => {
+    render(<App />);
+
+
+    expect(screen.getByText('Login')).toBeInTheDocument();
+    expect(screen.getByText('Credentials')).toBeInTheDocument();
+
+    const aboutUs = screen.getByTestId('helpPage')
+    person.click(aboutUs);
+    expect(screen.getByText('How do I log on to the system?')).toBeInTheDocument();
+
+  });
+
+  test('patient list renders', async () => {
     render(<App />);
     const person = userEvent.setup();
 
     expect(screen.getByText('Login')).toBeInTheDocument();
     expect(screen.getByText('Credentials')).toBeInTheDocument();
 
-    await person.click(screen.GetByText('Patient List'));
+    const aboutUs = screen.getByTestId('patientList')
+    person.click(aboutUs);
+    expect(screen.getByText('Edit Patient Data Demo')).toBeInTheDocument();
 
   });
-
-});
+*/
