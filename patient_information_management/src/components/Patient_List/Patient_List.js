@@ -33,8 +33,8 @@ function Patient_List() {
 
     const handleCancel = () => setShow(false);
 
-    const handleShow = () => {
-      LoadDataToModal("*", "PIMS", "Patients", "LastName", "Myers")
+    const handleShow = (personID) => {
+      LoadDataToModal("*", "PIMS", "Patients", "personID", personID)
       setShow(true);
     }
 
@@ -66,8 +66,14 @@ function Patient_List() {
           </section>
           <hr></hr>
       <div class = 'demoButton'>
-        <Button onClick = {handleShow}> 
-          Edit Patient Data Demo
+        <Button onClick = {() => handleShow(1)}>
+          Edit John Smith's Patient Data
+        </Button>
+        <Button onClick = {() => handleShow(2)}>
+          Edit Matthew Myers's Patient Data
+        </Button>
+        <Button onClick = {() => handleShow(3)}>
+          Edit Melody Wood's Patient Data
         </Button>
       </div>
       <Modal show={show} onHide={handleCancel} size ='lg'>
