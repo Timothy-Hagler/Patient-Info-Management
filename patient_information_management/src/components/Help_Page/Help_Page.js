@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 
 export default function Help_Page() {
   return(
+    <div data-testid="help_container">
     <section>
         <h1>User Guide</h1>
         <h3>FAQ</h3>
@@ -65,5 +66,6 @@ export default function Help_Page() {
             <b>Benjamin Stone: </b>bas0043@uah.edu<br/>
             <b>Laurel Strelzoff: </b>lcs0018@uah.edu<br/></p>
     </section>
+    </div>
   );
 }

@@ -40,7 +40,7 @@ describe('Navigation Bar Tests', () => {
   });
   
 });
-/*
+
 describe('BrowserRouter Tests', () => {
 
   test('login page renders by default', () => {
@@ -50,7 +50,9 @@ describe('BrowserRouter Tests', () => {
     expect(header).toBeInTheDocument();
     expect(note).toBeInTheDocument();
   });
-
+  
+  // Still need to test whether the links render each page
+  /*
   test('about us renders', () => {
     render(<App />);
 
@@ -63,9 +65,9 @@ describe('BrowserRouter Tests', () => {
     expect(screen.getByText('Patient Information Management System')).toBeInTheDocument();
 
   });
-
+  */
 });
-*/
+
 /*
 
   test('help page renders', () => {
