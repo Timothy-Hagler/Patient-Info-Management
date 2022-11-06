@@ -32,6 +32,5 @@ describe('Patient List API Tests', () => {
 });
 
 describe('Modal Dialogue API Tests', () => { 
-    // test appearance of modal (buttons, forms, etc). test this in each route (delete patient, save patient extra dialogues)
     // test each of the modal buttons to see if they connect to the correct api calls, don't test functionality of api calls here
 });
