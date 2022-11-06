@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './Patient_List.css';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/cjs/Button.js';
+import Modal from 'react-bootstrap/cjs/Modal.js';
+import Col from 'react-bootstrap/esm/Col.js';
+import Form from 'react-bootstrap/cjs/Form.js';
+import Row from 'react-bootstrap/cjs/Row.js';
 
 
 function Patient_List() {

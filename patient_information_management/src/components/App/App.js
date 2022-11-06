@@ -1,10 +1,10 @@
 import './App.css';
 import { BrowserRouter , Route, Routes} from 'react-router-dom';
 import React, {useState} from 'react';
-import Patient_List from '../Patient_List/Patient_List';
-import Login from '../Login/Login';
-import Help_Page from '../Help_Page/Help_Page';
-import About_Us from '../About_Us/About_Us';
+import Patient_List from '../Patient_List/Patient_List.js';
+import Login from '../Login/Login.js';
+import Help_Page from '../Help_Page/Help_Page.js';
+import About_Us from '../About_Us/About_Us.js';
 import logo from '../images/PIMS_emblem.png';
 
 function App() {

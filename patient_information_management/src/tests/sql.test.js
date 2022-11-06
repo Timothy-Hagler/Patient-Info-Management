@@ -1,24 +1,24 @@
-const sql = require('../../MySQL')
+import { createConnection, connect, disconnect } from '../../MySQL.js';
 
 test("Create valid connection to server",() => {
-    let connection = sql.createConnection("test_user", "passwordtest", "anotherTest")
+    let connection = createConnection("test_user", "passwordtest", "anotherTest")
     expect(connection).not.toBeNull()
-    sql.disconnect(connection)
+    disconnect(connection)
 })
 
 test("Connect to Server Successfully",() => {
-    let connection = sql.createConnection("test_user", "passwordtest", "anotherTest")
+    let connection = createConnection("test_user", "passwordtest", "anotherTest")
     expect(() => {
-        sql.connect(connection)
+        connect(connection)
     }).not.toThrow()
-    sql.disconnect(connection)
+    disconnect(connection)
 })
 
 test("Disconnect from Server Successfully",() => {
-    let connection = sql.createConnection("test_user", "passwordtest", "anotherTest")
-    sql.connect(connection)
+    let connection = createConnection("test_user", "passwordtest", "anotherTest")
+    connect(connection)
 
     expect(() => {
-        sql.disconnect(connection)
+        disconnect(connection)
     }).not.toThrow()
 })
