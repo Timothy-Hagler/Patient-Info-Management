@@ -41,6 +41,7 @@ describe('Navigation Bar Tests', () => {
   
 });
 
+// tests whether the links render their respective pages
 describe('BrowserRouter Tests', () => {
 
   test('login page renders by default', () => {
@@ -50,8 +51,10 @@ describe('BrowserRouter Tests', () => {
     expect(header).toBeInTheDocument();
     expect(note).toBeInTheDocument();
   });
-  
+
   // Still need to test whether the links render each page
+  // I think can be done by making fireEvent click on each link and then testing what renders to see if it's the correct page
+
   /*
   test('about us renders', () => {
     render(<App />);
