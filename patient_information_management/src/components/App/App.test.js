@@ -40,7 +40,7 @@ describe('Navigation Bar Tests', () => {
   });
   
 });
-
+/*
 describe('BrowserRouter Tests', () => {
 
   test('login page renders by default', () => {
@@ -65,7 +65,7 @@ describe('BrowserRouter Tests', () => {
   });
 
 });
-
+*/
 /*
 
   test('help page renders', () => {
