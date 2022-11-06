@@ -45,8 +45,6 @@ function App() {
               </ul>
             </div>
          </nav>
-
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/patient-list" element ={<Patient_List />} />
