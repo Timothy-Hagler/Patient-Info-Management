@@ -108,7 +108,7 @@ function Patient_List() {
                   Date of Birth
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.dob} />
+                  <Form.Control type="email" placeholder={person.dateOfBirth} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -180,7 +180,7 @@ function Patient_List() {
                   Emergency Contact 1's Name
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.ec_name_1} />
+                  <Form.Control type="email" placeholder={person.emergencyContact1_Name} />
                 </Col>
               </Form.Group>
 
@@ -198,7 +198,7 @@ function Patient_List() {
                   Emergency Contact 2's Name
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.ec_name_2} />
+                  <Form.Control type="email" placeholder={person.emergencyContact2_Name} />
                 </Col>
               </Form.Group>
 
@@ -216,7 +216,7 @@ function Patient_List() {
                   Date Admitted
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.dataOfAdmittance} />
+                  <Form.Control type="email" placeholder={person.dateOfAdmittance} />
                 </Col>
               </Form.Group>
 
@@ -334,7 +334,7 @@ function Patient_List() {
                   Billing Information
                 </Form.Label>
                 <Col>
-                  <Form.Control type="textarea" placeholder={person.billing_information} />
+                  <Form.Control type="textarea" placeholder={person.listOfBillingInfo} />
                 </Col>
               </Form.Group>
 
@@ -379,7 +379,7 @@ function Patient_List() {
                   Nurse's Notes
                 </Form.Label>
                 <Col>
-                  <Form.Control type="textarea" placeholder={person.nurse_notes} />
+                  <Form.Control type="textarea" placeholder={person.nurseNotes} />
                 </Col>
               </Form.Group>
 

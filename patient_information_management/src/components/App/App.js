@@ -35,7 +35,7 @@ function App() {
             </div>
           </nav>
         <BrowserRouter>
-          <Routes>   
+          <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/patient-list" element ={<Patient_List />} />
             <Route path="/help-page" element ={<Help_Page />} />
