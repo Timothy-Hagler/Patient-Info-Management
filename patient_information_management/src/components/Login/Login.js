@@ -83,8 +83,8 @@ export default function Login({ setToken }) {
   }
 
     return(
-
-    <>
+<div>
+    <body class = 'loginBody'>
       <div class="container-fluid text-center">
           <div class="row content"> 
             <div class="col-sm-8 text-left">
@@ -117,10 +117,12 @@ export default function Login({ setToken }) {
           </div>
         </div>
         {/*Create a footer for the bottom of the webpage*/}
-        <footer class="container-fluid text-center">
-          <p>CS499 Team 3</p>
-        </footer>
-    </>  
+
+    </body>  
+            <footer class="container-fluid text-center">
+            <p>CS499 Team 3</p>
+          </footer>
+          </div>
   )
 
 
