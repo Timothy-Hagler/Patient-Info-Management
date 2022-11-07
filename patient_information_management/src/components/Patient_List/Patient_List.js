@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './Patient_List.css';
+import Axios from 'axios'
 import Button from 'react-bootstrap/cjs/Button.js';
 import Modal from 'react-bootstrap/cjs/Modal.js';
-import Col from 'react-bootstrap/cjs/Col.js';
+import Col from 'react-bootstrap/esm/Col.js';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 
@@ -16,46 +17,24 @@ function Patient_List() {
       city: ''
     });
 
+    function LoadDataToModal(selection, schema, table, location, data) {
+      let url = (`http://localhost:8080/api/getPatientInformation/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
+      let patientData = {}
+      Axios.get(url).then((response)=>{
+        // this will insert the data of the patient
+          let data = response.data[0]
+          for (let x in data)
+          {
+            patientData[x] = data[x]
+          }
+          setPerson(patientData)
+      })
+  }
+
     const handleCancel = () => setShow(false);
 
-    const handleShow = () => {
-      // default person
-      // do a mysql call here eventually
-      setPerson({firstName: 'John', 
-      lastName: 'Smith', 
-      address: '601 John Wright Dr', 
-      city: 'Huntsville', 
-      state: 'AL',
-      zip: '35805',
-      h_phone: '1234569999',
-      w_phone: '1234569998',
-      m_phone: '1234569990',
-      ec_name_1: 'Jane Smith',
-      ec_phone_1: '9998880000',
-      ec_name_2: '',
-      ec_phone_2: '',
-      date_admit: '01/01/2000',
-      time_admit: '00:00:00',
-      reason_admit: 'Heart Attack',
-      family_doctor: 'Adam Smith',
-      facility: 'EMERGENCY',
-      floor: '1',
-      room_number: '102',
-      bed_number: '1',
-      date_discharged: '',
-      time_discharged: '',
-      insurance_carrier: '',
-      insurance_grp_num: '',
-      insurance_account_num: '',
-      billing_information: 'ambulance: 10000, resuscitation: 20000',
-      amount_paid: '0',
-      amount_owed: '30000',
-      amount_paid_insurance: '',
-      sex: 'M',
-      dob: '01/01/1950',
-      doctors_notes: 'Prescribed statins, recommended bed rest',
-      nurse_notes: '',
-    }) // take the data from that mysql call and distribute it into the structure above so the data is displayed correctly
+    const handleShow = (personID) => {
+      LoadDataToModal("*", "PIMS", "Patients", "personID", personID)
       setShow(true);
     }
 
@@ -87,8 +66,14 @@ function Patient_List() {
           </section>
           <hr></hr>
       <div class = 'demoButton'>
-        <Button onClick = {handleShow}> 
-          Edit Patient Data Demo
+        <Button onClick = {() => handleShow(1)}>
+          Edit John Smith's Patient Data
+        </Button>
+        <Button onClick = {() => handleShow(2)}>
+          Edit Matthew Myers's Patient Data
+        </Button>
+        <Button onClick = {() => handleShow(3)}>
+          Edit Melody Wood's Patient Data
         </Button>
       </div>
       <Modal show={show} onHide={handleCancel} size ='lg'>
@@ -138,7 +123,7 @@ function Patient_List() {
                   Address
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.address} />
+                  <Form.Control type="email" placeholder={person.street} />
                 </Col>
               </Form.Group>
 
@@ -174,7 +159,7 @@ function Patient_List() {
                   Home Phone
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.h_phone} />
+                  <Form.Control type="email" placeholder={person.homePhone} />
                 </Col>
               </Form.Group>
 
@@ -183,7 +168,7 @@ function Patient_List() {
                   Work Phone
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.w_phone} />
+                  <Form.Control type="email" placeholder={person.workPhone} />
                 </Col>
               </Form.Group>
 
@@ -210,7 +195,7 @@ function Patient_List() {
                   Emergency Contact 1's Phone Number
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.ec_phone_1} />
+                  <Form.Control type="email" placeholder={person.emergencyContactPhone_1} />
                 </Col>
               </Form.Group>
 
@@ -228,7 +213,7 @@ function Patient_List() {
                   Emergency Contact 2's Phone Number
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.ec_phone_2} />
+                  <Form.Control type="email" placeholder={person.emergencyContactPhone_2} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -237,7 +222,7 @@ function Patient_List() {
                   Date Admitted
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.date_admit} />
+                  <Form.Control type="email" placeholder={person.dataOfAdmittance} />
                 </Col>
               </Form.Group>
 
@@ -246,7 +231,7 @@ function Patient_List() {
                   Time Admitted
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.time_admit} />
+                  <Form.Control type="email" placeholder={person.timeOfAdmittance} />
                 </Col>
               </Form.Group>
 
@@ -255,7 +240,7 @@ function Patient_List() {
                   Reason Admitted
                 </Form.Label>
                 <Col>
-                  <Form.Control type="textarea" placeholder={person.reason_admit} />
+                  <Form.Control type="textarea" placeholder={person.reason} />
                 </Col>
               </Form.Group>
 
@@ -265,7 +250,7 @@ function Patient_List() {
                   Family Doctor
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.family_doctor} />
+                  <Form.Control type="email" placeholder={person.familyDoctor} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -292,7 +277,7 @@ function Patient_List() {
                   Room Number
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.room_number} />
+                  <Form.Control type="email" placeholder={person.roomNumber} />
                 </Col>
               </Form.Group>
 
@@ -301,7 +286,7 @@ function Patient_List() {
                   Bed Number
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.bed_number} />
+                  <Form.Control type="email" placeholder={person.bedNumber} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -310,7 +295,7 @@ function Patient_List() {
                   Date Discharged
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.date_discharged} />
+                  <Form.Control type="email" placeholder={person.dateOfDischarge} />
                 </Col>
               </Form.Group>
 
@@ -319,7 +304,7 @@ function Patient_List() {
                   Time Discharged
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.time_discharged} />
+                  <Form.Control type="email" placeholder={person.timeOfDischarge} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -328,7 +313,7 @@ function Patient_List() {
                   Insurance Carrier
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.insurance_carrier} />
+                  <Form.Control type="email" placeholder={person.insuranceCarrier} />
                 </Col>
               </Form.Group>
 
@@ -337,7 +322,7 @@ function Patient_List() {
                   Insurance Group Number
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.insurance_grp_num} />
+                  <Form.Control type="email" placeholder={person.insuranceGroupNumber} />
                 </Col>
               </Form.Group>
 
@@ -346,7 +331,7 @@ function Patient_List() {
                   Insurance Account Number
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.insurance_account_num} />
+                  <Form.Control type="email" placeholder={person.insuranceAccountNumber} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -364,7 +349,7 @@ function Patient_List() {
                   Amount Paid
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.amount_paid} />
+                  <Form.Control type="email" placeholder={person.amountPaid} />
                 </Col>
               </Form.Group>
 
@@ -373,7 +358,7 @@ function Patient_List() {
                   Amount Owed
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.amount_owed} />
+                  <Form.Control type="email" placeholder={person.amountOwed} />
                 </Col>
               </Form.Group>
 
@@ -382,7 +367,7 @@ function Patient_List() {
                   Amount paid by Insurance
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.amount_paid_insurance} />
+                  <Form.Control type="email" placeholder={person.amountPaidByInsurance} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -391,7 +376,7 @@ function Patient_List() {
                   Doctor's Notes
                 </Form.Label>
                 <Col>
-                  <Form.Control type="textarea" placeholder={person.doctors_notes} />
+                  <Form.Control type="textarea" placeholder={person.drNotes} />
                 </Col>
               </Form.Group>
 

@@ -12,6 +12,16 @@ connect(connection)
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
 
+app.use('/api/login', (req, res) => {
+
+  res.send({
+
+    token: 'test123'
+
+  });
+
+});
+
 app.post('/api/updateData', (req, res) => {
 
     const schema = req.body.schema;
@@ -46,7 +56,6 @@ app.post('/api/insertRow', (req, res) => {
 
   });
 
-
 app.post('/api/removeRow', (req, res) => {
 
     const schema = req.body.schema;
@@ -73,6 +82,26 @@ app.get('/api/searchData/', (req, res) => {
 
     let query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + location + " LIKE '" + data +  "%'");
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
+
+
+app.get('/api/getPatientInformation/', (req, res) => {
+
+    const selection = req.query.selection;
+    const schema = req.query.schema;
+    const table = req.query.table;
+    const location = req.query.location;
+    const data = req.query.data;
+
+    let query = ("SELECT " + selection + " FROM " + schema + "." + table
+             + " WHERE " + location + " = '" + data + "'");
 
     connection.query(query, (err,result)=>{
       if(err) {

@@ -1,0 +1,13 @@
+.col-sm {
+    text-align: center;
+}
+
+#cardHeader {
+    background-color: lightblue;
+    padding: 5px 0px;
+    font-weight: bolder;
+  }
+
+h2 {
+    text-align: center;
+}
