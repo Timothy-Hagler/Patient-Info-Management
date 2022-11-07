@@ -177,7 +177,7 @@ function Patient_List() {
                   Mobile Phone
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.m_phone} />
+                  <Form.Control type="email" placeholder={person.cellPhone} />
                 </Col>
               </Form.Group>
               <hr></hr>
@@ -186,7 +186,7 @@ function Patient_List() {
                   Emergency Contact 1's Name
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.emergencyContact1_Name} />
+                  <Form.Control type="email" placeholder={person.emergencyContact1_name} />
                 </Col>
               </Form.Group>
 
@@ -204,7 +204,7 @@ function Patient_List() {
                   Emergency Contact 2's Name
                 </Form.Label>
                 <Col>
-                  <Form.Control type="email" placeholder={person.emergencyContact2_Name} />
+                  <Form.Control type="email" placeholder={person.emergencyContact2_name} />
                 </Col>
               </Form.Group>
 
@@ -385,7 +385,7 @@ function Patient_List() {
                   Nurse's Notes
                 </Form.Label>
                 <Col>
-                  <Form.Control type="textarea" placeholder={person.nurseNotes} />
+                  <Form.Control type="textarea" placeholder={person.nursesNotes} />
                 </Col>
               </Form.Group>
 
