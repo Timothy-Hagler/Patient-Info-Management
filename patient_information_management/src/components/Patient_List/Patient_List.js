@@ -11,10 +11,6 @@ import Row from 'react-bootstrap/cjs/Row.js';
 function Patient_List() {
     const [show, setShow] = useState(false);
     const [person, setPerson] = useState({
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: ''
     });
 
     function LoadDataToModal(selection, schema, table, location, data) {
@@ -66,7 +62,7 @@ function Patient_List() {
           </section>
           <hr></hr>
       <div class = 'demoButton'>
-        <Button onClick = {() => handleShow(1)}>
+        <Button onClick = {() => handleShow(4)}>
           Edit John Smith's Patient Data
         </Button>
         <Button onClick = {() => handleShow(2)}>
@@ -469,4 +465,3 @@ const patients = [
 // })
 
 export default Patient_List;
-
