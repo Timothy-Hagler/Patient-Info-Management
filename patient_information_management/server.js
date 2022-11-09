@@ -77,11 +77,15 @@ app.get('/api/searchData/', (req, res) => {
     const selection = req.query.selection;
     const schema = req.query.schema;
     const table = req.query.table;
-    const location = req.query.location;
-    const data = req.query.data;
+    let locations = req.query.locations;
+    let data = req.query.data;
+
+    locations = locations.split(',')
+    data = data.split(',')
 
     let query = ("SELECT " + selection + " FROM " + schema + "." + table 
-             + " WHERE " + location + " LIKE '" + data +  "%'");
+             + " WHERE " + locations[0] + " LIKE '" + data[0] +  "%'"
+             + "AND " + locations[1] + " LIKE '" + data[1] + "%'");
 
     connection.query(query, (err,result)=>{
       if(err) {
