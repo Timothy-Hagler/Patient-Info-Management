@@ -50,7 +50,7 @@ export default function Login({ setToken }) {
     navigate('/about-us');
   }
 
-  const [username, setUserName] = useState();
+  const [username, setUserName] = useState(); 
   
   const [password, setPassword] = useState();
 
@@ -63,10 +63,6 @@ export default function Login({ setToken }) {
     Axios.get(url).then((response)=>{
       // this will insert the data of the patient
         let data = response.data[0]
-        for (let x in data)
-        {
-          console.log(data[x]);
-        }
 
         if(password === data["password"])
         {
