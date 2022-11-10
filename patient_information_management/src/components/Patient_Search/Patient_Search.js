@@ -11,8 +11,7 @@ import Row from 'react-bootstrap/cjs/Row.js';
 function Patient_Search() {
     const [show, setShow] = useState(false);
     const [search_results, setSearchResults] = useState([{}]);
-    const [person, setPerson] = useState({
-    });
+    const [person, setPerson] = useState({});
 
     function LoadDataToModal(selection, schema, table, location, data) {
       let url = (`http://localhost:8080/api/getPatientInformation/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)

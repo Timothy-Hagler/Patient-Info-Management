@@ -10,10 +10,30 @@ import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 
 
-
 function Patient_List() {
     const [search_results, setSearchResults] = useState([{}]);
     const [dataRetrieved, setDataRetrieved] = useState(false);
+
+    const [show, setShow] = useState(false);
+    const handleCancel = () => setShow(false);
+    const [person, setPerson] = useState({});
+    const handleShow = (personID) => {
+      setShow(true);
+    }
+
+    const [showWarn, setShowWarn] = useState(false);
+    const handleShowWarn = () => {
+      setShow(false);
+      setShowWarn(true);
+    }
+    const handleHideWarn = () => setShowWarn(false);
+
+    const [showSave, setShowSave] = useState(false);
+    const handleShowSave = () => {
+      setShow(false);
+      setShowSave(true);
+    }
+    const handleHideSave = () => setShowSave(false);
 
     const navigate = useNavigate();
 
@@ -22,10 +42,6 @@ function Patient_List() {
         console.log("Viewing the patient " + personID)
     }
 
-    function AddNewPatient()
-    {
-      console.log("Adding new patient")
-    }
 
     function GoToSearch()
     {
@@ -54,6 +70,37 @@ function Patient_List() {
               Edit
           </Button>
         )
+    }
+
+
+    function CreateAddPatientModal()
+    {
+      return (
+        <>
+      <Modal show={show} onHide={handleCancel} size ='lg'>
+        <Modal.Header closeButton>
+            <Modal.Title>Enter New Patient's Information</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group as={Row} className="mb-3" controlId="formFirstName">
+                <Form.Label column sm="3">
+                  First Name
+                </Form.Label>
+                <Col>
+                <Form.Control type="email" placeholder={person.firstName} />
+                </Col>
+              </Form.Group>
+              </Form>
+              </Modal.Body>
+      </Modal>
+      </>
+      )
+    }
+
+    function AddNewPatient()
+    {
+      setShow(true)
     }
 
     function GetPatientsFromDatabase() {
@@ -123,9 +170,18 @@ function Patient_List() {
         <Card.Header id="cardHeader"><h4>Patient List</h4>
         </Card.Header>
         <Card.Body>
+          <tr id="colLabels">
+            <td>First Name</td>
+            <td>Middle Name</td>
+            <td>Last Name</td>
+            <td>Age</td>
+            <td>Sex</td>
+            <td>Date Of Birth</td>
+          </tr>
           {LoadData()}
         </Card.Body>
         </Card>
+        {CreateAddPatientModal()}
  
     </>
     );

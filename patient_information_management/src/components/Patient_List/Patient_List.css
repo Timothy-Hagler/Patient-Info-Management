@@ -125,3 +125,7 @@ td {
   margin-top: 11px;
   padding: 0px 0px;
 }
+
+#colLabels {
+  font-weight: bolder;
+}
