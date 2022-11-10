@@ -48,30 +48,169 @@ function Patient_List() {
     }
     const handleHideSave = () => setShowSave(false);
 
-    return (
-      <>
-          <section>
+    {/* Search Button Functionality */
+    /* call to render table inside modal when this button is clicked */}
+    const [person2, setPerson2] = useState({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: ''
+    });
+    const [show2, setShow2] = useState(false);
+    const handleClose2 = () => setShow2(false);
+    const handleShow2 = () => {
+       // default person
+      // do a mysql call here eventually
+      setPerson2({firstName: 'John', 
+      lastName: 'Smith', 
+      address: '601 John Wright Dr', 
+      city: 'Huntsville', 
+      state: 'AL',
+      zip: '35805',
+      h_phone: '1234569999',
+      w_phone: '1234569998',
+      m_phone: '1234569990',
+      ec_name_1: 'Jane Smith',
+      ec_phone_1: '9998880000',
+      ec_name_2: '',
+      ec_phone_2: '',
+      date_admit: '01/01/2000',
+      time_admit: '00:00:00',
+      reason_admit: 'Heart Attack',
+      family_doctor: 'Adam Smith',
+      facility: 'EMERGENCY',
+      floor: '1',
+      room_number: '102',
+      bed_number: '1',
+      date_discharged: '',
+      time_discharged: '',
+      insurance_carrier: '',
+      insurance_grp_num: '',
+      insurance_account_num: '',
+      billing_information: 'ambulance: 10000, resuscitation: 20000',
+      amount_paid: '0',
+      amount_owed: '30000',
+      amount_paid_insurance: '',
+      sex: 'M',
+      dob: '01/01/1950',
+      doctors_notes: 'Prescribed statins, recommended bed rest',
+      nurse_notes: '',
+    }) // take the data from that mysql call and distribute it into the structure above so the data is displayed correctly
+      
+    setShow2(true);
+    }
+    const handleCancel2 = () => setShow2(false);
 
-            <input id="searchbar"></input>
-            
-
-            /* api to search the index for the user's inputted search bar text once search is pressed
-            and then go search the database for the name and return all the patient information in a new textbox below 
-            the searchbar */
-            /*
-          </section>
-          <hr></hr>
-      <div class = 'demoButton'>
-        <Button onClick = {() => handleShow(4)}>
-          Edit John Smith's Patient Data
-        </Button>
-        <Button onClick = {() => handleShow(2)}>
-          Edit Matthew Myers's Patient Data
-        </Button>
-        <Button onClick = {() => handleShow(3)}>
-          Edit Melody Wood's Patient Data
-        </Button>
+  return (
+   <>
+        <head>
+        <a href="/css/style.css"></a>
+        </head>
+       
+        <div class="Patient-Search-Box">
+        <p class="solid">
+        <h1 class = "hg1">Patient Search</h1><br></br>
+        
+        {/* Insert the search bar here */}
+        {/* Add a tool that says they can just enter the first or last name and get results */}
+        <div data-tip="Enter First Name">
+        <label for="First Name">First Name: &nbsp;</label>
+        <input type="text" id="FirstName" name="FirstName"></input>
+        </div><br></br>
+        <div data-tip="Enter First Name">
+        <label for="Last Name">Middle Name: &nbsp; </label>
+        <input type="text" id="MiddleName" name="MiddleName"></input><br></br>
+        </div><br></br>
+        <div data-tip="Enter First Name">
+        <label for="Last Name">Last Name: &nbsp;</label>
+        <input type="text" id="LastName" name="LastName"></input><br></br>
+        </div><br></br>
+        <div data-tip="Enter First Name">
+        <label for="start">Age: &nbsp;</label>
+        <input type="text" id="Age" name="Age"></input><br></br>
+        </div><br></br>
+        <div>
+        <label for="dateofbirth">Date Of Birth: &nbsp;</label>
+        <input type="date" name="dateofbirth" id="dateofbirth"></input>
+        </div><br></br>
+       
+  
+       <div class = "radioButtons" >
+        {/* Add radio buttons for male or female or other */}
+        <input type="radio" name="sex" value="HTML"></input>
+        <label class="radio-label" >Male</label><br></br>
+        <input type="radio" name="sex" value="HTML"></input>
+        <label class="radio-label" >Female</label><br></br>
+        <input type="radio" name="sex" value="HTML"></input>
+        <label class="radio-label" >Other</label><br></br>
+        </div><br></br>
+       <div>
+        <Button class = 'searchButton' onClick = {handleShow2}> 
+        Search
+      </Button>
       </div>
+      </p>
+      </div>
+ 
+      
+  <div>
+  <Modal show={show2} onHide={handleCancel2}>
+      <Modal.Header closeButton>
+        <Modal.Title>Patient Search Results for {person2.firstName} {person2.lastName}</Modal.Title>
+      </Modal.Header>
+        <Modal.Body>
+          <table>
+          <thead>
+          <tr>
+            {/* This is the columns */}
+            <th>Firstname</th>
+            <th>Lastname</th> 
+            <th>Age</th>
+            <th>Sex</th>
+            <th>DOB</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          {/* This is the rows */}
+          <tr>
+            {/* first entry 3 rows */}
+            <td>Jill</td>
+            <td>Smith</td>
+            <td>26</td>
+            <td>Female</td>
+            <td>04041996</td>
+          </tr>
+          <tr>
+            {/* second entry 3 rows */}
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>94</td>
+            <td>Female</td>
+            <td>01181928</td>
+          </tr>
+          <tr>
+            {/* third entry 3 rows */}
+            <td>John</td>
+            <td>Doe</td>
+            <td>24</td>
+            <td>Male</td>
+            <td>10151998</td>
+          </tr>
+          </tbody>
+        </table>
+        </Modal.Body>
+      <Modal.Footer>
+      <Button onClick = {handleShow}> 
+        Edit Patient Data
+      </Button>
+      </Modal.Footer>
+   
+  </Modal>
+</div> 
+     
+          <hr></hr>
+      
       <Modal show={show} onHide={handleCancel} size ='lg'>
         <Modal.Header closeButton>
             <Modal.Title>Edit {person.firstName} {person.lastName}'s information </Modal.Title>
