@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/cjs/Row.js';
 
 function Patient_List() {
     const [show, setShow] = useState(false);
+    const [search_results, setSearchResults] = useState([{}]);
     const [person, setPerson] = useState({
     });
 
@@ -26,6 +27,60 @@ function Patient_List() {
           setPerson(patientData)
       })
   }
+
+    function SearchForData(selection, schema, table, location) {
+      let information = GetDataFromFields()
+      let locations = information[0]
+      let data = information[1]
+      let people = []
+
+      let url = (`http://localhost:8080/api/searchData/?selection=${selection}&schema=${schema}&table=${table}&locations=${[locations]}&data=${data}`)
+      Axios.get(url).then((response)=>{
+        // this will insert the data of each patient reaching the search criteria
+          let patients = response.data
+          for (let i = 0; i < patients.length; i++)
+          {
+            let patientData = {}
+            for (let info in patients[i])
+            {
+                patientData[info] = patients[i][info]
+            }
+            people.push(patientData)
+          }
+          setSearchResults(people)
+      })
+  }
+
+    function GetDataFromFields()
+    {
+      let data = []
+      let fields = ["FirstName", "MiddleName", "LastName"]
+      let locations = ["firstName", "middleName", "lastName"]
+      for (let i = 0; i < fields.length; i++)
+      {
+        data.push(document.getElementById(fields[i]).value)
+      }
+      return [locations, data]
+    }
+
+    function LoadSearchResults()
+    {
+          let data = []
+          for (let i = 0; i < search_results.length; i++)
+          {
+          data.push(<tr>
+            {/* entry for patient */}
+            <td>{search_results[i].firstName}</td>
+            <td>{search_results[i].middleName}</td>
+            <td>{search_results[i].lastName}</td>
+            <td>{search_results[i].age}</td>
+            <td>{search_results[i].sex}</td>
+            <td>{search_results[i].dateOfBirth}</td>
+          </tr>)
+          }
+          return data
+    }
+
 
     const handleCancel = () => setShow(false);
 
@@ -61,41 +116,7 @@ function Patient_List() {
     const handleShow2 = () => {
        // default person
       // do a mysql call here eventually
-      setPerson2({firstName: 'John', 
-      lastName: 'Smith', 
-      address: '601 John Wright Dr', 
-      city: 'Huntsville', 
-      state: 'AL',
-      zip: '35805',
-      h_phone: '1234569999',
-      w_phone: '1234569998',
-      m_phone: '1234569990',
-      ec_name_1: 'Jane Smith',
-      ec_phone_1: '9998880000',
-      ec_name_2: '',
-      ec_phone_2: '',
-      date_admit: '01/01/2000',
-      time_admit: '00:00:00',
-      reason_admit: 'Heart Attack',
-      family_doctor: 'Adam Smith',
-      facility: 'EMERGENCY',
-      floor: '1',
-      room_number: '102',
-      bed_number: '1',
-      date_discharged: '',
-      time_discharged: '',
-      insurance_carrier: '',
-      insurance_grp_num: '',
-      insurance_account_num: '',
-      billing_information: 'ambulance: 10000, resuscitation: 20000',
-      amount_paid: '0',
-      amount_owed: '30000',
-      amount_paid_insurance: '',
-      sex: 'M',
-      dob: '01/01/1950',
-      doctors_notes: 'Prescribed statins, recommended bed rest',
-      nurse_notes: '',
-    }) // take the data from that mysql call and distribute it into the structure above so the data is displayed correctly
+      SearchForData("*", "PIMS", "Patients", "lastName", "Smith")
       
     setShow2(true);
     }
@@ -162,9 +183,10 @@ function Patient_List() {
           <table>
           <thead>
           <tr>
-            {/* This is the columns */}
-            <th>Firstname</th>
-            <th>Lastname</th> 
+            {/* These are the columns */}
+            <th>First</th>
+            <th>Middle</th>
+            <th>Last</th> 
             <th>Age</th>
             <th>Sex</th>
             <th>DOB</th>
@@ -172,36 +194,14 @@ function Patient_List() {
           </tr>
           </thead>
           <tbody>
-          {/* This is the rows */}
-          <tr>
-            {/* first entry 3 rows */}
-            <td>Jill</td>
-            <td>Smith</td>
-            <td>26</td>
-            <td>Female</td>
-            <td>04041996</td>
-          </tr>
-          <tr>
-            {/* second entry 3 rows */}
-            <td>Eve</td>
-            <td>Jackson</td>
-            <td>94</td>
-            <td>Female</td>
-            <td>01181928</td>
-          </tr>
-          <tr>
-            {/* third entry 3 rows */}
-            <td>John</td>
-            <td>Doe</td>
-            <td>24</td>
-            <td>Male</td>
-            <td>10151998</td>
-          </tr>
+          {/* These are the rows */}
+          {LoadSearchResults()}
           </tbody>
         </table>
         </Modal.Body>
       <Modal.Footer>
-      <Button onClick = {handleShow}> 
+      {/* Need to update this to be based on selected patient's personID*/}
+      <Button onClick = {() => handleShow(1)}> 
         Edit Patient Data
       </Button>
       </Modal.Footer>
