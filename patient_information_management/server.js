@@ -122,3 +122,28 @@ app.get('/api/patientList/', (req, res) => {
       res.send(result)
   });
 });
+
+//Username and Password for Login
+app.get('/api/getUsernameAndPassword/', (req, res) => {
+
+  const selection = req.query.selection;
+  const schema = req.query.schema;
+  const table = req.query.table;
+  const location = req.query.location;
+  const data = req.query.data;
+
+  let query = ("SELECT " + selection + " FROM " + schema + "." + table
+           + " WHERE " + location + " = '" + data + "'");
+
+ try{
+  connection.query(query, (err,result)=>{
+    res.send(result)
+  });
+}
+catch (error)
+{
+  if (error instanceof TypeError){
+    console.log("wrong");
+  }
+}
+});
