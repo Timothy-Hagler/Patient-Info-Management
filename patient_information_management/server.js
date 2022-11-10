@@ -85,7 +85,28 @@ app.get('/api/searchData/', (req, res) => {
 
     let query = ("SELECT " + selection + " FROM " + schema + "." + table 
              + " WHERE " + locations[0] + " LIKE '" + data[0] +  "%'"
-             + "AND " + locations[1] + " LIKE '" + data[1] + "%'");
+             + "AND " + locations[1] + " LIKE '" + data[1] + "%'"
+             + "AND " + locations[2] + " LIKE '" + data[2] + "%'");
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
+
+
+app.get('/api/getPatientInformation/', (req, res) => {
+
+    const selection = req.query.selection;
+    const schema = req.query.schema;
+    const table = req.query.table;
+    const location = req.query.location;
+    const data = req.query.data;
+
+    let query = ("SELECT " + selection + " FROM " + schema + "." + table
+             + " WHERE " + location + " = '" + data + "'");
 
     connection.query(query, (err,result)=>{
       if(err) {

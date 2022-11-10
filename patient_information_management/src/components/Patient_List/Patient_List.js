@@ -7,14 +7,11 @@ import Col from 'react-bootstrap/esm/Col.js';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 
+
 function Patient_List() {
     const [show, setShow] = useState(false);
     const [search_results, setSearchResults] = useState([{}]);
     const [person, setPerson] = useState({
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: ''
     });
 
     function LoadDataToModal(selection, schema, table, location, data) {
@@ -57,8 +54,8 @@ function Patient_List() {
     function GetDataFromFields()
     {
       let data = []
-      let fields = ["FirstName", "LastName", "Age"]
-      let locations = ["firstName", "lastName", "age"]
+      let fields = ["FirstName", "MiddleName", "LastName"]
+      let locations = ["firstName", "middleName", "lastName"]
       for (let i = 0; i < fields.length; i++)
       {
         data.push(document.getElementById(fields[i]).value)
@@ -72,10 +69,11 @@ function Patient_List() {
           for (let i = 0; i < search_results.length; i++)
           {
           data.push(<tr>
-            {/* first entry 3 rows */}
+            {/* entry for patient */}
             <td>{search_results[i].firstName}</td>
+            <td>{search_results[i].middleName}</td>
             <td>{search_results[i].lastName}</td>
-            <td>26</td>
+            <td>{search_results[i].age}</td>
             <td>{search_results[i].sex}</td>
             <td>{search_results[i].dateOfBirth}</td>
           </tr>)
@@ -90,13 +88,14 @@ function Patient_List() {
       LoadDataToModal("*", "PIMS", "Patients", "personID", personID)
       setShow(true);
     }
-    
+
     const [showWarn, setShowWarn] = useState(false);
     const handleShowWarn = () => {
       setShow(false);
       setShowWarn(true);
     }
     const handleHideWarn = () => setShowWarn(false);
+
     const [showSave, setShowSave] = useState(false);
     const handleShowSave = () => {
       setShow(false);
@@ -119,7 +118,7 @@ function Patient_List() {
       // do a mysql call here eventually
       SearchForData("*", "PIMS", "Patients", "lastName", "Smith")
       
-      setShow2(true);
+    setShow2(true);
     }
     const handleCancel2 = () => setShow2(false);
 
@@ -129,17 +128,6 @@ function Patient_List() {
         <a href="/css/style.css"></a>
         </head>
        
-      <div class = 'demoButton'>
-        <Button onClick = {() => handleShow(1)}>
-          Edit John Smith's Patient Data
-        </Button>
-        <Button onClick = {() => handleShow(2)}>
-          Edit Matthew Myers's Patient Data
-        </Button>
-        <Button onClick = {() => handleShow(3)}>
-          Edit Melody Wood's Patient Data
-        </Button>
-        </div>
         <div class="Patient-Search-Box">
         <p class="solid">
         <h1 class = "hg1">Patient Search</h1><br></br>
@@ -195,9 +183,10 @@ function Patient_List() {
           <table>
           <thead>
           <tr>
-            {/* This is the columns */}
-            <th>Firstname</th>
-            <th>Lastname</th> 
+            {/* These are the columns */}
+            <th>First</th>
+            <th>Middle</th>
+            <th>Last</th> 
             <th>Age</th>
             <th>Sex</th>
             <th>DOB</th>
@@ -205,12 +194,13 @@ function Patient_List() {
           </tr>
           </thead>
           <tbody>
-          {/* This is the rows */}
+          {/* These are the rows */}
           {LoadSearchResults()}
           </tbody>
         </table>
         </Modal.Body>
       <Modal.Footer>
+      {/* Need to update this to be based on selected patient's personID*/}
       <Button onClick = {() => handleShow(1)}> 
         Edit Patient Data
       </Button>
@@ -223,7 +213,7 @@ function Patient_List() {
       
       <Modal show={show} onHide={handleCancel} size ='lg'>
         <Modal.Header closeButton>
-            <Modal.Title>Edit {person.firstName} {person.lastName} information </Modal.Title>
+            <Modal.Title>Edit {person.firstName} {person.lastName}'s information </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -235,6 +225,7 @@ function Patient_List() {
                 <Form.Control type="email" placeholder={person.firstName} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formLastName">
                 <Form.Label column sm="3">
                   Last Name
@@ -243,6 +234,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.lastName} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formGender">
                 <Form.Label column sm="3">
                   Sex
@@ -251,6 +243,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.sex} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formDOB">
                 <Form.Label column sm="3">
                   Date of Birth
@@ -268,6 +261,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.street} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formCity">
                 <Form.Label column sm="3">
                   City
@@ -276,6 +270,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.city} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formState">
                 <Form.Label column sm="3">
                   State
@@ -284,6 +279,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.state} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formZipCode">
                 <Form.Label column sm="3">
                   Zip Code
@@ -292,6 +288,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.zip} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formHomePhone">
                 <Form.Label column sm="3">
                   Home Phone
@@ -300,6 +297,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.homePhone} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formWorkPhone">
                 <Form.Label column sm="3">
                   Work Phone
@@ -308,6 +306,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.workPhone} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formMobilePhone">
                 <Form.Label column sm="3">
                   Mobile Phone
@@ -325,6 +324,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.emergencyContact1_name} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formEmergencyPhone1">
                 <Form.Label column sm="3">
                   Emergency Contact 1's Phone Number
@@ -333,6 +333,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.emergencyContactPhone_1} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formEmergencyName2">
                 <Form.Label column sm="3">
                   Emergency Contact 2's Name
@@ -341,6 +342,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.emergencyContact2_name} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formEmergencyPhone2">
                 <Form.Label column sm="3">
                   Emergency Contact 2's Phone Number
@@ -358,6 +360,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.dateOfAdmittance} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formTimeAdmitted">
                 <Form.Label column sm="3">
                   Time Admitted
@@ -366,6 +369,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.timeOfAdmittance} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formReasonAdmitted">
                 <Form.Label column sm="3">
                   Reason Admitted
@@ -374,6 +378,7 @@ function Patient_List() {
                   <Form.Control type="textarea" placeholder={person.reason} />
                 </Col>
               </Form.Group>
+
               
               <Form.Group as={Row} className="mb-3" controlId="formFamilyDoctor">
                 <Form.Label column sm="3">
@@ -392,6 +397,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.facility} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formFloor">
                 <Form.Label column sm="3">
                   Floor
@@ -400,6 +406,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.floor} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formRoomNum">
                 <Form.Label column sm="3">
                   Room Number
@@ -408,6 +415,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.roomNumber} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formBedNum">
                 <Form.Label column sm="3">
                   Bed Number
@@ -425,6 +433,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.dateOfDischarge} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formTimeDischarged">
                 <Form.Label column sm="3">
                   Time Discharged
@@ -442,6 +451,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.insuranceCarrier} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formInsuranceGrpNumber">
                 <Form.Label column sm="3">
                   Insurance Group Number
@@ -450,6 +460,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.insuranceGroupNumber} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formInsuranceAccountNumber">
                 <Form.Label column sm="3">
                   Insurance Account Number
@@ -467,6 +478,7 @@ function Patient_List() {
                   <Form.Control type="textarea" placeholder={person.listOfBillingInfo} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formAmountPaid">
                 <Form.Label column sm="3">
                   Amount Paid
@@ -475,6 +487,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.amountPaid} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formAmountOwed">
                 <Form.Label column sm="3">
                   Amount Owed
@@ -483,6 +496,7 @@ function Patient_List() {
                   <Form.Control type="email" placeholder={person.amountOwed} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formAmountPaidByInsurance">
                 <Form.Label column sm="3">
                   Amount paid by Insurance
@@ -500,6 +514,7 @@ function Patient_List() {
                   <Form.Control type="textarea" placeholder={person.drNotes} />
                 </Col>
               </Form.Group>
+
               <Form.Group as={Row} className="mb-3" controlId="formNurseNotes">
                 <Form.Label column sm="3">
                   Nurse's Notes
@@ -508,6 +523,7 @@ function Patient_List() {
                   <Form.Control type="textarea" placeholder={person.nursesNotes} />
                 </Col>
               </Form.Group>
+
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -522,34 +538,69 @@ function Patient_List() {
             </Button>
           </Modal.Footer>
       </Modal>
+
       <Modal show={showWarn} onHide={handleHideWarn}>
         <Modal.Header warn>
           <Modal.Title>Are you sure you would like to delete {person.firstName} {person.lastName} from the system?</Modal.Title>
         </Modal.Header>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleHideWarn}>Cancel</Button>
           <Button variant="danger" onClick={handleHideWarn}>Yes</Button>
         </Modal.Footer>
       </Modal>
+
       
       <Modal show={showSave} onHide={handleHideSave}>
         <Modal.Header warn>
           <Modal.Title>Are you sure you would like to save?</Modal.Title>
         </Modal.Header>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={handleHideSave}>Cancel</Button>
           <Button variant="primary" onClick={handleHideSave}>Yes</Button>
         </Modal.Footer>
       </Modal>
-      
       </>
     );
 };
 
- 
 const testModal = [
   {lastName: "Smith", firstName: "John"}
 ]
+//connect to SQL database to search for the patients dependent on the innerHTML string the user entered and is 
+// saved on the clicked enter button event 
+const patients = [
+  {name: 'Syd'},
+  {name: 'Hunter'},
+  {name: 'Max'}
+];
+
+
+// searchButton.addEventListener("clicked", () => {
+
+// });
+
+// const searchInput = document.querySelector('.input')
+
+// searchInput.addEventListener("input", (e) => {
+
+//   let value  = e.target.value
+
+//   if(value && value.trim().length > 0){
+//     value = value.trim().toLowerCase()
+//   }else{
+
+//   }
+
+
+// });
+
+// const clearButton = document.getElementsByElementId('clear')
+
+// clearButton.addEventListener("click", () => { // clears text in box when pressed
+
+
+// })
 
 export default Patient_List;
-
