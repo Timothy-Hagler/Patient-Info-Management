@@ -58,7 +58,6 @@ export default function Login({ setToken }) {
 
   function LoadUsernameAndPassword(selection, schema, table, location, data) {
     let url = (`http://localhost:8080/api/getUsernameAndPassword/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
-    let patientData = {}
     
     Axios.get(url).then((response)=>{
       // this will insert the data of the patient
@@ -94,8 +93,7 @@ export default function Login({ setToken }) {
   const handleClick = event => {
     LoadUsernameAndPassword("*", "Accounts", "Accounts", "username", username);
   }
-  
-  
+
     return(
 
     <>
