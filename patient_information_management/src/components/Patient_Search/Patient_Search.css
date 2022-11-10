@@ -96,32 +96,7 @@ p.solid {
    
 }
 
-#cardHeader {
-    background-color: lightblue;
-    padding: 5px 0px;
-    font-weight: bolder;
-    text-align: center;
-  }
-
-.PatientListCard {
-  margin-top: 50px;
-}
-
 td {
   table-layout: fixed;
   width: 500px;
-}
-
-#addPatient {
-  float: right;
-  margin-right: 50px;
-  margin-top: 11px;
-  padding: 0px 0px;
-}
-
-#searchForPatient {
-  float: right;
-  margin-right: 50px;
-  margin-top: 11px;
-  padding: 0px 0px;
 }

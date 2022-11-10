@@ -117,6 +117,19 @@ app.get('/api/getPatientInformation/', (req, res) => {
 });
 
 
+app.get('/api/getFullPatientTable/', (req, res) => {
+
+    let query = "SELECT * FROM PIMS.Patients"
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
+
+
 app.get('/api/getPatientInformation/', (req, res) => {
 
     const selection = req.query.selection;
