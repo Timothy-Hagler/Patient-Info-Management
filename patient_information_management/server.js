@@ -96,6 +96,21 @@ app.get('/api/searchData/', (req, res) => {
   });
 });
 
+app.get('/api/getHighestPersonID/', (req, res) => {
+
+    const selection = req.query.selection;
+    const schema = req.query.schema;
+    const table = req.query.table;
+
+    let query = ("SELECT MAX(personID) FROM " + schema + "." + table);
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
 
 app.get('/api/getPatientInformation/', (req, res) => {
 
