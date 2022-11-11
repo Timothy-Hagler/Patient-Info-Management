@@ -44,7 +44,6 @@ function Patient_List() {
 
     function SaveDataToPerson()
     {
-      GetHighestPersonID()
       addedPersonData["personID"] = highestID + 1
 
       let keys = (Object.keys(addedPersonData))
@@ -62,7 +61,13 @@ function Patient_List() {
 
       InsertRow("PIMS", "Patients", keys, dataString)
       setShowSave(false);
+      window.location.reload();
     }
+
+    function RemoveRow(schema, table, location, data) {
+      Axios.post(`http://localhost:8080/api/removeRow/`, {schema: schema, table: table,
+      location: location, data: data}).then((response)=>{})
+  }
 
     function handleHideSave()
     {
@@ -78,6 +83,14 @@ function Patient_List() {
       setShowEdit(false);
       setShowDeleteWarn(true);
     }
+    const handleHideDeleteWarn = () => {
+      setShowDeleteWarn(false);
+    }
+    const handleDeletePatient = () => {
+      RemoveRow("PIMS", "Patients", "personID", person.personID)
+      setShowDeleteWarn(false);
+      window.location.reload();
+    }
     const handleHideWarn = () => setShowWarn(false);
 
     const [showSave, setShowSave] = useState(false);
@@ -90,7 +103,6 @@ function Patient_List() {
       setShow(false);
     }
 
-
     const navigate = useNavigate();
 
     function OpenViewPatient(personID)
@@ -99,7 +111,6 @@ function Patient_List() {
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
         setShowView(true)
     }
-
 
     function GoToSearch()
     {
@@ -485,14 +496,14 @@ function Patient_List() {
               </Button>
             </Modal.Footer>
           </Modal>
-          <Modal show={showWarn} onHide={handleDeleteWarn}>
+          <Modal show={showDeleteWarn} onHide={handleHideDeleteWarn}>
               <Modal.Header warn>
                 <Modal.Title>Are you sure you would like to delete {person.firstName} {person.lastName} from the system?</Modal.Title>
               </Modal.Header>
 
               <Modal.Footer>
-                <Button variant="secondary" onClick={handleHideWarn}>Cancel</Button>
-                <Button variant="danger" onClick={handleHideWarn}>Yes</Button>
+                <Button variant="secondary" onClick={handleHideDeleteWarn}>Cancel</Button>
+                <Button variant="danger" onClick={handleDeletePatient}>Yes</Button>
               </Modal.Footer>
             </Modal></>
         )
@@ -837,6 +848,7 @@ function Patient_List() {
 
     function CreateAddPatientModal()
     {
+      GetHighestPersonID()
       return (
         <>
       <Modal show={show} onHide={handleCancel} size ='lg'>
@@ -1164,7 +1176,7 @@ function Patient_List() {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={handleShowSave}>
-              Save Changes
+              Add Patient
             </Button>
             <Button variant="secondary" onClick={handleHideModal}>
               Cancel
@@ -1174,7 +1186,7 @@ function Patient_List() {
 
       <Modal show={showSave} onHide={handleHideSave}>
         <Modal.Header warn>
-          <Modal.Title>Are you sure you would like to save?</Modal.Title>
+          <Modal.Title>Are you sure you would like to add a patient?</Modal.Title>
         </Modal.Header>
 
         <Modal.Footer>

@@ -68,6 +68,7 @@ app.post('/api/removeRow', (req, res) => {
     let query = ("DELETE FROM " + schema + "." + table + " WHERE "
              + location + " = '" + data + "'");
 
+    connection.query("SET SQL_SAFE_UPDATES = 0");
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
       });
