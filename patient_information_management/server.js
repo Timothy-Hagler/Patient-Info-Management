@@ -50,9 +50,7 @@ app.post('/api/insertRow', (req, res) => {
     let query = ("INSERT INTO " + schema + "." + table + " ("
              + headers + ") VALUES (" + values + ")");
 
-    connection.query(query, function (err, result, fields) {
-        if (err) throw err;
-      });
+    connection.query(query, function (err, result, fields) {});
 
   });
 
@@ -98,7 +96,6 @@ app.get('/api/searchData/', (req, res) => {
 
 app.get('/api/getHighestPersonID/', (req, res) => {
 
-    const selection = req.query.selection;
     const schema = req.query.schema;
     const table = req.query.table;
 
