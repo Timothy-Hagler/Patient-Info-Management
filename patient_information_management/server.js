@@ -50,7 +50,11 @@ app.post('/api/insertRow', (req, res) => {
     let query = ("INSERT INTO " + schema + "." + table + " ("
              + headers + ") VALUES (" + values + ")");
 
-    connection.query(query, function (err, result, fields) {});
+    connection.query(query, function (err, result, fields) {
+      if(err) {
+        console.log(err)
+      }
+    });
 
   });
 
