@@ -26,7 +26,11 @@ function Patient_List() {
     const [showUpdateWarn, setShowUpdateWarn] = useState(false);
     const handleCancel = () => setShow(false);
     const handleCancelView = () => setShowView(false);
-    const handleCancelEdit = () => setShowEdit(false);
+    const handleCancelEdit = () =>
+    {
+      updatedPersonData = {}
+      setShowEdit(false);
+    }
     const handleShow = (personID) => {
       setShow(true);
     }
@@ -34,6 +38,7 @@ function Patient_List() {
     function InsertRow(schema, table, headers, values) {
       Axios.post(`http://localhost:8080/api/insertRow/`, {schema: schema, table: table,
       headers: headers, values: values}).then((response)=>{})
+      addedPersonData = {}
   }
 
     function GetHighestPersonID() {
@@ -45,10 +50,12 @@ function Patient_List() {
   }
 
     function UpdateData(schema, table, cols_to_update, updated_info, location, personID) {
+      if (Object.keys(updatedPersonData).length !== 0)
+      {
       Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
-      cols_to_update: cols_to_update, updated_info: updated_info, location: location, data: personID}).then((response)=>{
-        alert("you updated data")
-      })
+      cols_to_update: cols_to_update, updated_info: updated_info, location: location, data: personID}).then((response)=>{})
+      }
+      updatedPersonData = {}
   }
 
     function SaveUpdatedDataToPerson()
@@ -59,7 +66,27 @@ function Patient_List() {
 
     function SaveDataToPerson()
     {
+      if (Object.keys(addedPersonData).length === 0)
+      {
+          window.location.reload();
+          return
+      }
       addedPersonData["personID"] = highestID + 1
+
+      if (addedPersonData["firstName"] == null)
+      {
+          addedPersonData["firstName"] = ""
+      }
+
+      if (addedPersonData["middleName"] == null)
+      {
+          addedPersonData["middleName"] = ""
+      }
+
+      if (addedPersonData["lastName"] == null)
+      {
+          addedPersonData["lastName"] = ""
+      }
 
       let keys = (Object.keys(addedPersonData))
       let values = (Object.values(addedPersonData))
@@ -75,7 +102,6 @@ function Patient_List() {
       }
 
       InsertRow("PIMS", "Patients", keys, dataString)
-      setShowSave(false);
       window.location.reload();
     }
 
@@ -86,6 +112,7 @@ function Patient_List() {
 
     function handleHideSave()
     {
+      addedPersonData = {}
       setShowSave(false);
     }
 
@@ -127,6 +154,7 @@ function Patient_List() {
     }
 
     const handleHideModal = () => {
+      addedPersonData = {}
       setShow(false);
     }
 
@@ -1269,16 +1297,16 @@ function Patient_List() {
           for (let i = 0; i < search_results.length; i++)
           {
           data.push(<tr>
-            {/* entry for patient */}
-            <td>{search_results[i].firstName}</td>
-            <td>{search_results[i].middleName}</td>
-            <td>{search_results[i].lastName}</td>
-            <td>{search_results[i].sex}</td>
-            <td>{search_results[i].dateOfBirth}</td>
-            <td>{CreateViewButton(search_results[i].personID)}</td>
-            {CreateEditButton(search_results[i].personID)}
-            <hr></hr>
-          </tr>)
+              {/* entry for patient */}
+              <td>{search_results[i].firstName}</td>
+              <td>{search_results[i].middleName}</td>
+              <td>{search_results[i].lastName}</td>
+              <td>{search_results[i].sex}</td>
+              <td>{search_results[i].dateOfBirth}</td>
+              <td>{CreateViewButton(search_results[i].personID)}</td>
+              {CreateEditButton(search_results[i].personID)}
+              <hr></hr>
+            </tr>)
           }
           return data
     }
