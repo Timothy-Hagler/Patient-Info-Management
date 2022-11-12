@@ -10,3 +10,8 @@ html, body {
   height: 100%;
   width: 100%;
 }
+
+#logOutButton {
+  float: right;
+  margin-right: 0px;
+}
