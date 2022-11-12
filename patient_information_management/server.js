@@ -26,12 +26,24 @@ app.post('/api/updateData', (req, res) => {
 
     const schema = req.body.schema;
     const table = req.body.table;
-    const col_to_update = req.body.col_to_update;
+    const cols_to_update = req.body.cols_to_update;
     const updated_info = req.body.updated_info;
     const location = req.body.location;
     const data = req.body.data;
 
-    let query = ("UPDATE " + schema + "." + table + " SET " + col_to_update + " = " + updated_info 
+    let info = ``
+
+    for (let i = 0; i < cols_to_update.length; i++)
+    {
+      info = info + `${cols_to_update[i]}='${updated_info[cols_to_update[i]]}'`
+
+      if (i + 1 < cols_to_update.length)
+      {
+        info = info + `,`
+      }
+    }
+
+    let query = ("UPDATE " + schema + "." + table + " SET " + info 
             + " WHERE "+ location + " = '" + data + "'");
 
     connection.query(query, function (err, result, fields) {

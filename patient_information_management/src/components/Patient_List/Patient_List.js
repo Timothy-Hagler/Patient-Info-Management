@@ -11,6 +11,7 @@ import Row from 'react-bootstrap/cjs/Row.js';
 
 
 var addedPersonData = {}
+var updatedPersonData = {}
 
 function Patient_List() {
     const [search_results, setSearchResults] = useState([{}]);
@@ -22,6 +23,7 @@ function Patient_List() {
     const [showView, setShowView] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
     const [showDeleteWarn, setShowDeleteWarn] = useState(false);
+    const [showUpdateWarn, setShowUpdateWarn] = useState(false);
     const handleCancel = () => setShow(false);
     const handleCancelView = () => setShowView(false);
     const handleCancelEdit = () => setShowEdit(false);
@@ -41,6 +43,19 @@ function Patient_List() {
           setHighestID(response.data[0]["MAX(personID)"])
       })
   }
+
+    function UpdateData(schema, table, cols_to_update, updated_info, location, personID) {
+      Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
+      cols_to_update: cols_to_update, updated_info: updated_info, location: location, data: personID}).then((response)=>{
+        alert("you updated data")
+      })
+  }
+
+    function SaveUpdatedDataToPerson()
+    {
+      let keys = (Object.keys(updatedPersonData))
+      UpdateData("PIMS", "Patients", keys, updatedPersonData, "personID", person["personID"])
+    }
 
     function SaveDataToPerson()
     {
@@ -83,8 +98,20 @@ function Patient_List() {
       setShowEdit(false);
       setShowDeleteWarn(true);
     }
+    const handleUpdateWarn = () => {
+      setShowEdit(false);
+      setShowUpdateWarn(true);
+    }
     const handleHideDeleteWarn = () => {
       setShowDeleteWarn(false);
+    }
+    const handleHideUpdateWarn = () => {
+      setShowUpdateWarn(false);
+    }
+    const handleHideUpdateWarnWithUpdate = () => {
+      SaveUpdatedDataToPerson()
+      setShowUpdateWarn(false);
+      window.location.reload();
     }
     const handleDeletePatient = () => {
       RemoveRow("PIMS", "Patients", "personID", person.personID)
@@ -107,20 +134,17 @@ function Patient_List() {
 
     function OpenViewPatient(personID)
     {
-        console.log("Viewing the patient " + personID)
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
         setShowView(true)
     }
 
     function GoToSearch()
     {
-      console.log("Going to search")
       navigate('/patient-search');
     }
 
     function OpenEditPatient(personID)
     {
-        console.log("Editing the patient " + personID)
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
         setShowEdit(true)
     }
@@ -160,7 +184,7 @@ function Patient_List() {
     function CreateEditModal()
     {
         return (
-          <><Modal show={showEdit} onHide={handleCancelEdit} size='lg'>
+          <><><Modal show={showEdit} onHide={handleCancelEdit} size='lg'>
             <Modal.Header closeButton>
               <Modal.Title>Editing {person.firstName} {person.lastName}'s information</Modal.Title>
             </Modal.Header>
@@ -171,7 +195,7 @@ function Patient_List() {
                     First Name
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.firstName} />
+                    <Form.Control type="email" placeholder={person.firstName} onChange={(e) => GetUpdatedDataInfo(e, "firstName")} />
                   </Col>
                 </Form.Group>
 
@@ -180,7 +204,7 @@ function Patient_List() {
                     Middle Name
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.middleName} />
+                    <Form.Control type="email" placeholder={person.middleName} onChange={(e) => GetUpdatedDataInfo(e, "middleName")} />
                   </Col>
                 </Form.Group>
 
@@ -189,7 +213,7 @@ function Patient_List() {
                     Last Name
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.lastName} />
+                    <Form.Control type="email" placeholder={person.lastName} onChange={(e) => GetUpdatedDataInfo(e, "lastName")} />
                   </Col>
                 </Form.Group>
 
@@ -198,7 +222,7 @@ function Patient_List() {
                     Sex
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.sex} />
+                    <Form.Control type="email" placeholder={person.sex} onChange={(e) => GetUpdatedDataInfo(e, "sex")} />
                   </Col>
                 </Form.Group>
 
@@ -207,7 +231,7 @@ function Patient_List() {
                     Date of Birth
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.dateOfBirth} />
+                    <Form.Control type="email" placeholder={person.dateOfBirth} onChange={(e) => GetUpdatedDataInfo(e, "dateOfBirth")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -216,7 +240,7 @@ function Patient_List() {
                     Address
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.street} />
+                    <Form.Control type="email" placeholder={person.street} onChange={(e) => GetUpdatedDataInfo(e, "street")} />
                   </Col>
                 </Form.Group>
 
@@ -225,7 +249,7 @@ function Patient_List() {
                     City
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.city} />
+                    <Form.Control type="email" placeholder={person.city} onChange={(e) => GetUpdatedDataInfo(e, "city")} />
                   </Col>
                 </Form.Group>
 
@@ -234,7 +258,7 @@ function Patient_List() {
                     State
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.state} />
+                    <Form.Control type="email" placeholder={person.state} onChange={(e) => GetUpdatedDataInfo(e, "state")} />
                   </Col>
                 </Form.Group>
 
@@ -243,7 +267,7 @@ function Patient_List() {
                     Zip Code
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.zip} />
+                    <Form.Control type="email" placeholder={person.zip} onChange={(e) => GetUpdatedDataInfo(e, "zip")} />
                   </Col>
                 </Form.Group>
 
@@ -252,7 +276,7 @@ function Patient_List() {
                     Home Phone
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.homePhone} />
+                    <Form.Control type="email" placeholder={person.homePhone} onChange={(e) => GetUpdatedDataInfo(e, "homePhone")} />
                   </Col>
                 </Form.Group>
 
@@ -261,7 +285,7 @@ function Patient_List() {
                     Work Phone
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.workPhone} />
+                    <Form.Control type="email" placeholder={person.workPhone} onChange={(e) => GetUpdatedDataInfo(e, "workPhone")} />
                   </Col>
                 </Form.Group>
 
@@ -270,7 +294,7 @@ function Patient_List() {
                     Mobile Phone
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.cellPhone} />
+                    <Form.Control type="email" placeholder={person.cellPhone} onChange={(e) => GetUpdatedDataInfo(e, "cellPhone")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -279,7 +303,7 @@ function Patient_List() {
                     Emergency Contact 1's Name
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.emergencyContact1_name} />
+                    <Form.Control type="email" placeholder={person.emergencyContact1_name} onChange={(e) => GetUpdatedDataInfo(e, "emergencyContact2_name")} />
                   </Col>
                 </Form.Group>
 
@@ -288,7 +312,7 @@ function Patient_List() {
                     Emergency Contact 1's Phone Number
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.emergencyContactPhone_1} />
+                    <Form.Control type="email" placeholder={person.emergencyContactPhone_1} onChange={(e) => GetUpdatedDataInfo(e, "emergencyContactPhone_1")} />
                   </Col>
                 </Form.Group>
 
@@ -297,7 +321,7 @@ function Patient_List() {
                     Emergency Contact 2's Name
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.emergencyContact2_name} />
+                    <Form.Control type="email" placeholder={person.emergencyContact2_name} onChange={(e) => GetUpdatedDataInfo(e, "emergencyContact2_name")} />
                   </Col>
                 </Form.Group>
 
@@ -306,7 +330,7 @@ function Patient_List() {
                     Emergency Contact 2's Phone Number
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.emergencyContactPhone_2} />
+                    <Form.Control type="email" placeholder={person.emergencyContactPhone_2} onChange={(e) => GetUpdatedDataInfo(e, "emergencyContactPhone_2")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -315,7 +339,7 @@ function Patient_List() {
                     Date Admitted
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.dateOfAdmittance} />
+                    <Form.Control type="email" placeholder={person.dateOfAdmittance} onChange={(e) => GetUpdatedDataInfo(e, "dateOfAdmittance")} />
                   </Col>
                 </Form.Group>
 
@@ -324,7 +348,7 @@ function Patient_List() {
                     Time Admitted
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.timeOfAdmittance} />
+                    <Form.Control type="email" placeholder={person.timeOfAdmittance} onChange={(e) => GetUpdatedDataInfo(e, "timeOfAdmittance")} />
                   </Col>
                 </Form.Group>
 
@@ -333,7 +357,7 @@ function Patient_List() {
                     Reason Admitted
                   </Form.Label>
                   <Col>
-                    <Form.Control type="textarea" placeholder={person.reason} />
+                    <Form.Control type="textarea" placeholder={person.reason} onChange={(e) => GetUpdatedDataInfo(e, "reason")} />
                   </Col>
                 </Form.Group>
 
@@ -343,7 +367,7 @@ function Patient_List() {
                     Family Doctor
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.familyDoctor} />
+                    <Form.Control type="email" placeholder={person.familyDoctor} onChange={(e) => GetUpdatedDataInfo(e, "familyDoctor")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -352,7 +376,7 @@ function Patient_List() {
                     Facility
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.facility} />
+                    <Form.Control type="email" placeholder={person.facility} onChange={(e) => GetUpdatedDataInfo(e, "facility")} />
                   </Col>
                 </Form.Group>
 
@@ -361,7 +385,7 @@ function Patient_List() {
                     Floor
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.floor} />
+                    <Form.Control type="email" placeholder={person.floor} onChange={(e) => GetUpdatedDataInfo(e, "floor")} />
                   </Col>
                 </Form.Group>
 
@@ -370,7 +394,7 @@ function Patient_List() {
                     Room Number
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.roomNumber} />
+                    <Form.Control type="email" placeholder={person.roomNumber} onChange={(e) => GetUpdatedDataInfo(e, "roomNumber")} />
                   </Col>
                 </Form.Group>
 
@@ -379,7 +403,7 @@ function Patient_List() {
                     Bed Number
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.bedNumber} />
+                    <Form.Control type="email" placeholder={person.bedNumber} onChange={(e) => GetUpdatedDataInfo(e, "bedNumber")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -388,7 +412,7 @@ function Patient_List() {
                     Date Discharged
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.dateOfDischarge} />
+                    <Form.Control type="email" placeholder={person.dateOfDischarge} onChange={(e) => GetUpdatedDataInfo(e, "dateOfDischarge")} />
                   </Col>
                 </Form.Group>
 
@@ -397,7 +421,7 @@ function Patient_List() {
                     Time Discharged
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.timeOfDischarge} />
+                    <Form.Control type="email" placeholder={person.timeOfDischarge} onChange={(e) => GetUpdatedDataInfo(e, "timeOfDischarge")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -406,7 +430,7 @@ function Patient_List() {
                     Insurance Carrier
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.insuranceCarrier} />
+                    <Form.Control type="email" placeholder={person.insuranceCarrier} onChange={(e) => GetUpdatedDataInfo(e, "insuranceCarrier")} />
                   </Col>
                 </Form.Group>
 
@@ -415,7 +439,7 @@ function Patient_List() {
                     Insurance Group Number
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.insuranceGroupNumber} />
+                    <Form.Control type="email" placeholder={person.insuranceGroupNumber} onChange={(e) => GetUpdatedDataInfo(e, "insuranceGroupNumber")} />
                   </Col>
                 </Form.Group>
 
@@ -424,7 +448,7 @@ function Patient_List() {
                     Insurance Account Number
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.insuranceAccountNumber} />
+                    <Form.Control type="email" placeholder={person.insuranceAccountNumber} onChange={(e) => GetUpdatedDataInfo(e, "insuranceAccountNumber")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -433,7 +457,7 @@ function Patient_List() {
                     Billing Information
                   </Form.Label>
                   <Col>
-                    <Form.Control type="textarea" placeholder={person.listOfBillingInfo} />
+                    <Form.Control type="textarea" placeholder={person.listOfBillingInfo} onChange={(e) => GetUpdatedDataInfo(e, "listOfBillingInfo")} />
                   </Col>
                 </Form.Group>
 
@@ -442,7 +466,7 @@ function Patient_List() {
                     Amount Paid
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.amountPaid} />
+                    <Form.Control type="email" placeholder={person.amountPaid} onChange={(e) => GetUpdatedDataInfo(e, "amountPaid")} />
                   </Col>
                 </Form.Group>
 
@@ -451,7 +475,7 @@ function Patient_List() {
                     Amount Owed
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.amountOwed} />
+                    <Form.Control type="email" placeholder={person.amountOwed} onChange={(e) => GetUpdatedDataInfo(e, "amountOwed")} />
                   </Col>
                 </Form.Group>
 
@@ -460,7 +484,7 @@ function Patient_List() {
                     Amount paid by Insurance
                   </Form.Label>
                   <Col>
-                    <Form.Control type="email" placeholder={person.amountPaidByInsurance} />
+                    <Form.Control type="email" placeholder={person.amountPaidByInsurance} onChange={(e) => GetUpdatedDataInfo(e, "amountPaidByInsurance")} />
                   </Col>
                 </Form.Group>
                 <hr></hr>
@@ -469,7 +493,7 @@ function Patient_List() {
                     Doctor's Notes
                   </Form.Label>
                   <Col>
-                    <Form.Control type="textarea" placeholder={person.drNotes} />
+                    <Form.Control type="textarea" placeholder={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} />
                   </Col>
                 </Form.Group>
 
@@ -478,14 +502,14 @@ function Patient_List() {
                     Nurse's Notes
                   </Form.Label>
                   <Col>
-                    <Form.Control type="textarea" placeholder={person.nursesNotes} />
+                    <Form.Control type="textarea" placeholder={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} />
                   </Col>
                 </Form.Group>
 
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="primary" onClick={handleCancelEdit}>
+              <Button variant="primary" onClick={handleUpdateWarn}>
                 Update Patient
               </Button>
               <Button variant="danger" onClick={handleDeleteWarn}>
@@ -496,7 +520,7 @@ function Patient_List() {
               </Button>
             </Modal.Footer>
           </Modal>
-          <Modal show={showDeleteWarn} onHide={handleHideDeleteWarn}>
+            <Modal show={showDeleteWarn} onHide={handleHideDeleteWarn}>
               <Modal.Header warn>
                 <Modal.Title>Are you sure you would like to delete {person.firstName} {person.lastName} from the system?</Modal.Title>
               </Modal.Header>
@@ -504,6 +528,16 @@ function Patient_List() {
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleHideDeleteWarn}>Cancel</Button>
                 <Button variant="danger" onClick={handleDeletePatient}>Yes</Button>
+              </Modal.Footer>
+            </Modal></>
+            <Modal show={showUpdateWarn} onHide={handleHideUpdateWarn}>
+              <Modal.Header warn>
+                <Modal.Title>Are you sure you would like to update {person.firstName} {person.lastName}'s information?</Modal.Title>
+              </Modal.Header>
+
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleHideUpdateWarn}>Cancel</Button>
+                <Button variant="primary" onClick={handleHideUpdateWarnWithUpdate}>Yes</Button>
               </Modal.Footer>
             </Modal></>
         )
@@ -1239,7 +1273,6 @@ function Patient_List() {
             <td>{search_results[i].firstName}</td>
             <td>{search_results[i].middleName}</td>
             <td>{search_results[i].lastName}</td>
-            <td>{search_results[i].age}</td>
             <td>{search_results[i].sex}</td>
             <td>{search_results[i].dateOfBirth}</td>
             <td>{CreateViewButton(search_results[i].personID)}</td>
@@ -1253,6 +1286,11 @@ function Patient_List() {
     function GetAddedDataInfo(event, field)
     {
       addedPersonData[field] = event.target.value
+    }
+
+    function GetUpdatedDataInfo(event, field)
+    {
+      updatedPersonData[field] = event.target.value
     }
 
   return (
@@ -1279,7 +1317,6 @@ function Patient_List() {
             <td>First Name</td>
             <td>Middle Name</td>
             <td>Last Name</td>
-            <td>Age</td>
             <td>Sex</td>
             <td>Date Of Birth</td>
           </tr>
