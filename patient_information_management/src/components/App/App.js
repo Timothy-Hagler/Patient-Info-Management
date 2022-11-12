@@ -16,13 +16,13 @@ function App() {
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
         <nav class="navbar navbar-expand-lg">
-            <a class="navbar-brand" href="/"><img src={logo} alt="logo" width="32" height="32"></img></a>
+            <img src={logo} alt="logo" width="32" height="32"></img>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
+              <ul class="navbar navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link" href="/patient-list">Patient List</a>
                 </li>
@@ -34,6 +34,13 @@ function App() {
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/patient-search">Search</a>
+                </li>
+              </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar navbar-nav ml-auto">
+                <li class="nav-item" id="logOutButton">
+                  <a class="nav-link" href="/">Log Out</a>
                 </li>
               </ul>
             </div>
