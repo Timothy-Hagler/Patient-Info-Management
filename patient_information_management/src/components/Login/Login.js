@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import './Login.css';
+
 import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
@@ -98,6 +99,7 @@ export default function Login({ setToken }) {
     return(
 
     <>
+    <body className = "loginBody">
       <div class="container-fluid text-center">
           <div class="row content"> 
             <div class="col-sm-8 text-left">
@@ -133,6 +135,7 @@ export default function Login({ setToken }) {
         <footer class="container-fluid text-center">
           <p>CS499 Team 3</p>
         </footer>
+        </body>
     </>  
   )
 
