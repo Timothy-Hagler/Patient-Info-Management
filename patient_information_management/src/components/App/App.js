@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter , Route, Routes} from 'react-router-dom';
 import React, {useState} from 'react';
+import Patient_Search from '../Patient_Search/Patient_Search.js';
 import Patient_List from '../Patient_List/Patient_List.js';
 import Login from '../Login/Login.js';
 import Help_Page from '../Help_Page/Help_Page.js';
@@ -31,6 +32,9 @@ function App() {
                 <li class="nav-item">
                   <a class="nav-link" href="/help-page">Help</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/patient-search">Search</a>
+                </li>
               </ul>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -45,6 +49,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/patient-list" element ={<Patient_List />} />
+            <Route path="/patient-search" element ={<Patient_Search />} />
             <Route path="/help-page" element ={<Help_Page />} />
             <Route path="/about-us" element ={<About_Us />} />
           </Routes>

@@ -26,12 +26,24 @@ app.post('/api/updateData', (req, res) => {
 
     const schema = req.body.schema;
     const table = req.body.table;
-    const col_to_update = req.body.col_to_update;
+    const cols_to_update = req.body.cols_to_update;
     const updated_info = req.body.updated_info;
     const location = req.body.location;
     const data = req.body.data;
 
-    let query = ("UPDATE " + schema + "." + table + " SET " + col_to_update + " = " + updated_info 
+    let info = ``
+
+    for (let i = 0; i < cols_to_update.length; i++)
+    {
+      info = info + `${cols_to_update[i]}='${updated_info[cols_to_update[i]]}'`
+
+      if (i + 1 < cols_to_update.length)
+      {
+        info = info + `,`
+      }
+    }
+
+    let query = ("UPDATE " + schema + "." + table + " SET " + info 
             + " WHERE "+ location + " = '" + data + "'");
 
     connection.query(query, function (err, result, fields) {
@@ -51,8 +63,10 @@ app.post('/api/insertRow', (req, res) => {
              + headers + ") VALUES (" + values + ")");
 
     connection.query(query, function (err, result, fields) {
-        if (err) throw err;
-      });
+      if(err) {
+        console.log(err)
+      }
+    });
 
   });
 
@@ -66,6 +80,7 @@ app.post('/api/removeRow', (req, res) => {
     let query = ("DELETE FROM " + schema + "." + table + " WHERE "
              + location + " = '" + data + "'");
 
+    connection.query("SET SQL_SAFE_UPDATES = 0");
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
       });
@@ -96,6 +111,20 @@ app.get('/api/searchData/', (req, res) => {
   });
 });
 
+app.get('/api/getHighestPersonID/', (req, res) => {
+
+    const schema = req.query.schema;
+    const table = req.query.table;
+
+    let query = ("SELECT MAX(personID) FROM " + schema + "." + table);
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
 
 app.get('/api/getPatientInformation/', (req, res) => {
 
@@ -107,6 +136,19 @@ app.get('/api/getPatientInformation/', (req, res) => {
 
     let query = ("SELECT " + selection + " FROM " + schema + "." + table
              + " WHERE " + location + " = '" + data + "'");
+
+    connection.query(query, (err,result)=>{
+      if(err) {
+        console.log(err)
+      }
+      res.send(result)
+  });
+});
+
+
+app.get('/api/getFullPatientTable/', (req, res) => {
+
+    let query = "SELECT * FROM PIMS.Patients"
 
     connection.query(query, (err,result)=>{
       if(err) {
