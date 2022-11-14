@@ -7,52 +7,24 @@ import Login from '../Login/Login.js';
 import Help_Page from '../Help_Page/Help_Page.js';
 import About_Us from '../About_Us/About_Us.js';
 import logo from '../images/PIMS_emblem.png';
+import Navbar from '../Navbar/Navbar.js';
 
 function App() {
   return(
-    <div className = "app">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>  
-        <nav class="navbar navbar-expand-lg">
-            <img src={logo} alt="logo" width="32" height="32"></img>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
+    <>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"></link>
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossOrigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossOrigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossOrigin="anonymous"></script>  
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <a className="nav-link"  data-testid = 'patientList' href="/patient-list">Patient List</a>
-                </li>
-                <li className="nav-item" data-testid = 'aboutUs'>
-                  <a className="nav-link"  href="/about-us">About Us</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link"  data-testid = 'helpPage' href="/help-page">Help</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/patient-search">Search</a>
-                </li>
-              </ul>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar navbar-nav ml-auto">
-                <li class="nav-item" id="logOutButton">
-                  <a class="nav-link" href="/">Log Out</a>
-                </li>
-              </ul>
-            </div>
-         </nav>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/patient-list" element ={<Patient_List />} />
+            <Route path="/patient-list" element ={<div><Navbar /><Patient_List /></div>} />
+            <Route path="/help-page" element ={<div><Navbar /><Help_Page /></div>} />
+            <Route path="/about-us" element ={<div><Navbar /><About_Us /></div>} />
             <Route path="/patient-search" element ={<Patient_Search />} />
-            <Route path="/help-page" element ={<Help_Page />} />
-            <Route path="/about-us" element ={<About_Us />} />
           </Routes>
-    </div>
+    </>
   );
 }
 
