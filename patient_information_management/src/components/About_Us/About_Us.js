@@ -25,20 +25,6 @@ const About_Us = () => {
       })
   }
 
-    function SearchData(selection, schema, table, location, data) {
-      console.log("top of searching")
-      let url = (`http://localhost:8080/api/searchData/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
-      Axios.get(url).then((response)=>{
-        // this will print out each piece of data on each patient reaching the search criteria
-        for (let index in response.data)
-        {
-          for (let x in response.data[index])
-          {
-            console.log(x + ": " + response.data[index][x])
-          }
-        }
-      })
-  }
 
     function ShowPatientList() {
       console.log("top of showing list")

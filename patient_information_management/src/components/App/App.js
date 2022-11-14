@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter , Route, Routes} from 'react-router-dom';
 import React, {useState} from 'react';
+import Patient_Search from '../Patient_Search/Patient_Search.js';
 import Patient_List from '../Patient_List/Patient_List.js';
 import Login from '../Login/Login.js';
 import Help_Page from '../Help_Page/Help_Page.js';

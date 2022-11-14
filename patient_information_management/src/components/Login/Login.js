@@ -1,10 +1,10 @@
 import React, { Component, useState } from 'react';
 import './Login.css';
-import Logo from '../images/PIMS_emblem.png';
 import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import Axios from 'axios';
 
 
 
@@ -51,11 +51,30 @@ export default function Login({ setToken }) {
     navigate('/about-us');
   }
 
-  const [username, setUserName] = useState();
+  const [username, setUserName] = useState(); 
   
   const [password, setPassword] = useState();
 
   const [show, setShow] = useState(false); //Used for alert
+
+  function LoadUsernameAndPassword(selection, schema, table, location, data) {
+    let url = (`http://localhost:8080/api/getUsernameAndPassword/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
+    
+    Axios.get(url).then((response)=>{
+      // this will insert the data of the patient
+        let data = response.data[0]
+
+        if(password === data["password"])
+        {
+          navigateToHelp();
+        }
+        
+        else
+        {
+          window.location.reload();
+        }
+    })
+}
 
   const handleSubmit = async e => {
 
@@ -73,20 +92,12 @@ export default function Login({ setToken }) {
     }
   
   const handleClick = event => {
-    if(username === "drhagler" && password === "password")
-    {
-      navigateToHelp();
-    }
-    else{
-      window.location.reload();
-    }
-
+    LoadUsernameAndPassword("*", "Accounts", "Accounts", "username", username);
   }
-  
-  
+
     return(
-<div>
-    <body class = 'loginBody'>
+
+    <>
       <div class="container-fluid text-center">
           <div class="row content"> 
             <div class="col-sm-8 text-left">
@@ -119,12 +130,10 @@ export default function Login({ setToken }) {
           </div>
         </div>
         {/*Create a footer for the bottom of the webpage*/}
-
-    </body>  
-            <footer class="container-fluid text-center">
-            <p>CS499 Team 3</p>
-          </footer>
-          </div>
+        <footer class="container-fluid text-center">
+          <p>CS499 Team 3</p>
+        </footer>
+    </>  
   )
 
 
