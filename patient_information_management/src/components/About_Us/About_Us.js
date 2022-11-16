@@ -42,11 +42,6 @@ const About_Us = () => {
     <>
     <div className="container">
         <center><h2><b>About Us</b></h2></center>
-        <button className="update_btn" onClick={(() => UpdateData("PIMS", "Patients", "LastName", "'Smith'", "FirstName", "John"))}>Update Data</button>
-        <button className="search_btn" onClick={(() => SearchData("*", "PIMS", "Patients", "LastName", "Do"))}>Search</button>
-        <button className="patientList_btn" onClick={(() => ShowPatientList())}>Show Patient List</button>
-        <button className="insertRow_btn" onClick={(() => InsertRow("PIMS", "Patients", "PersonID, LastName, FirstName, Address, City", "'6', 'Doe', 'Jane', '901 Explorer Blvd. NW', 'Huntsville'"))}>Insert Row</button>
-        <button className="removeRow_btn" onClick={(() => RemoveRow("PIMS", "Patients", "LastName", "Doe"))}>Remove Row</button>
         <div className="row">
         <div className="col-sm">
           <span className="d-md-block bg-info">
