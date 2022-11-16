@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/cjs/Modal.js';
-import Col from 'react-bootstrap/esm/Col.js';
+import Col from 'react-bootstrap/cjs/Col.js';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 

@@ -3,43 +3,7 @@ import App from './App';
 import userEvent from '@testing-library/user-event';
 import fireEvent from '@testing-library/user-event';
 
-describe('Navigation Bar Tests', () => {
 
-  test('renders nav bar', () => {
-    render(<App />);
-    const navBar = screen.getByTestId('navBar')
-    expect(navBar).toBeInTheDocument();
-  });
-
-  test('renders nav bar patient list hyperlink', () => {
-    render(<App />);
-    const patientList = screen.getByText('Patient List')
-    expect(patientList).toBeInTheDocument();
-    expect(patientList).toHaveAttribute('href', '/patient-list')
-  });
-
-  test('renders nav bar about us hyperlink', () => {
-    render(<App />);
-    const aboutUs = screen.getByText('About Us')
-    expect(aboutUs).toBeInTheDocument();
-    expect(aboutUs).toHaveAttribute('href', '/about-us')
-  });
-
-  test('renders nav bar help page hyperlink', () => {
-    render(<App />);
-    const helpPage = screen.getByText('Help')
-    expect(helpPage).toBeInTheDocument();
-    expect(helpPage).toHaveAttribute('href', '/help-page')
-  });
-  
-  test('renders nav bar login logo hyperlink', () => {
-    render(<App />);
-    const logo = screen.getByTestId('logo')
-    expect(logo).toBeInTheDocument();
-    expect(logo).toHaveAttribute('href', '/')
-  });
-  
-});
 
 // tests whether the links render their respective pages
 describe('BrowserRouter Tests', () => {
