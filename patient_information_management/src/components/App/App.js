@@ -21,16 +21,16 @@ function App() {
               <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="/patient-list">Patient List</a>
+            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <a className="nav-link" href="/patient-list">Patient List</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/about-us">About Us</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="/about-us">About Us</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/help-page">Help</a>
+                <li className="nav-item">
+                  <a className="nav-link" href="/help-page">Help</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/patient-search">Search</a>

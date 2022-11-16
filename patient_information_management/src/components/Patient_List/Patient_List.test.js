@@ -1,3 +1,3 @@
-test("Dummy Patient List Test",() => {
+test("Dummy About Us Test",() => {
 
 })
