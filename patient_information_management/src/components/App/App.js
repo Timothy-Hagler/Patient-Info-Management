@@ -32,9 +32,6 @@ function App() {
                 <li class="nav-item">
                   <a class="nav-link" href="/help-page">Help</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/patient-search">Search</a>
-                </li>
               </ul>
             </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -49,7 +46,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/patient-list" element ={<Patient_List />} />
-            <Route path="/patient-search" element ={<Patient_Search />} />
             <Route path="/help-page" element ={<Help_Page />} />
             <Route path="/about-us" element ={<About_Us />} />
           </Routes>
