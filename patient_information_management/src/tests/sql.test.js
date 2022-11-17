@@ -22,3 +22,12 @@ test("Disconnect from Server Successfully",() => {
         disconnect(connection)
     }).not.toThrow()
 })
+
+// will need tests for the following
+// - login
+// - update data or refresh data 
+// - delete patient aka delete row
+// - add new patient aka insert row
+// - save patient data
+// - search
+// - show patient list based on search
