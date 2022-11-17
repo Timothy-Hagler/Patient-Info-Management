@@ -48,19 +48,6 @@ h2 {
   text-align: center;
 }
 
-
-/* search button in the Patient Search Box */
-
-
-.modalSearchButton{
-}
-
-.modalCancelButton{
- 
-}
-<<<<<<< Updated upstream
-=======
-
 #cardHeader {
     background-color: lightblue;
     padding: 5px 0px;
@@ -95,4 +82,4 @@ td {
 #colLabels {
   font-weight: bolder;
 }
->>>>>>> Stashed changes
+
