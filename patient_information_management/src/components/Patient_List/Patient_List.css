@@ -16,10 +16,12 @@ input[type=text] {
 input[type=text]:focus {
     width: 30%;
 }
+
 #list{
     font-size: 1.5em;
     margin-left: 90px;
 }
+
 .patients{
 display: list-item; 
 }
@@ -28,70 +30,69 @@ display: list-item;
     border: 1px solid;
     width: 100%;
   }
-.radioButtons input{
-    text-align: left;
-    display:inline;
-    
+
+
+.col-sm2 {
+  text-align: center;
+  justify-content: center;
+  display:flex;
 }
-.Patient-Search-Box{
-    
-    min-height: 100vh; /* minimum height = screen height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+#cardHeader2 {
+  background-color: lightblue;
+  font-weight: bolder;
+  text-align: center;
 }
-/* border around the search box */
-p.solid {
-    width: 400px;
-    padding-top: 30px;
-    padding-left: 30px;
-    border-style: solid;
-    border-color: blue;
-    padding-bottom: 15px;
+
+h2 {
+  text-align: center;
 }
-/* Calendar */
-[type="date"] {
-    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
-  }
-  [type="date"]::-webkit-inner-spin-button {
-    display: none;
-  }
-  [type="date"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-  }
-  
-  /* Calendar custom styles */
-  body {
-    
-    background: #e5e5e5;
-    font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
-  }
-  label {
-    display: block;
-  }
-  input {
-    border: 1px solid #c4c4c4;
-    border-radius: 5px;
-    background-color: #fff;
-    padding: 3px 5px;
-    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
-    width: 190px;
-  }
-  /* header 1 Patient Search */
-.hg1 { 
-    color: #000000;
-    font-family: Arial;
-    font-size: 40px;
-   
-}
+
+
 /* search button in the Patient Search Box */
-.searchButton {
-    display:flex;
-    justify-content: center; /* puts the search button in the center */
-    align-items :center;
-    margin: 15px;
+
+
+.modalSearchButton{
 }
-.radio-label{
-    justify-content: left;
-   
+
+.modalCancelButton{
+ 
 }
+<<<<<<< Updated upstream
+=======
+
+#cardHeader {
+    background-color: lightblue;
+    padding: 5px 0px;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+  /* Card that hpolds the list of patients */
+.PatientListCard {
+  margin-top: 50px;
+}
+
+td {
+  table-layout: fixed;
+  width: 500px;
+}
+
+#addPatient {
+  float: right;
+  margin-right: 50px;
+  margin-top: 11px;
+  padding: 0px 0px;
+}
+
+#searchForPatient {
+  float: right;
+  margin-right: 50px;
+  margin-top: 11px;
+  padding: 0px 0px;
+}
+
+#colLabels {
+  font-weight: bolder;
+}
+>>>>>>> Stashed changes
