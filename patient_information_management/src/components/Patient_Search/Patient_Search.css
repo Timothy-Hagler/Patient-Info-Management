@@ -1,0 +1,102 @@
+
+#searchbar{
+    margin-left: 15%;
+    padding:15px;
+    border-radius: 10px;
+}
+
+/* search bar text boxes */
+input[type=text] {
+    width: 30%;
+    -webkit-transition: width 0.15s ease-in-out;
+    transition: width 0.15s ease-in-out;
+}
+/* When the input field gets focus,
+        change its width to 100% */
+input[type=text]:focus {
+    width: 30%;
+}
+#list{
+    font-size: 1.5em;
+    margin-left: 90px;
+}
+.patients{
+display: list-item; 
+}
+  /* Patient Name Display After Search Table */
+  table, th, td {
+    border: 1px solid;
+    width: 100%;
+  }
+.radioButtons input{
+    text-align: left;
+    display:inline;
+    
+}
+.Patient-Search-Box{
+    
+    min-height: 100vh; /* minimum height = screen height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* border around the search box */
+p.solid {
+    width: 400px;
+    padding-top: 30px;
+    padding-left: 30px;
+    border-style: solid;
+    border-color: blue;
+    padding-bottom: 15px;
+}
+/* Calendar */
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  }
+  [type="date"]::-webkit-inner-spin-button {
+    display: none;
+  }
+  [type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  
+  /* Calendar custom styles */
+  body {
+    
+    background: #e5e5e5;
+    font: 13px/1.4 Geneva, 'Lucida Sans', 'Lucida Grande', 'Lucida Sans Unicode', Verdana, sans-serif;
+  }
+  label {
+    display: block;
+  }
+  input {
+    border: 1px solid #c4c4c4;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 3px 5px;
+    box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
+    width: 190px;
+  }
+  /* header 1 Patient Search */
+.hg1 { 
+    color: #000000;
+    font-family: Arial;
+    font-size: 40px;
+   
+}
+/* search button in the Patient Search Box */
+.searchButton {
+    display:flex;
+    justify-content: center; /* puts the search button in the center */
+    align-items :center;
+    margin: 15px;
+}
+.radio-label{
+    justify-content: left;
+   
+}
+
+td {
+  table-layout: fixed;
+  width: 500px;
+}
