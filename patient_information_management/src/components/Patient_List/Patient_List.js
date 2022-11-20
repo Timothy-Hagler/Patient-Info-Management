@@ -637,7 +637,7 @@ function Patient_List() {
                       Doctor's Notes
                     </Form.Label>
                     <Col>
-                      <Form.Control type="textarea" placeholder={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} />
+                      <textarea class="form-control" placeholder={person.drNotes} value={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} />
                     </Col>
                   </Form.Group>
   
@@ -646,7 +646,7 @@ function Patient_List() {
                       Nurse's Notes
                     </Form.Label>
                     <Col>
-                      <Form.Control type="textarea" placeholder={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} />
+                      <textarea class="form-control" placeholder={person.nursesNotes} value={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} />
                     </Col>
                   </Form.Group>
   
@@ -691,6 +691,7 @@ function Patient_List() {
       {
           return (
             <Modal show={showView} onHide={handleCancelView} size ='lg'>
+              <div id="viewModal">
               <Modal.Header closeButton>
                   <Modal.Title>Viewing {person.firstName} {person.lastName}'s information</Modal.Title>
                 </Modal.Header>
@@ -999,7 +1000,7 @@ function Patient_List() {
                         Doctor's Notes
                       </Form.Label>
                       <Col>
-                        <Form.Control type="textarea" placeholder={person.drNotes} readOnly />
+                        <textarea class="form-control" placeholder={person.drNotes} readOnly />
                       </Col>
                     </Form.Group>
   
@@ -1008,13 +1009,17 @@ function Patient_List() {
                         Nurse's Notes
                       </Form.Label>
                       <Col>
-                        <Form.Control type="textarea" placeholder={person.nursesNotes} readOnly />
+                        <textarea class="form-control" placeholder={person.nursesNotes} readOnly />
                       </Col>
                     </Form.Group>
   
                   </Form>
                 </Modal.Body>
+                </div>
                 <Modal.Footer>
+                  <Button variant="primary" onClick={() => printElement(document.getElementById("viewModal"))}>
+                    Print
+                  </Button>
                   <Button variant="primary" onClick={handleCancelView}>
                     Done
                   </Button>
@@ -1436,6 +1441,22 @@ function Patient_List() {
       {
         updatedPersonData[field] = event.target.value
       }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        var $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+        window.print();
+    }
   
 
   return (
