@@ -37,7 +37,7 @@ function App() {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar navbar-nav ml-auto">
                 <li class="nav-item" id="logOutButton">
-                  <a class="nav-link" href="/">Log Out</a>
+                  <a class="nav-link" href="/" onClick={localStorage.setItem("accountType", "")}>Log Out</a>
                 </li>
               </ul>
             </div>

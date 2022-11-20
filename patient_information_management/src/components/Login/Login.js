@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 
+var accountType = localStorage.getItem("accountType")
 
 //async function required for login-authentication
 //to 8080 port where authentication server runs
@@ -65,7 +66,8 @@ export default function Login({ setToken }) {
 
         if(password === data["password"])
         {
-          navigateToHelp();
+          localStorage.setItem("accountType", data["type"])
+          navigateToPatientList();
         }
         
         else
