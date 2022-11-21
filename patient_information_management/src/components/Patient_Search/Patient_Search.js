@@ -6,6 +6,8 @@ import Modal from 'react-bootstrap/cjs/Modal.js';
 import Col from 'react-bootstrap/cjs/Col.js';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
+import Card from 'react-bootstrap/cjs/Card.js';
+
 
 
 function Patient_Search() {
@@ -126,14 +128,14 @@ function Patient_Search() {
         <head>
         <a href="/css/style.css"></a>
         </head>
-       
-        <div class="Patient-Search-Box">
-        <p class="solid">
-        <h1 class = "hg1">Patient Search</h1><br></br>
-        
-        {/* Insert the search bar here */}
-        {/* Add a tool that says they can just enter the first or last name and get results */}
-        <div data-tip="Enter First Name">
+        <div class="col-sm2">
+        <head>
+        <a href="/css/style.css"></a>
+        </head>
+        <Card border="primary" style={{ width: '30rem' }}>
+        <Card.Header id="cardHeader2"><h3>Patient Search</h3></Card.Header> 
+        <Card.Body>      
+         <div data-tip="Enter First Name">
         <label for="First Name">First Name: &nbsp;</label>
         <input type="text" id="FirstName" name="FirstName"></input>
         </div><br></br>
@@ -145,33 +147,15 @@ function Patient_Search() {
         <label for="Last Name">Last Name: &nbsp;</label>
         <input type="text" id="LastName" name="LastName"></input><br></br>
         </div><br></br>
-        <div data-tip="Enter First Name">
-        <label for="start">Age: &nbsp;</label>
-        <input type="text" id="Age" name="Age"></input><br></br>
-        </div><br></br>
+        <div data-tip="Enter First Name"></div>
         <div>
-        <label for="dateofbirth">Date Of Birth: &nbsp;</label>
-        <input type="date" name="dateofbirth" id="dateofbirth"></input>
-        </div><br></br>
-       
-  
-       <div class = "radioButtons" >
-        {/* Add radio buttons for male or female or other */}
-        <input type="radio" name="sex" value="HTML"></input>
-        <label class="radio-label" >Male</label><br></br>
-        <input type="radio" name="sex" value="HTML"></input>
-        <label class="radio-label" >Female</label><br></br>
-        <input type="radio" name="sex" value="HTML"></input>
-        <label class="radio-label" >Other</label><br></br>
-        </div><br></br>
-       <div>
         <Button class = 'searchButton' onClick = {handleShow2}> 
         Search
-      </Button>
-      </div>
-      </p>
-      </div>
- 
+       </Button>
+      </div>  
+      </Card.Body>
+    </Card>
+    </div>
       
   <div>
   <Modal show={show2} onHide={handleCancel2}>
