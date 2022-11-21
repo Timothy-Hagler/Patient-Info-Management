@@ -3,7 +3,7 @@ import './Patient_Search.css';
 import Axios from 'axios'
 import Button from 'react-bootstrap/cjs/Button.js';
 import Modal from 'react-bootstrap/cjs/Modal.js';
-import Col from 'react-bootstrap/esm/Col.js';
+import Col from 'react-bootstrap/cjs/Col.js';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 import Card from 'react-bootstrap/cjs/Card.js';
