@@ -23,8 +23,6 @@ function App() {
             <Route path="/patient-list" element ={<div><Navbar /><Patient_List /></div>} />
             <Route path="/help-page" element ={<div><Navbar /><Help_Page /></div>} />
             <Route path="/about-us" element ={<div><Navbar /><About_Us /></div>} />
-            <Route path="/patient-search" element ={<div><Navbar /><Patient_Search /></div>} />
-
           </Routes>
         </BrowserRouter>
     </>
