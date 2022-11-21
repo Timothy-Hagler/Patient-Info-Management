@@ -30,4 +30,3 @@ test("Disconnect from Server Successfully",() => {
 // - add new patient aka insert row
 // - save patient data
 // - search
-// - show patient list based on search
