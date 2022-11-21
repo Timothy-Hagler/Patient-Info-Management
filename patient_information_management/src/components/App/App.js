@@ -7,7 +7,7 @@ import Login from '../Login/Login.js';
 import Help_Page from '../Help_Page/Help_Page.js';
 import About_Us from '../About_Us/About_Us.js';
 import logo from '../images/PIMS_emblem.png';
-import Navbar from '../Navbar/Navbar.js';
+import Navbar from '../Navbar/Navbar.js'
 
 function App() {
   return(
