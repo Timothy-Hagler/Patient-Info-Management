@@ -19,9 +19,6 @@ export default function Navbar(){
           <li class="nav-item">
             <a class="nav-link" href="/help-page">Help</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/patient-search">Search</a>
-          </li>
         </ul>
       </div>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
