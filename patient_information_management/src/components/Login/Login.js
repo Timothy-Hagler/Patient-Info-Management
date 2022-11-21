@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import './Login.css';
+
 import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
@@ -7,6 +8,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 
 var accountType = localStorage.getItem("accountType")
+
 
 //async function required for login-authentication
 //to 8080 port where authentication server runs
@@ -67,7 +69,7 @@ export default function Login({ setToken }) {
         if(password === data["password"])
         {
           localStorage.setItem("accountType", data["type"])
-          navigateToPatientList();
+          navigateToHelp();
         }
         
         else
@@ -99,6 +101,7 @@ export default function Login({ setToken }) {
     return(
 
     <>
+    <body className = "loginBody">
       <div class="container-fluid text-center">
           <div class="row content"> 
             <div class="col-sm-8 text-left">
@@ -134,6 +137,7 @@ export default function Login({ setToken }) {
         <footer class="container-fluid text-center">
           <p>CS499 Team 3</p>
         </footer>
+        </body>
     </>  
   )
 

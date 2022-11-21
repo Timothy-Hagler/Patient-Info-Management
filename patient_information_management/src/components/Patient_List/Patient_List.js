@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/cjs/Modal.js';
-import Col from 'react-bootstrap/esm/Col.js';
+import { Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 
@@ -36,7 +36,6 @@ else if (accountType === "doctor")
 {
   doctor = true;
 }
-
 
 function Patient_List() {
 
@@ -1345,6 +1344,7 @@ function Patient_List() {
                   </Col>
                 </Form.Group>
                 <hr></hr>
+                <div style={{display: staff ? 'none' : '?'}}>
                 <Form.Group as={Row} className="mb-3" controlId="formDoctorNotes">
                   <Form.Label column sm="3">
                     Doctor's Notes
@@ -1362,6 +1362,7 @@ function Patient_List() {
                     <Form.Control type="textarea" onChange={(e) => GetAddedDataInfo(e, "nursesNotes")}/>
                   </Col>
                 </Form.Group>
+                </div>
   
               </Form>
             </Modal.Body>
@@ -1459,7 +1460,7 @@ function Patient_List() {
        
 
           <div id = "addPatient">
-            <Button class = 'addPatientButton' onClick = {() => AddNewPatient()}>
+            <Button class = 'addPatientButton' onClick = {() => AddNewPatient()} style={{display: volunteer ? 'none' : '?'}}>
                 Add new Patient
             </Button>
           </div>

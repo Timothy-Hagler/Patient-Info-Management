@@ -40,7 +40,7 @@ const About_Us = () => {
   }
 
   return (
-    <>
+    <section>
     <div class="container">
         <h2><b>About Us</b></h2>
        {/* <button className="update_btn" onClick={(() => UpdateData("PIMS", "Patients", "LastName", "'Smith'", "FirstName", "John"))}>Update Data</button>
@@ -84,7 +84,7 @@ const About_Us = () => {
         </div>
         </div>
     </div>
-    </>
+    </section>
   );
 };
 export default About_Us;
