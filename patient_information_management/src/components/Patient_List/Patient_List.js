@@ -212,9 +212,15 @@ function Patient_List() {
     function OpenViewPatient(personID)
     {
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
+      //  while (Object.keys(person).length !== 0)
+      //  {
+
+      //  console.log("loop")
+      //  }
+//        console.log(person)
         console.log(person)
-        //setTimeout(() => navigate('/individual-patient', {state: {person: person}}, 100000))
         setShowView(true)
+        setTimeout(() => {navigate('/individual-patient', {state: {person: person}})}, 10000)
     }
 
     function OpenEditPatient(personID)
