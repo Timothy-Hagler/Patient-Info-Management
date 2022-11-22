@@ -12,7 +12,30 @@ import Row from 'react-bootstrap/cjs/Row.js';
 
 var addedPersonData = {}
 var updatedPersonData = {}
+var accountType = localStorage.getItem("accountType")
 
+var volunteer = null;
+var nurse = null;
+var staff = null;
+var doctor = null;
+
+// set up the account type as a bool to determine what is shown
+if (accountType === "volunteer")
+{
+  volunteer = true;
+}
+else if (accountType === "staff")
+{
+  staff = true;
+}
+else if (accountType === "nurse")
+{
+  nurse = true;
+}
+else if (accountType === "doctor")
+{
+  doctor = true;
+}
 
 function Patient_List() {
 
@@ -28,7 +51,8 @@ function Patient_List() {
     const [showUpdateWarn, setShowUpdateWarn] = useState(false);
     const handleCancel = () => setShow(false);
     const handleCancelView = () => setShowView(false);
-
+    //Navigation functions
+    const navigate = useNavigate();
 
    // hook to close the modal of editing patient-list data and update the data from the database since nothing was updated
     const handleCancelEdit = () =>
@@ -58,13 +82,11 @@ function Patient_List() {
     // function to close modal button on patient-search modal
     const handleSearchModalCancel = () => setShow2(false);
 
-
     function InsertRow(schema, table, headers, values) {
       Axios.post(`http://localhost:8080/api/insertRow/`, {schema: schema, table: table,
       headers: headers, values: values}).then((response)=>{})
       addedPersonData = {}
   }
-
 
     function GetHighestPersonID() {
       let url = (`http://localhost:8080/api/getHighestPersonID/?schema=PIMS&table=Patients`)
@@ -73,7 +95,6 @@ function Patient_List() {
           setHighestID(response.data[0]["MAX(personID)"])
       })
   }
-
 
     function UpdateData(schema, table, cols_to_update, updated_info, location, personID) {
       if (Object.keys(updatedPersonData).length !== 0)
@@ -84,13 +105,11 @@ function Patient_List() {
       updatedPersonData = {}
   }
 
-
     function SaveUpdatedDataToPerson()
     {
       let keys = (Object.keys(updatedPersonData))
       UpdateData("PIMS", "Patients", keys, updatedPersonData, "personID", person["personID"])
     }
-
 
     function SaveDataToPerson()
     {
@@ -99,21 +118,19 @@ function Patient_List() {
           window.location.reload();
           return
       }
-      addedPersonData["personID"] = highestID + 1
 
-      if (addedPersonData["firstName"] == null)
-      {
-          addedPersonData["firstName"] = ""
-      }
+      if (addedPersonData["firstName"] == null ||
+          addedPersonData["lastName"] == null)
+          {
+              window.location.reload();
+              return
+          }
+
+      addedPersonData["personID"] = highestID + 1
 
       if (addedPersonData["middleName"] == null)
       {
           addedPersonData["middleName"] = ""
-      }
-
-      if (addedPersonData["lastName"] == null)
-      {
-          addedPersonData["lastName"] = ""
       }
 
       let keys = (Object.keys(addedPersonData))
@@ -133,12 +150,10 @@ function Patient_List() {
       window.location.reload();
     }
 
-
     function RemoveRow(schema, table, location, data) {
       Axios.post(`http://localhost:8080/api/removeRow/`, {schema: schema, table: table,
       location: location, data: data}).then((response)=>{})
     }
-
 
     function handleHideSave()
     {
@@ -146,9 +161,7 @@ function Patient_List() {
       setShowSave(false);
     }
 
-
     const [showWarn, setShowWarn] = useState(false);
-
 
     // const handleShowWarn = () => {
     //   setShow(false);
@@ -194,15 +207,12 @@ function Patient_List() {
       setShow(false);
     }
 
-    const navigate = useNavigate();
-
     function OpenViewPatient(personID)
     {
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
         setShowView(true)
     }
 
-  
     function OpenEditPatient(personID)
     {
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
@@ -221,12 +231,11 @@ function Patient_List() {
     function CreateEditButton(personID)
     {
         return (
-          <Button class = 'editButton' onClick = {() => OpenEditPatient(personID)}>
+          <Button class = 'editButton' onClick = {() => OpenEditPatient(personID)} style={{display: volunteer ? 'none' : '?'}}>
               Edit
           </Button>
         )
     }
-
 
     function SearchForData(selection, schema, table, location) {
       let information = GetDataFromFields()
@@ -264,8 +273,6 @@ function Patient_List() {
       return [locations, data]
     }
 
-
-
     function SetPersonToPatientData(selection, schema, table, location, data) {
       let url = (`http://localhost:8080/api/getPatientInformation/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
       let patientData = {}
@@ -280,10 +287,8 @@ function Patient_List() {
       })
   }
 
-
       function CreatePatientSearchModal()
       {
-        console.log("Inside Create Patient Search Modal")
         return(
         <>
         <div class="col-sm2">
@@ -324,7 +329,6 @@ function Patient_List() {
         </>   
       )}
 
-
       function CreateEditModal()
       {
           return (
@@ -339,7 +343,7 @@ function Patient_List() {
                       First Name
                     </Form.Label>
                     <Col>
-                      <Form.Control type="email" placeholder={person.firstName} onChange={(e) => GetUpdatedDataInfo(e, "firstName")} />
+                      <Form.Control type="email" placeholder={person.firstName} onChange={(e) => GetUpdatedDataInfo(e, "firstName")}  />
                     </Col>
                   </Form.Group>
   
@@ -631,13 +635,14 @@ function Patient_List() {
                       <Form.Control type="email" placeholder={person.amountPaidByInsurance} onChange={(e) => GetUpdatedDataInfo(e, "amountPaidByInsurance")} />
                     </Col>
                   </Form.Group>
+                  <div style={{display: staff ? 'none' : '?'}}>
                   <hr></hr>
                   <Form.Group as={Row} className="mb-3" controlId="formDoctorNotes">
                     <Form.Label column sm="3">
                       Doctor's Notes
                     </Form.Label>
                     <Col>
-                      <Form.Control type="textarea" placeholder={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} />
+                      <Form.Control type="textarea" placeholder={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} readOnly={nurse}/>
                     </Col>
                   </Form.Group>
   
@@ -646,9 +651,10 @@ function Patient_List() {
                       Nurse's Notes
                     </Form.Label>
                     <Col>
-                      <Form.Control type="textarea" placeholder={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} />
+                      <Form.Control type="textarea" placeholder={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} readOnly={doctor}/>
                     </Col>
                   </Form.Group>
+                  </div>
   
                 </Form>
               </Modal.Body>
@@ -732,7 +738,7 @@ function Patient_List() {
                       </Col>
                     </Form.Group>
   
-                    <Form.Group as={Row} className="mb-3" controlId="formDOB">
+                    <Form.Group as={Row} className="mb-3" controlId="formDOB" >
                       <Form.Label column sm="3">
                         Date of Birth
                       </Form.Label>
@@ -777,6 +783,7 @@ function Patient_List() {
                       </Col>
                     </Form.Group>
   
+                    <div style={{display: volunteer ? 'none' : '?'}}>
                     <Form.Group as={Row} className="mb-3" controlId="formHomePhone">
                       <Form.Label column sm="3">
                         Home Phone
@@ -876,6 +883,7 @@ function Patient_List() {
                         <Form.Control type="email" placeholder={person.familyDoctor} readOnly />
                       </Col>
                     </Form.Group>
+                    </div>
                     <hr></hr>
                     <Form.Group as={Row} className="mb-3" controlId="formFacility">
                       <Form.Label column sm="3">
@@ -913,6 +921,7 @@ function Patient_List() {
                       </Col>
                     </Form.Group>
                     <hr></hr>
+                    <div style={{display: volunteer ? 'none' : '?'}}>
                     <Form.Group as={Row} className="mb-3" controlId="formDateDischarged">
                       <Form.Label column sm="3">
                         Date Discharged
@@ -993,6 +1002,7 @@ function Patient_List() {
                         <Form.Control type="email" placeholder={person.amountPaidByInsurance} readOnly />
                       </Col>
                     </Form.Group>
+                    <div style={{display: staff ? 'none' : '?'}}>
                     <hr></hr>
                     <Form.Group as={Row} className="mb-3" controlId="formDoctorNotes">
                       <Form.Label column sm="3">
@@ -1011,6 +1021,8 @@ function Patient_List() {
                         <Form.Control type="textarea" placeholder={person.nursesNotes} readOnly />
                       </Col>
                     </Form.Group>
+                    </div>
+                    </div>
   
                   </Form>
                 </Modal.Body>
@@ -1332,6 +1344,7 @@ function Patient_List() {
                   </Col>
                 </Form.Group>
                 <hr></hr>
+                <div style={{display: staff ? 'none' : '?'}}>
                 <Form.Group as={Row} className="mb-3" controlId="formDoctorNotes">
                   <Form.Label column sm="3">
                     Doctor's Notes
@@ -1349,6 +1362,7 @@ function Patient_List() {
                     <Form.Control type="textarea" onChange={(e) => GetAddedDataInfo(e, "nursesNotes")}/>
                   </Col>
                 </Form.Group>
+                </div>
   
               </Form>
             </Modal.Body>
@@ -1404,6 +1418,7 @@ function Patient_List() {
             })
           }
     }
+
       function LoadData()
       {
             let data = []
@@ -1437,7 +1452,6 @@ function Patient_List() {
         updatedPersonData[field] = event.target.value
       }
   
-
   return (
    <>
         <head>
@@ -1446,7 +1460,7 @@ function Patient_List() {
        
 
           <div id = "addPatient">
-            <Button class = 'addPatientButton' onClick = {() => AddNewPatient()}>
+            <Button class = 'addPatientButton' onClick = {() => AddNewPatient()} style={{display: volunteer ? 'none' : '?'}}>
                 Add new Patient
             </Button>
           </div>
