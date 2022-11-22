@@ -8,7 +8,6 @@ import Help_Page from '../Help_Page/Help_Page.js';
 import About_Us from '../About_Us/About_Us.js';
 import logo from '../images/PIMS_emblem.png';
 import Navbar from '../Navbar/Navbar.js'
-import Individual_Patient from '../Individual_Patient/Individual_Patient.js';
 import Protected from './Protected.js';
 
 function App() {
@@ -30,10 +29,6 @@ function App() {
             <Route path="/about-us" element ={
             <Protected isLoggedIn={JSON.parse(localStorage.getItem("isLoggedIn"))}>
               <div><Navbar /><About_Us /></div>
-            </Protected>} />
-            <Route path="/individual-patient" element ={
-            <Protected isLoggedIn={JSON.parse(localStorage.getItem("isLoggedIn"))}>
-              <div><Navbar /><Individual_Patient /></div>
             </Protected>} />
           </Routes>
         </BrowserRouter>
