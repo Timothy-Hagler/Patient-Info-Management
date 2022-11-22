@@ -65,16 +65,16 @@ export default function Login({ setToken }) {
     Axios.get(url).then((response)=>{
       // this will insert the data of the patient
         let data = response.data[0]
-            if(password === data["password"])
-            {
-              localStorage.setItem("isLoggedIn", JSON.stringify(true))
-              localStorage.setItem("accountType", data["type"])
-              navigateToHelp();
-            }
-        
-          window.location.reload();
+        if(password === data["password"])
+        {
+          localStorage.setItem("isLoggedIn", JSON.stringify(true))
+          localStorage.setItem("accountType", data["type"])
+          navigateToHelp();
+        }
+    
+        window.location.reload();
     })
-          window.location.reload();
+    window.location.reload();
 }
 
   const handleSubmit = async e => {
