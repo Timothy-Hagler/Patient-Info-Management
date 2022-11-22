@@ -67,6 +67,7 @@ export default function Login({ setToken }) {
 
         if(password === data["password"])
         {
+          localStorage.setItem("isLoggedIn", JSON.stringify(true))
           navigateToHelp();
         }
         
