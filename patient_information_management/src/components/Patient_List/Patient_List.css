@@ -98,7 +98,11 @@ font-weight: bolder;
   }
   #printSection {
     position:absolute;
-    left:0;
+    left: 125px;
     top:0;
   }
+}
+
+#viewModalCard {
+  padding-left: 50px;
 }
