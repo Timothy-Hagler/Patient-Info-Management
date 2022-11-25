@@ -642,7 +642,7 @@ function Patient_List() {
                       Doctor's Notes
                     </Form.Label>
                     <Col>
-                      <Form.Control type="textarea" placeholder={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} readOnly={nurse}/>
+                      <textarea class="form-control" placeholder={person.drNotes} onChange={(e) => GetUpdatedDataInfo(e, "drNotes")} readOnly={nurse}/>
                     </Col>
                   </Form.Group>
   
@@ -651,7 +651,16 @@ function Patient_List() {
                       Nurse's Notes
                     </Form.Label>
                     <Col>
-                      <Form.Control type="textarea" placeholder={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} readOnly={doctor}/>
+                      <textarea class="form-control" placeholder={person.nursesNotes} onChange={(e) => GetUpdatedDataInfo(e, "nursesNotes")} readOnly={doctor}/>
+                    </Col>
+                  </Form.Group>
+
+                  <Form.Group as={Row} className="mb-3" controlId="formScheduledProcedures">
+                    <Form.Label column sm="3">
+                      Scheduled Procedures
+                    </Form.Label>
+                    <Col>
+                      <textarea class="form-control" placeholder={person.additionalProcedures} onChange={(e) => GetUpdatedDataInfo(e, "additionalProcedures")} />
                     </Col>
                   </Form.Group>
                   </div>
@@ -696,342 +705,82 @@ function Patient_List() {
       function CreateViewModal()
       {
           return (
-            <Modal show={showView} onHide={handleCancelView} size ='lg'>
-              <Modal.Header closeButton>
-                  <Modal.Title>Viewing {person.firstName} {person.lastName}'s information</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <Form>
-                    <Form.Group as={Row} className="mb-3" controlId="formFirstName">
-                      <Form.Label column sm="3">
-                        First Name
-                      </Form.Label>
-                      <Col>
-                      <Form.Control type="email" placeholder={person.firstName} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formMiddleName">
-                      <Form.Label column sm="3">
-                        Middle Name
-                      </Form.Label>
-                      <Col>
-                      <Form.Control type="email" placeholder={person.middleName} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formLastName">
-                      <Form.Label column sm="3">
-                        Last Name
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.lastName} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formGender">
-                      <Form.Label column sm="3">
-                        Sex
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.sex} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formDOB" >
-                      <Form.Label column sm="3">
-                        Date of Birth
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.dateOfBirth} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formAddress">
-                      <Form.Label column sm="3">
-                        Address
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.street} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formCity">
-                      <Form.Label column sm="3">
-                        City
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.city} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formState">
-                      <Form.Label column sm="3">
-                        State
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.state} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formZipCode">
-                      <Form.Label column sm="3">
-                        Zip Code
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.zip} readOnly />
-                      </Col>
-                    </Form.Group>
-  
+            <div class="col-sm2">
+            <Modal class="col-sm2" show={showView} onHide={handleCancelView} size ='lg'>
+              <div id="viewModal">
+              <Modal.Header closeButton />
+              <Modal.Body>
+                  <div id="viewModalCard">
+                  <Card border="primary" style={{ width: '42rem' }}>
+                  <Card.Header id="cardHeader2"><h3>{person.firstName} {person.middleName} {person.lastName}</h3></Card.Header> 
+                  <Card.Body>      
+                    <td>
+                      <tr><b>First Name: </b> {person.firstName}</tr>
+                      <tr><b>Middle Name: </b> {person.middleName}</tr>
+                      <tr><b>Last Name: </b> {person.lastName}</tr>
+                      <tr><b>Sex: </b> {person.sex}</tr>
+                      <tr><b>Date of Birth: </b> {person.dateOfBirth} </tr>
+                      <hr></hr>
+                      <tr><b>Address: </b> {person.street}</tr>
+                      <tr><b>City: </b> {person.city}</tr>
+                      <tr><b>State: </b> {person.state}</tr>
+                      <tr><b>Zip Code: </b> {person.zip}</tr>
                     <div style={{display: volunteer ? 'none' : '?'}}>
-                    <Form.Group as={Row} className="mb-3" controlId="formHomePhone">
-                      <Form.Label column sm="3">
-                        Home Phone
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.homePhone} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formWorkPhone">
-                      <Form.Label column sm="3">
-                        Work Phone
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.workPhone} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formMobilePhone">
-                      <Form.Label column sm="3">
-                        Mobile Phone
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.cellPhone} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formEmergencyName1">
-                      <Form.Label column sm="3">
-                        Emergency Contact 1's Name
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.emergencyContact1_name} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formEmergencyPhone1">
-                      <Form.Label column sm="3">
-                        Emergency Contact 1's Phone Number
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.emergencyContactPhone_1} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formEmergencyName2">
-                      <Form.Label column sm="3">
-                        Emergency Contact 2's Name
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.emergencyContact2_name} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formEmergencyPhone2">
-                      <Form.Label column sm="3">
-                        Emergency Contact 2's Phone Number
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.emergencyContactPhone_2} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formDateAdmitted">
-                      <Form.Label column sm="3">
-                        Date Admitted
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.dateOfAdmittance} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formTimeAdmitted">
-                      <Form.Label column sm="3">
-                        Time Admitted
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.timeOfAdmittance} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formReasonAdmitted">
-                      <Form.Label column sm="3">
-                        Reason Admitted
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="textarea" placeholder={person.reason} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    
-                    <Form.Group as={Row} className="mb-3" controlId="formFamilyDoctor">
-                      <Form.Label column sm="3">
-                        Family Doctor
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.familyDoctor} readOnly />
-                      </Col>
-                    </Form.Group>
-                    </div>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formFacility">
-                      <Form.Label column sm="3">
-                        Facility
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.facility} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formFloor">
-                      <Form.Label column sm="3">
-                        Floor
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.floor} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formRoomNum">
-                      <Form.Label column sm="3">
-                        Room Number
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.roomNumber} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formBedNum">
-                      <Form.Label column sm="3">
-                        Bed Number
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.bedNumber} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <hr></hr>
+                      <tr><b>Home Phone: </b> {person.homePhone}</tr>
+                      <tr><b>Work Phone: </b> {person.workPhone}</tr>
+                      <tr><b>Mobile Phone: </b> {person.cellPhone}</tr>
+                      <hr></hr>
+                      <tr><b>Emergency Contact 1's Name: </b> {person.emergencyContact1_name}</tr>
+                      <tr><b>Emergency Contact 1's Phone Number: </b> {person.emergencyContactPhone_1}</tr>
+                      <tr><b>Emergency Contact 2's Name: </b> {person.emergencyContact2_name}</tr>
+                      <tr><b>Emergency Contact 2's Phone Number: </b> {person.emergencyContactPhone_2}</tr>
+                      <hr></hr>
+                      <tr><b>Date Admitted: </b> {person.dateOfAdmittance}</tr>
+                      <tr><b>Time Admitted: </b> {person.timeOfAdmittance}</tr>
+                      <tr><b>Reason Admitted: </b> {person.reason}</tr>
+                      <tr><b>Family Doctor: </b> {person.familyDoctor}</tr>
+                      </div>
+                      <hr></hr>
+                      <tr><b>Facility: </b> {person.facility}</tr>
+                      <tr><b>Floor: </b> {person.floor}</tr>
+                      <tr><b>Room Number: </b> {person.roomNumber}</tr>
+                      <tr><b>Bed Number: </b> {person.bedNumber}</tr>
                     <div style={{display: volunteer ? 'none' : '?'}}>
-                    <Form.Group as={Row} className="mb-3" controlId="formDateDischarged">
-                      <Form.Label column sm="3">
-                        Date Discharged
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.dateOfDischarge} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formTimeDischarged">
-                      <Form.Label column sm="3">
-                        Time Discharged
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.timeOfDischarge} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formInsuranceCarrier">
-                      <Form.Label column sm="3">
-                        Insurance Carrier
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.insuranceCarrier} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formInsuranceGrpNumber">
-                      <Form.Label column sm="3">
-                        Insurance Group Number
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.insuranceGroupNumber} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formInsuranceAccountNumber">
-                      <Form.Label column sm="3">
-                        Insurance Account Number
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.insuranceAccountNumber} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formBillingInformation">
-                      <Form.Label column sm="3">
-                        Billing Information
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="textarea" placeholder={person.listOfBillingInfo} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formAmountPaid">
-                      <Form.Label column sm="3">
-                        Amount Paid
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.amountPaid} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formAmountOwed">
-                      <Form.Label column sm="3">
-                        Amount Owed
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.amountOwed} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formAmountPaidByInsurance">
-                      <Form.Label column sm="3">
-                        Amount paid by Insurance
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="email" placeholder={person.amountPaidByInsurance} readOnly />
-                      </Col>
-                    </Form.Group>
-                    <div style={{display: staff ? 'none' : '?'}}>
-                    <hr></hr>
-                    <Form.Group as={Row} className="mb-3" controlId="formDoctorNotes">
-                      <Form.Label column sm="3">
-                        Doctor's Notes
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="textarea" placeholder={person.drNotes} readOnly />
-                      </Col>
-                    </Form.Group>
-  
-                    <Form.Group as={Row} className="mb-3" controlId="formNurseNotes">
-                      <Form.Label column sm="3">
-                        Nurse's Notes
-                      </Form.Label>
-                      <Col>
-                        <Form.Control type="textarea" placeholder={person.nursesNotes} readOnly />
-                      </Col>
-                    </Form.Group>
-                    </div>
-                    </div>
-  
-                  </Form>
+                      <hr></hr>
+                      <tr><b>Date Discharged: </b> {person.dateOfDischarge}</tr>
+                      <tr><b>Time Discharged: </b> {person.timeOfDischarge}</tr>
+                      <hr></hr>
+                      <tr><b>Insurance Carrier: </b> {person.insuranceCarrier}</tr>
+                      <tr><b>Insurance Group Number: </b> {person.insuranceGroupNumber}</tr>
+                      <tr><b>Insurance Account Number: </b> {person.insuranceAccountNumber}</tr>
+                      <hr></hr>
+                      <tr><b>Billing Information: </b> {person.listOfBillingInfo}</tr>
+                      <tr><b>Amount Paid: </b> {person.amountPaid}</tr>
+                      <tr><b>Amount Owed: </b> {person.amountOwed}</tr>
+                      <tr><b>Amount Paid By Insurance: </b> {person.amountPaidByInsurance}</tr>
+                      <div style={{display: staff ? 'none' : '?'}}>
+                      <hr></hr>
+                      <tr><b>Doctor's Notes: </b> {person.drNotes}</tr>
+                      <tr><b>Nurse's Notes: </b> {person.nursesNotes}</tr>
+                      <tr><b>Scheduled Procedures: </b> {person.additionalProcedures}</tr>
+                      </div>
+                      </div>
+                    </td>
+                  </Card.Body>
+                  </Card>
+                  </div>
                 </Modal.Body>
                 <Modal.Footer>
+                  <Button variant="primary" onClick={() => printElement(document.getElementById("viewModalCard"))}>
+                    Print
+                  </Button>
                   <Button variant="primary" onClick={handleCancelView}>
                     Done
                   </Button>
                 </Modal.Footer>
+                </div>
             </Modal>
+            </div>
   
           )
       }
@@ -1350,7 +1099,7 @@ function Patient_List() {
                     Doctor's Notes
                   </Form.Label>
                   <Col>
-                    <Form.Control type="textarea" onChange={(e) => GetAddedDataInfo(e, "drNotes")}/>
+                    <Form.Control type="textarea" onChange={(e) => GetAddedDataInfo(e, "drNotes")} readOnly={nurse || staff}/>
                   </Col>
                 </Form.Group>
   
@@ -1359,9 +1108,18 @@ function Patient_List() {
                     Nurse's Notes
                   </Form.Label>
                   <Col>
-                    <Form.Control type="textarea" onChange={(e) => GetAddedDataInfo(e, "nursesNotes")}/>
+                    <Form.Control type="textarea" onChange={(e) => GetAddedDataInfo(e, "nursesNotes")} readOnly={doctor || staff}/>
                   </Col>
                 </Form.Group>
+
+                  <Form.Group as={Row} className="mb-3" controlId="formScheduledProcedures">
+                    <Form.Label column sm="3">
+                      Scheduled Procedures
+                    </Form.Label>
+                    <Col>
+                      <textarea class="form-control" onChange={(e) => GetAddedDataInfo(e, "additionalProcedures")} />
+                    </Col>
+                  </Form.Group>
                 </div>
   
               </Form>
@@ -1451,6 +1209,22 @@ function Patient_List() {
       {
         updatedPersonData[field] = event.target.value
       }
+
+    function printElement(elem) {
+        var domClone = elem.cloneNode(true);
+
+        var $printSection = document.getElementById("printSection");
+
+        if (!$printSection) {
+            var $printSection = document.createElement("div");
+            $printSection.id = "printSection";
+            document.body.appendChild($printSection);
+        }
+
+        $printSection.innerHTML = "";
+        $printSection.appendChild(domClone);
+        window.print();
+    }
   
   return (
    <>

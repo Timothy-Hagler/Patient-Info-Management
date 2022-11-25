@@ -82,3 +82,27 @@ padding: 0px 0px;
 #colLabels {
 font-weight: bolder;
 }
+
+@media screen {
+  #printSection {
+      display: none;
+  }
+}
+
+@media print {
+  body * {
+    visibility:hidden;
+  }
+  #printSection, #printSection * {
+    visibility:visible;
+  }
+  #printSection {
+    position:absolute;
+    left: 125px;
+    top:0;
+  }
+}
+
+#viewModalCard {
+  padding-left: 50px;
+}
