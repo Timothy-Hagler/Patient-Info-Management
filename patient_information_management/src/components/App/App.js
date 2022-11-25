@@ -22,12 +22,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/patient-list" element ={
-            <Protected isLoggedIn={JSON.parse(localStorage.getItem("isLoggedIn"))}>
+            <Protected isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}>
               <div><Navbar /><Patient_List /></div>
             </Protected>} />
             <Route path="/help-page" element ={<div><Navbar /><Help_Page /></div>} />
             <Route path="/about-us" element ={
-            <Protected isLoggedIn={JSON.parse(localStorage.getItem("isLoggedIn"))}>
+            <Protected isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}>
               <div><Navbar /><About_Us /></div>
             </Protected>} />
           </Routes>

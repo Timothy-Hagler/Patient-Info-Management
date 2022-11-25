@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/cjs/Row.js';
 
 var addedPersonData = {}
 var updatedPersonData = {}
-var accountType = localStorage.getItem("accountType")
+var accountType = sessionStorage.getItem("accountType")
 
 var volunteer = null;
 var nurse = null;
