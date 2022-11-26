@@ -451,7 +451,7 @@ function Patient_List() {
                       Emergency Contact 1's Name
                     </Form.Label>
                     <Col>
-                      <Form.Control type="email" placeholder={person.emergencyContact1_name} onChange={(e) => GetUpdatedDataInfo(e, "emergencyContact2_name")} />
+                      <Form.Control type="email" placeholder={person.emergencyContact1_name} onChange={(e) => GetUpdatedDataInfo(e, "emergencyContact1_name")} />
                     </Col>
                   </Form.Group>
   
