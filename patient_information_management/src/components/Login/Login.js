@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 
-var accountType = localStorage.getItem("accountType")
+var accountType = sessionStorage.getItem("accountType")
 
 
 //async function required for login-authentication
@@ -67,14 +67,15 @@ export default function Login({ setToken }) {
         let data = response.data[0]
         if(password === data["password"])
         {
-          localStorage.setItem("isLoggedIn", JSON.stringify(true))
-          localStorage.setItem("accountType", data["type"])
+          sessionStorage.setItem("isLoggedIn", JSON.stringify(true))
+          sessionStorage.setItem("accountType", data["type"])
           navigateToHelp();
         }
+        else {
+          window.location.reload();
+        }
     
-        window.location.reload();
     })
-    window.location.reload();
 }
 
   const handleSubmit = async e => {
