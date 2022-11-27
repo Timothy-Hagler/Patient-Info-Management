@@ -22,6 +22,19 @@ app.use('/api/login', (req, res) => {
 
 });
 
+app.get('/api/checkForDatabase', (req, res) => {
+    let query = ("SELECT * FROM Accounts.Persons");
+    connection.query(query, function (err, result, fields) {
+        if (err) throw err;
+      });
+    res.send({
+
+      status: 'up'
+
+    });
+
+})
+
 app.post('/api/updateData', (req, res) => {
 
     const schema = req.body.schema;

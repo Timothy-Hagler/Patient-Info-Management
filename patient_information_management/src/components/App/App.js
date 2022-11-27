@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter , Route, Routes} from 'react-router-dom';
 import React, {useState} from 'react';
-import Patient_Search from '../Patient_Search/Patient_Search.js';
 import Patient_List from '../Patient_List/Patient_List.js';
+import Error_Page from '../Error_Page/Error_Page.js'
 import Login from '../Login/Login.js';
 import Help_Page from '../Help_Page/Help_Page.js';
 import About_Us from '../About_Us/About_Us.js';
@@ -26,6 +26,7 @@ function App() {
               <div><Navbar /><Patient_List /></div>
             </Protected>} />
             <Route path="/help-page" element ={<div><Navbar /><Help_Page /></div>} />
+            <Route path="/error-page" element ={<Error_Page />} />
             <Route path="/about-us" element ={
             <Protected isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}>
               <div><Navbar /><About_Us /></div>

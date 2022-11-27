@@ -52,11 +52,25 @@ export default function Login({ setToken }) {
     navigate('/about-us');
   }
 
+  const navigateToErrorPage = () => {
+    navigate('/error-page');
+  }
+
   const [username, setUserName] = useState(); 
   
   const [password, setPassword] = useState();
 
   const [show, setShow] = useState(false); //Used for alert
+
+  CheckForDatabaseConnection()
+  function CheckForDatabaseConnection()
+  {
+    let url = (`http://localhost:8080/api/checkForDatabase/`)
+    
+    Axios.get(url).then((response)=>{
+    }).catch((error) => {if (JSON.stringify(error).includes("Error: Network Error")) {navigateToErrorPage()}})
+
+  }
 
   function LoadUsernameAndPassword(selection, schema, table, location, data) {
     let url = (`http://localhost:8080/api/getUsernameAndPassword/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
