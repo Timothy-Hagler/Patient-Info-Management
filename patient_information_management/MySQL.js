@@ -28,8 +28,8 @@ async function init() {
 function createConnection(username, password, database)
 { 
     return __createConnection({
-        //host: "24.42.199.116",
-        host: "173.16.38.250",
+        host: "24.42.199.116",
+        //host: "173.16.38.250",
         user: username,
         password: password,
         database: database
