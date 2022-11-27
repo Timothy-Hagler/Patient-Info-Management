@@ -27,12 +27,6 @@ app.get('/api/checkForDatabase', (req, res) => {
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
       });
-    res.send({
-
-      status: 'up'
-
-    });
-
 })
 
 app.post('/api/updateData', (req, res) => {
