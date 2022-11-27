@@ -9,7 +9,6 @@ import Axios from 'axios';
 
 var accountType = sessionStorage.getItem("accountType")
 
-
 //async function required for login-authentication
 //to 8080 port where authentication server runs
 async function loginUser(credentials) {

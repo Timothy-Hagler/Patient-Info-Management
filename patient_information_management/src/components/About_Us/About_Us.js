@@ -5,50 +5,10 @@ import Card from 'react-bootstrap/cjs/Card.js';
 import './About_Us.css';
 const About_Us = () => {
 
-    function InsertRow(schema, table, headers, values) {
-      Axios.post(`http://localhost:8080/api/insertRow/`, {schema: schema, table: table,
-      headers: headers, values: values}).then((response)=>{
-        alert("you inserted data")
-      })
-  }
-
-    function RemoveRow(schema, table, location, data) {
-      Axios.post(`http://localhost:8080/api/removeRow/`, {schema: schema, table: table,
-      location: location, data: data}).then((response)=>{
-        alert("you removed data")
-      })
-  }
-
-    function UpdateData(schema, table, col_to_update, updated_info, location, new_data) {
-      Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
-      col_to_update: col_to_update, updated_info: updated_info, location: location, data: new_data}).then((response)=>{
-        alert("you updated data")
-      })
-  }
-
-
-    function ShowPatientList() {
-      console.log("top of showing list")
-      let url = (`http://localhost:8080/api/patientList/`)
-      Axios.get(url).then((response)=>{
-        // this will print out all of the patients as json objects
-        for (let index in response.data)
-        {
-          console.log(response.data[index])
-        }
-      })
-  }
-
   return (
     <section>
     <div class="container">
         <h2><b>About Us</b></h2>
-       {/* <button className="update_btn" onClick={(() => UpdateData("PIMS", "Patients", "LastName", "'Smith'", "FirstName", "John"))}>Update Data</button>
-        <button className="search_btn" onClick={(() => SearchData("*", "PIMS", "Patients", "LastName", "Do"))}>Search</button>
-        <button className="patientList_btn" onClick={(() => ShowPatientList())}>Show Patient List</button>
-        <button className="insertRow_btn" onClick={(() => InsertRow("PIMS", "Patients", "PersonID, LastName, FirstName, Address, City", "'6', 'Doe', 'Jane', '901 Explorer Blvd. NW', 'Huntsville'"))}>Insert Row</button>
-  <button className="removeRow_btn" onClick={(() => RemoveRow("PIMS", "Patients", "LastName", "Doe"))}>Remove Row</button>
-        <br></br>*/}
         <br></br>
         <hr />
         <br></br>
