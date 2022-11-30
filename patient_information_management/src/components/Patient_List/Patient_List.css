@@ -1,108 +1,119 @@
-
-#searchbar{
-  margin-left: 15%;
-  padding:15px;
-  border-radius: 10px;
+#searchbar {
+	margin-left: 15%;
+	padding: 15px;
+	border-radius: 10px;
 }
 
 /* search bar text boxes */
-input[type=text] {
-  width: 30%;
-  -webkit-transition: width 0.15s ease-in-out;
-  transition: width 0.15s ease-in-out;
+input[type="text"] {
+	width: 30%;
+	-webkit-transition: width 0.15s ease-in-out;
+	transition: width 0.15s ease-in-out;
 }
 /* When the input field gets focus,
       change its width to 100% */
-input[type=text]:focus {
-  width: 30%;
+input[type="text"]:focus {
+	width: 30%;
 }
 
-#list{
-  font-size: 1.5em;
-  margin-left: 90px;
+#list {
+	font-size: 1.5em;
+	margin-left: 90px;
 }
 
-.patients{
-display: list-item; 
+.patients {
+	display: list-item;
 }
 /* Patient Name Display After Search Table */
-table, th, td {
-  border: 1px solid;
-  width: 100%;
+table,
+th,
+td {
+	border: 1px solid;
+	width: 100%;
 }
 
-
 .col-sm2 {
-text-align: center;
-justify-content: center;
-display:flex;
+	text-align: center;
+	justify-content: center;
+	display: flex;
 }
 
 #cardHeader2 {
-background-color: lightblue;
-font-weight: bolder;
-text-align: center;
+	background-color: lightblue;
+	font-weight: bolder;
+	text-align: center;
 }
 
 h2 {
-text-align: center;
+	text-align: center;
 }
 
 #cardHeader {
-  background-color: lightblue;
-  padding: 5px 0px;
-  font-weight: bolder;
-  text-align: center;
+	background-color: lightblue;
+	padding: 5px 0px;
+	font-weight: bolder;
+	text-align: center;
 }
 
 /* Card that hpolds the list of patients */
 .PatientListCard {
-margin-top: 50px;
+	margin-top: 50px;
 }
 
 td {
-table-layout: fixed;
-width: 500px;
+	table-layout: fixed;
+	width: 500px;
 }
 
 #addPatient {
-float: right;
-margin-right: 50px;
-margin-top: 11px;
-padding: 0px 0px;
+	float: right;
+	margin-right: 50px;
+	margin-top: 11px;
+	padding: 0px 0px;
 }
 
 #searchForPatient {
-float: right;
-margin-right: 50px;
-margin-top: 11px;
-padding: 0px 0px;
+	float: right;
+	margin-right: 50px;
+	margin-top: 11px;
+	padding: 0px 0px;
 }
 
 #colLabels {
-font-weight: bolder;
+	font-weight: bolder;
 }
 
 @media screen {
-  #printSection {
-      display: none;
-  }
+	#printSection {
+		display: none;
+	}
 }
 
 @media print {
-  body * {
-    visibility:hidden;
-  }
-  #printSection, #printSection * {
-    visibility:visible;
-  }
-  #printSection {
-    position:absolute;
-    left: 125px;
-    top:0;
-  }
+	body * {
+		visibility: hidden;
+	}
+	#printSection,
+	#printSection * {
+		visibility: visible;
+	}
+	#printSection {
+		position: absolute;
+		left: 125px;
+		top: 0;
+	}
 }
 
 #viewModalCard {
-  padding-left: 50px;
+	padding-left: 50px;
+}
+
+label {
+	display: block;
+	font: 1rem "Fira Sans", sans-serif;
+}
+
+input,
+label {
+	margin: 0.4rem 0;
 }
