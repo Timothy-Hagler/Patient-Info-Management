@@ -6,17 +6,17 @@ Professor Adam Colwell
 Fall 2022
 */
 
-import { createConnection as __createConnection } from 'mysql';
+import { createConnection as __createConnection } from "mysql";
 
 /*
 This function initializes the connection to the database.
 */
-function createConnection(username, password, database) { 
+function createConnection(username, password, database) {
   return __createConnection({
-      host: "24.42.199.116",
-      user: username,
-      password: password,
-      database: database
+    host: "24.42.199.116",
+    user: username,
+    password: password,
+    database: database,
   });
 }
 
@@ -24,10 +24,10 @@ function createConnection(username, password, database) {
 This function connects the user based on the connection created in createConnection
 */
 function connect(connection) {
-    connection.connect(function(err) {
+  connection.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
-});
+  });
 }
 
 const _createConnection = createConnection;
