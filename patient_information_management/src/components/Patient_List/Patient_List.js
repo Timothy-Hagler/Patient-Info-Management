@@ -1,9 +1,17 @@
+/*
+Authors: Timothy Hagler, Sydney Keller, Ben Stone, Laurel Strelzoff
+CS 499-01
+Senior Design Final Deliverable
+Professor Adam Colwell
+Fall 2022
+*/
+
+//import libraries
 import React, {useState} from 'react';
 import './Patient_List.css';
 import Axios from 'axios'
 import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
-import { useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/cjs/Modal.js';
 import { Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/cjs/Form.js';
