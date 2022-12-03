@@ -147,7 +147,6 @@ function Patient_List() {
       }
 
       InsertRow("PIMS", "Patients", keys, dataString)
-      //window.location.reload();
     }
 
     function RemoveRow(schema, table, location, data) {
@@ -185,6 +184,11 @@ function Patient_List() {
     const handleHideUpdateWarnWithUpdate = () => {
       SaveUpdatedDataToPerson()
       setShowUpdateWarn(false);
+      window.location.reload();
+    }
+    const handleHideAddWarn = () => {
+      SaveDataToPerson()
+      handleHideSave(false);
       window.location.reload();
     }
     const handleDeletePatient = () => {
@@ -1141,7 +1145,7 @@ function Patient_List() {
   
           <Modal.Footer>
             <Button variant="secondary" onClick={handleHideSave}>Cancel</Button>
-            <Button variant="primary" onClick={SaveDataToPerson}>Yes</Button>
+            <Button variant="primary" onClick={handleHideAddWarn}>Yes</Button>
           </Modal.Footer>
         </Modal>
         </>
