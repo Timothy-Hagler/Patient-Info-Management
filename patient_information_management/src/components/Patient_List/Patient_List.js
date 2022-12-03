@@ -18,10 +18,11 @@ import Form from 'react-bootstrap/cjs/Form.js';
 import Row from 'react-bootstrap/cjs/Row.js';
 
 
-var addedPersonData = {}
-var updatedPersonData = {}
-var accountType = sessionStorage.getItem("accountType")
+var addedPersonData = {} // empty dictionary to hold addedPerson data
+var updatedPersonData = {} // empty dictionary to hold updatedPerson data
+var accountType = sessionStorage.getItem("accountType") // retrieve sessionStorage to determine account type
 
+// initialize all accounts to null
 var volunteer = null;
 var nurse = null;
 var staff = null;
@@ -53,16 +54,16 @@ else if (accountType === "doctor")
 function Patient_List() {
 
     // Create hooks for the page
-    const [search_results, setSearchResults] = useState([{}]);
-    const [highestID, setHighestID] = useState(0);
-    const [dataRetrieved, setDataRetrieved] = useState(false);
-    const [person, setPerson] = useState({});
-    const [show, setShow] = useState(false);
-    const [show2, setShow2] = useState(false);
-    const [showView, setShowView] = useState(false);
-    const [showEdit, setShowEdit] = useState(false);
-    const [showDeleteWarn, setShowDeleteWarn] = useState(false);
-    const [showUpdateWarn, setShowUpdateWarn] = useState(false);
+    const [search_results, setSearchResults] = useState([{}]); // search results hook handles who shows up in patient-list
+    const [highestID, setHighestID] = useState(0); // final patient added hook
+    const [dataRetrieved, setDataRetrieved] = useState(false); // verifies the data was retrieved from database
+    const [person, setPerson] = useState({}); // person hook
+    const [show, setShow] = useState(false); // cancel button hook
+    const [show2, setShow2] = useState(false); // searchPatientModal show hook
+    const [showView, setShowView] = useState(false); // view information modal hook
+    const [showEdit, setShowEdit] = useState(false); // show edit modal hook
+    const [showDeleteWarn, setShowDeleteWarn] = useState(false); // delete warning hook
+    const [showUpdateWarn, setShowUpdateWarn] = useState(false); // update warning hook
 
     // Create events to handle different button presses
     const handleCancel = () => setShow(false);
