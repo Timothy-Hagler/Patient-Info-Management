@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/cjs/Card.js';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Axios from 'axios';
+import Alert from 'react-bootstrap/cjs/Alert.js';
 
 var accountType = sessionStorage.getItem("accountType")
 
@@ -69,25 +70,49 @@ export default function Login({ setToken }) {
     
     Axios.get(url).then((response)=>{
     }).catch((error) => {if (JSON.stringify(error).includes("Error: Network Error")) {navigateToErrorPage()}})
+  }
 
+  function incorrectUsernameOrPassword()
+  {
+    if(JSON.parse(sessionStorage.getItem("showMessage")))
+      return(
+        <>
+          <div>
+            <Alert variant="danger" onClose={() => setShow(false)}>
+              <Alert.Heading>Incorrect Username or Password</Alert.Heading>
+            </Alert>
+          </div>
+        </>
+      )
+      
   }
 
   function LoadUsernameAndPassword(selection, schema, table, location, data) {
     let url = (`http://localhost:8080/api/getUsernameAndPassword/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
     
     Axios.get(url).then((response)=>{
-      // this will insert the data of the patient
+        // this will insert the data of the patient
         let data = response.data[0]
+
+        //If username is incorrect
+        if (data == null)
+        {
+            sessionStorage.setItem("showMessage", JSON.stringify(true));
+            window.location.reload();
+        }
+        
+        //If password is incorrect
         if(password === data["password"])
         {
           sessionStorage.setItem("isLoggedIn", JSON.stringify(true))
           sessionStorage.setItem("accountType", data["type"])
+          sessionStorage.setItem("showMessage", JSON.stringify(false))
           navigateToHelp();
         }
         else {
+          sessionStorage.setItem("showMessage", JSON.stringify(true));
           window.location.reload();
         }
-    
     })
 }
 
@@ -123,6 +148,7 @@ export default function Login({ setToken }) {
                     <Card border="primary" className="LoginCard">
                       <Card.Header>Login to PIMS</Card.Header>
                       <Card.Body>
+                        {incorrectUsernameOrPassword()}
                         <label className = "username"><p>Username</p></label> {/*&nbsp adds a space*/}
                         <input text = "text" required onChange={e => setUserName(e.target.value)}/>
                         <br></br>   
