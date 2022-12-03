@@ -89,7 +89,13 @@ function Patient_List() {
 
     // function to close modal button on patient-search modal
     const handleSearchModalCancel = () => setShow2(false);
-
+  
+    // Function to open the add patient modal
+    function AddNewPatient()
+    {
+      setShow(true)
+    }
+  
     // Insert a row into the database based on the user input
     function InsertRow(schema, table, headers, values) {
       Axios.post(`http://localhost:8080/api/insertRow/`, {schema: schema, table: table,
@@ -1203,116 +1209,133 @@ function Patient_List() {
         </>
         )
       }
-  
-      function AddNewPatient()
-      {
-        setShow(true)
-      }
-  
-      function GetPatientsFromDatabase() {
-        if (dataRetrieved === false)
-          {
-            let people = []
-  
-            let url = ("http://localhost:8080/api/getFullPatientTable/")
-            Axios.get(url).then((response)=>{
-              // this will insert the data of each patient reaching the search criteria
-                let patients = response.data
-                for (let i = 0; i < patients.length; i++)
-                {
-                  let patientData = {}
-                  for (let info in patients[i])
-                  {
-                      patientData[info] = patients[i][info]
-                  }
-                  people.push(patientData)
-                }
-                setSearchResults(people)
-                setDataRetrieved(true)
-            })
-          }
-    }
 
-      function LoadData()
-      {
-            let data = []
+  // This function gets all of the patients stored in the database
+  function GetPatientsFromDatabase() {
+    if (dataRetrieved === false) {
+      let people = []
+
+      let url = ("http://localhost:8080/api/getFullPatientTable/")
+      Axios.get(url).then((response)=>{
+
+        // This inserts the data of every patient in the database
+        let patients = response.data
+
+        // iterates through the entire database
+        for (let i = 0; i < patients.length; i++)
+        {
+          let patientData = {}
+          for (let info in patients[i])
+          {
+              patientData[info] = patients[i][info]
+          }
+          people.push(patientData)
+        }
+        
+        // sets the results of the search and allows the data to be retrieved
+        setSearchResults(people)
+        setDataRetrieved(true)
+      })
+    }
+  }
   
-            GetPatientsFromDatabase()
-  
-            for (let i = 0; i < search_results.length; i++)
-            {
-            data.push(<tr>
-                {/* entry for patient */}
+  // This function loads data from the database and creates table entries for each person.
+  function LoadData() {
+        let data = []
+
+        GetPatientsFromDatabase()
+
+        // Iterates through all patients in the database
+        for (let i = 0; i < search_results.length; i++) {
+          data.push(
+              <tr>
+                {/* This is an entry for an individual patient */}
                 <td>{search_results[i].firstName}</td>
                 <td>{search_results[i].middleName}</td>
                 <td>{search_results[i].lastName}</td>
                 <td>{search_results[i].sex}</td>
                 <td>{search_results[i].dateOfBirth}</td>
+
+                {/*These calls create the view button and edit button corresponding to the person received from the database */}
                 <td>{CreateViewButton(search_results[i].personID)}</td>
                 {CreateEditButton(search_results[i].personID)}
-                <hr></hr>
-              </tr>)
-            }
-            return data
-      }
-  
-      function GetAddedDataInfo(event, field)
-      {
-        addedPersonData[field] = event.target.value
-      }
-  
-      function GetUpdatedDataInfo(event, field)
-      {
-        updatedPersonData[field] = event.target.value
-      }
-
-    function printElement(elem) {
-        var domClone = elem.cloneNode(true);
-
-        var $printSection = document.getElementById("printSection");
-
-        if (!$printSection) {
-            var $printSection = document.createElement("div");
-            $printSection.id = "printSection";
-            document.body.appendChild($printSection);
+          </tr>)
         }
+        return data
+  }
 
-        $printSection.innerHTML = "";
-        $printSection.appendChild(domClone);
-        window.print();
+  
+  // This function gets the user's input when adding a patient.
+  function GetAddedDataInfo(event, field) {
+    addedPersonData[field] = event.target.value
+  }
+
+  // This function gets updated data from the database and renders it
+  function GetUpdatedDataInfo(event, field) {
+    updatedPersonData[field] = event.target.value
+  }
+
+  /*
+  This function generates a clone of the html view card and generates a print call that allows the user to print the view modal card as a report.
+  */
+  function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+
+    var $printSection = document.getElementById("printSection");
+
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
     }
+
+    // Appends the dom clone to an innerHTML value and generates the browser's default print dialogue
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+  }
   
   return (
    <>
-          <div id = "addPatient">
-            <Button class = 'addPatientButton' onClick = {() => AddNewPatient()} style={{display: volunteer ? 'none' : '?'}}>
-                Add new Patient
-            </Button>
-          </div>
-          <div id = "searchForPatient">
-            <Button class = 'searchForPatientButton' onClick = {() => SearchPatientModalShow()}>
-                Search for Patient
-            </Button>
-          </div>
+      {/*This div initializes the addPatient and searchForPatient buttons */}
+      <div className = "buttonDiv">
+        <div id = "addPatient">
+          <Button class = 'addPatientButton' onClick = {() => AddNewPatient()} style={{display: volunteer ? 'none' : '?'}}>
+              Add new Patient
+          </Button>
+        </div>
+
+        <div id = "searchForPatient">
+          <Button class = 'searchForPatientButton' onClick = {() => SearchPatientModalShow()}>
+              Search for Patient
+          </Button>
+        </div>
+      </div>
+
+      {/*This section contains the card with all of the patient data pulled from the API 
+         This data gets rendered in the table initialized here below the header values.*/}
+      <section>
         <Card border="primary" className="PatientListCard">
-        <Card.Header id="cardHeader"><h4>Patient List</h4>
-        </Card.Header>
-        <Card.Body>
-          <tr id="colLabels">
-            <td>First Name</td>
-            <td>Middle Name</td>
-            <td>Last Name</td>
-            <td>Sex</td>
-            <td>Date Of Birth</td>
-          </tr>
-          {LoadData()}
-        </Card.Body>
+          <Card.Header id="cardHeader"><h4>Patient List</h4></Card.Header>
+          <Card.Body>
+            <tr id="colLabels">
+              <td>First Name</td>
+              <td>Middle Name</td>
+              <td>Last Name</td>
+              <td>Sex</td>
+              <td>Date Of Birth</td>
+            </tr>
+            {LoadData()}
+          </Card.Body>
         </Card>
-        {CreatePatientSearchModal()} {/* create a modal behind the scenes but the hook setShow2 calls to show the modal*/}
-        {CreateAddPatientModal()}
-        {CreateViewModal()}
-        {CreateEditModal()}
-        </>
+      </section>
+
+      {/*These calls generate the html for the modal dialogues, but it keeps them hidden until their corresponding hooks have been called. */}
+      {CreatePatientSearchModal()}
+      {CreateAddPatientModal()}
+      {CreateViewModal()}
+      {CreateEditModal()}
+  </>
 
 )}
 
