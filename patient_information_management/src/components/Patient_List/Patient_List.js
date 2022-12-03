@@ -1848,6 +1848,7 @@ function Patient_List() {
           {/*These calls create the view button and edit button corresponding to the person received from the database */}
           <td>{CreateViewButton(search_results[i].personID)}</td>
           {CreateEditButton(search_results[i].personID)}
+          <hr></hr>
         </tr>
       );
     }
