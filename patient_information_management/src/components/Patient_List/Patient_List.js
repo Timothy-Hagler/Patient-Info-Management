@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './Patient_List.css';
 import Axios from 'axios'
 import Button from 'react-bootstrap/cjs/Button.js';
 import Card from 'react-bootstrap/cjs/Card.js';
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/cjs/Modal.js';
 import { Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/cjs/Form.js';
@@ -37,8 +37,14 @@ else if (accountType === "doctor")
   doctor = true;
 }
 
+/*
+  Create a page that will display the patient list. Information will be accessible
+  based on the user's account type. There will be a way to view a patient's information,
+  search for a patient, update a patient's information, and add a new patient.
+*/
 function Patient_List() {
 
+    // Create hooks for the page
     const [search_results, setSearchResults] = useState([{}]);
     const [highestID, setHighestID] = useState(0);
     const [dataRetrieved, setDataRetrieved] = useState(false);
@@ -49,12 +55,12 @@ function Patient_List() {
     const [showEdit, setShowEdit] = useState(false);
     const [showDeleteWarn, setShowDeleteWarn] = useState(false);
     const [showUpdateWarn, setShowUpdateWarn] = useState(false);
+
+    // Create events to handle different button presses
     const handleCancel = () => setShow(false);
     const handleCancelView = () => setShowView(false);
-    //Navigation functions
-    const navigate = useNavigate();
 
-   // hook to close the modal of editing patient-list data and update the data from the database since nothing was updated
+    // hook to close the modal of editing patient-list data and update the data from the database since nothing was updated
     const handleCancelEdit = () =>
     {
       updatedPersonData = {}
@@ -66,13 +72,6 @@ function Patient_List() {
       setShow2(false);
     }
 
-    const handleShow = (personID) => {
-      setShow(true);
-    }
-
-
-    const handleClose2 = () => setShow2(false);
-
     // once the Search for Patient button is clicked, this renders the modal
     const SearchPatientModalShow = () => {
       setShow2(true);
@@ -82,43 +81,49 @@ function Patient_List() {
     // function to close modal button on patient-search modal
     const handleSearchModalCancel = () => setShow2(false);
 
+    // Insert a row into the database based on the user input
     function InsertRow(schema, table, headers, values) {
       Axios.post(`http://localhost:8080/api/insertRow/`, {schema: schema, table: table,
       headers: headers, values: values}).then((response)=>{})
       addedPersonData = {}
   }
 
+    // Get the highest ID of the last person in the database and set it to the hook
     function GetHighestPersonID() {
       let url = (`http://localhost:8080/api/getHighestPersonID/?schema=PIMS&table=Patients`)
       Axios.get(url).then((response)=>{
-        // this will set the highest id based on the database
           setHighestID(response.data[0]["MAX(personID)"])
       })
   }
 
+    // Update data in the database based on what a user change in the edit modal
     function UpdateData(schema, table, cols_to_update, updated_info, location, personID) {
-      if (Object.keys(updatedPersonData).length !== 0)
-      {
-      Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
-      cols_to_update: cols_to_update, updated_info: updated_info, location: location, data: personID}).then((response)=>{})
-      }
-      updatedPersonData = {}
+        if (Object.keys(updatedPersonData).length !== 0)
+        {
+        Axios.post(`http://localhost:8080/api/updateData/`, {schema: schema, table: table,
+        cols_to_update: cols_to_update, updated_info: updated_info, location: location, data: personID}).then((response)=>{})
+        }
+        updatedPersonData = {}
   }
 
+    // Get the keys of the changed data then update the data
     function SaveUpdatedDataToPerson()
     {
       let keys = (Object.keys(updatedPersonData))
       UpdateData("PIMS", "Patients", keys, updatedPersonData, "personID", person["personID"])
     }
 
+    // Save data to a person in the database when adding a new patient
     function SaveDataToPerson()
     {
+      // Ensure there was data input
       if (Object.keys(addedPersonData).length === 0)
       {
           window.location.reload();
           return
       }
 
+      // Ensure the patient has a first and last name input
       if (addedPersonData["firstName"] == null ||
           addedPersonData["lastName"] == null)
           {
@@ -126,8 +131,10 @@ function Patient_List() {
               return
           }
 
+      // Set the new patient's ID to the highest ID + 1
       addedPersonData["personID"] = highestID + 1
 
+      // Make an empty middle name if there is not one. Keeps search functionality from failing
       if (addedPersonData["middleName"] == null)
       {
           addedPersonData["middleName"] = ""
@@ -137,6 +144,7 @@ function Patient_List() {
       let values = (Object.values(addedPersonData))
       let dataString = ``
 
+      // append each added value to a string in order to add the patient
       for (let i = 0; i < values.length; i++)
       {
         dataString = dataString + `'${values[i]}'`
@@ -149,80 +157,93 @@ function Patient_List() {
       InsertRow("PIMS", "Patients", keys, dataString)
     }
 
+    // Remove a patient from the database
     function RemoveRow(schema, table, location, data) {
       Axios.post(`http://localhost:8080/api/removeRow/`, {schema: schema, table: table,
       location: location, data: data}).then((response)=>{})
     }
 
+    // hide the save confirmation modal and reset the addedPersonData
     function handleHideSave()
     {
       addedPersonData = {}
       setShowSave(false);
     }
 
-    const [showWarn, setShowWarn] = useState(false);
-
-    // const handleShowWarn = () => {
-    //   setShow(false);
-    //   setShowWarn(true);
-    // }
-
+    // hide the edit modal and show the confirmation modal
     const handleDeleteWarn = () => {
       setShowEdit(false);
       setShowDeleteWarn(true);
     }
+
+    // hide the edit modal and show the confirmation modal
     const handleUpdateWarn = () => {
       setShowEdit(false);
       setShowUpdateWarn(true);
     }
+
+    // hide the confirmation modal
     const handleHideDeleteWarn = () => {
       setShowDeleteWarn(false);
     }
+
+    // hide the confirmation modal
     const handleHideUpdateWarn = () => {
       setShowUpdateWarn(false);
     }
+
+    // Update the patient's data, hide the modal, reload the page to show the new data
     const handleHideUpdateWarnWithUpdate = () => {
       SaveUpdatedDataToPerson()
       setShowUpdateWarn(false);
       window.location.reload();
     }
+
+    // Add the new patient's data, hide the modal, reload the page to show the new data
     const handleHideAddWarn = () => {
       SaveDataToPerson()
       handleHideSave(false);
       window.location.reload();
     }
+
+    // Delete the patient from the database, hide the modal, reload the page to show changes
     const handleDeletePatient = () => {
       RemoveRow("PIMS", "Patients", "personID", person.personID)
       setShowDeleteWarn(false);
       window.location.reload();
     }
 
-    // const handleHideWarn = () => setShowWarn(false);
+  
+    // hook for showing confirmation of adding a patient
+    const [showSave, setShowSave] = useState(false);
 
-   const [showSave, setShowSave] = useState(false);
+    // show confirmation window for adding patient
+    const handleShowSave = () => {
+        setShow(false);
+        setShowSave(true);
+      }
 
-   const handleShowSave = () => {
-      setShow(false);
-      setShowSave(true);
-    }
-
+    // hide add patient modal and reset the added data
     const handleHideModal = () => {
       addedPersonData = {}
       setShow(false);
     }
 
+    // Open the view patient modal. Patient is based on the given person ID
     function OpenViewPatient(personID)
     {
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
         setShowView(true)
     }
 
+    // Open the edit patient modal. Patient is based on the given person ID
     function OpenEditPatient(personID)
     {
         SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID)
         setShowEdit(true)
     }
 
+    // Create the view button on each patient based on the given person ID
     function CreateViewButton(personID)
     {
         return (
@@ -232,6 +253,7 @@ function Patient_List() {
         )
     }
 
+    // Create the edit button on each patient based on the given person ID. Volunteers cannot see this button
     function CreateEditButton(personID)
     {
         return (
@@ -241,45 +263,65 @@ function Patient_List() {
         )
     }
 
-    function SearchForData(selection, schema, table, location) {
+    // Search for a patient based on the given information in the search modal
+    function SearchForData(selection, schema, table) {
+      
+      // Get the locations and data for searching
       let information = GetDataFromFields()
       let locations = information[0]
       let data = information[1]
       let people = []
 
       let url = (`http://localhost:8080/api/searchData/?selection=${selection}&schema=${schema}&table=${table}&locations=${[locations]}&data=${data}`)
+
       Axios.get(url).then((response)=>{
-        // this will insert the data of each patient reaching the search criteria
           let patients = response.data
+
+          // run through each patient that reaches the search criteria
           for (let i = 0; i < patients.length; i++)
           {
             let patientData = {}
+            
+            // put data for each patient into the patientData dictionary
             for (let info in patients[i])
             {
                 patientData[info] = patients[i][info]
             }
+            
+            // add the person to the overall list
             people.push(patientData)
           }
+          
+          // set the search results
           setSearchResults(people)
       })
+      
+      // hide the search modal
       setShow2(false);
   }
 
+    // Get the data from the search fields
     function GetDataFromFields()
     {
       let data = []
       let fields = ["FirstName", "MiddleName", "LastName"]
       let locations = ["firstName", "middleName", "lastName"]
+      
+      // get the data based on the ID of the field
       for (let i = 0; i < fields.length; i++)
       {
         data.push(document.getElementById(fields[i]).value)
       }
+      
+      // return both locations and data for modularity
       return [locations, data]
     }
 
+    // Collect all the patient information and set the person based on that
     function SetPersonToPatientData(selection, schema, table, location, data) {
       let url = (`http://localhost:8080/api/getPatientInformation/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`)
       let patientData = {}
+
       Axios.get(url).then((response)=>{
         // this will insert the data of the patient
           let data = response.data[0]
@@ -291,48 +333,47 @@ function Patient_List() {
       })
   }
 
+      // Create the patient search modal
       function CreatePatientSearchModal()
       {
         return(
         <>
         <div class="col-sm2">
-        <head>
-        <a href="/css/style.css"></a>
-        </head>
-        <Modal class = "col-sm2" show={show2} onHide={handlePatientSearchModalCancel} >
-        <Card border="primary" style={{ width: '32rem' }}>
-        <Card.Header id="cardHeader2"><h3>Patient Search</h3></Card.Header> 
-        <Card.Body>      
-        <div data-tip= "Enter First Name">
-        <label for="First Name">First Name: &nbsp;</label>
-        <input type="text" id="FirstName" name="FirstName"></input>
-        </div><br></br>
-        <div data-tip="Enter First Name">
-        <label for="Last Name">Middle Name: &nbsp; </label>
-        <input type="text" id="MiddleName" name="MiddleName"></input><br></br>
-        </div><br></br>
-        <div data-tip="Enter First Name">
-        <label for="Last Name">Last Name: &nbsp;</label>
-        <input type="text" id="LastName" name="LastName"></input><br></br>
-        </div><br></br>
-        <div data-tip="Enter First Name"></div>
-        <div>
-        <Modal.Footer>
-        <Button class = 'modalSearchButton' onClick = {() => SearchForData('*', 'PIMS', 'Patients')}> 
-        Search
-        </Button>
-        <Button variant="secondary" class = 'modalCancelButton' onClick = {handleSearchModalCancel} > 
-        Cancel
-        </Button>
-        </Modal.Footer>
-        </div>
-        </Card.Body>
-        </Card>
-        </Modal>
+          <Modal class = "col-sm2" show={show2} onHide={handlePatientSearchModalCancel} >
+            <Card border="primary" style={{ width: '32rem' }}>
+              <Card.Header id="cardHeader2"><h3>Patient Search</h3></Card.Header> 
+              <Card.Body>      
+                <div data-tip= "Enter First Name">
+                  <label for="First Name">First Name: &nbsp;</label>
+                  <input type="text" id="FirstName" name="FirstName"></input>
+                </div><br></br>
+                <div data-tip="Enter First Name">
+                  <label for="Last Name">Middle Name: &nbsp; </label>
+                  <input type="text" id="MiddleName" name="MiddleName"></input><br></br>
+                </div><br></br>
+                <div data-tip="Enter First Name">
+                  <label for="Last Name">Last Name: &nbsp;</label>
+                  <input type="text" id="LastName" name="LastName"></input><br></br>
+                </div><br></br>
+                <div data-tip="Enter First Name"></div>
+                <div>
+                  <Modal.Footer>
+                    <Button class = 'modalSearchButton' onClick = {() => SearchForData('*', 'PIMS', 'Patients')}> 
+                    Search
+                    </Button>
+                    <Button variant="secondary" class = 'modalCancelButton' onClick = {handleSearchModalCancel} > 
+                    Cancel
+                    </Button>
+                  </Modal.Footer>
+                </div>
+              </Card.Body>
+            </Card>
+          </Modal>
         </div>
         </>   
       )}
 
+      // Create the edit patient modal
       function CreateEditModal()
       {
           return (
@@ -706,6 +747,7 @@ function Patient_List() {
           )
       }
   
+      // Create the view patient modal
       function CreateViewModal()
       {
           return (
@@ -789,6 +831,7 @@ function Patient_List() {
           )
       }
 
+      // Create the add patient modal
       function CreateAddPatientModal()
       {
         GetHighestPersonID()
@@ -1232,11 +1275,6 @@ function Patient_List() {
   
   return (
    <>
-        <head>
-        <a href="/css/style.css"></a>
-        </head>
-       
-
           <div id = "addPatient">
             <Button class = 'addPatientButton' onClick = {() => AddNewPatient()} style={{display: volunteer ? 'none' : '?'}}>
                 Add new Patient
