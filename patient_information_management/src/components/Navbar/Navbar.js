@@ -1,13 +1,15 @@
 import logo from '../images/PIMS_emblem.png';
 
 export default function Navbar(){
-    return(
-      <nav class="navbar navbar-expand-lg">
+  /*
+  This function renders a Navbar with links to the Patient List, About Us Page and Help Page.
+  */
+  return(
+    <nav class="navbar navbar-expand-lg">
+      {/* Renders the logo onto the Navbar */}
       <img src={logo} alt="logo" width="32" height="32"></img>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
 
+      {/* Renders hyperlinks onto the Navbar */}
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar navbar-nav mr-auto">
           <li class="nav-item">
@@ -21,13 +23,18 @@ export default function Navbar(){
           </li>
         </ul>
       </div>
+
+      {/* Renders the Logout hyperlink onto the Navbar */}
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar navbar-nav ml-auto">
           <li class="nav-item" id="logOutButton">
+
+            {/* The line below sets the value of isLoggedIn in local storage to false, which protects the other routes again. */}
             <a class="nav-link" href="/" onClick={() => {sessionStorage.setItem("isLoggedIn", JSON.stringify(false)); sessionStorage.setItem("accountType", "")}} >Log Out</a>
           </li>
         </ul>
       </div>
-    </nav>
-    );
+
+  </nav>
+  );
 }
