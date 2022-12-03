@@ -147,7 +147,7 @@ function Patient_List() {
       }
 
       InsertRow("PIMS", "Patients", keys, dataString)
-      window.location.reload();
+      //window.location.reload();
     }
 
     function RemoveRow(schema, table, location, data) {
