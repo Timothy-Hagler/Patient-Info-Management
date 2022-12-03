@@ -1,6 +1,6 @@
 import './App.css';
 import { BrowserRouter , Route, Routes} from 'react-router-dom';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Patient_List from '../Patient_List/Patient_List.js';
 import Error_Page from '../Error_Page/Error_Page.js'
 import Login from '../Login/Login.js';
@@ -9,8 +9,29 @@ import About_Us from '../About_Us/About_Us.js';
 import logo from '../images/PIMS_emblem.png';
 import Navbar from '../Navbar/Navbar.js'
 import Protected from './Protected.js';
+import axios from 'axios'
 
 function App() {
+
+    //creating IP state
+  const [ip, setIP] = useState('');
+
+  //creating function to load ip address from the API
+  const getData = async () => {
+    const res = await axios.get('https://geolocation-db.com/json/')
+    console.log(res.data);
+    setIP(res.data.IPv4)
+  }
+
+  useEffect( () => {
+    //passing getData method to the lifecycle method
+    getData()
+
+  }, [])
+
+  if (ip === "146.229.255.21")
+  {
+
   return(
     <>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"></link>
@@ -26,7 +47,6 @@ function App() {
               <div><Navbar /><Patient_List /></div>
             </Protected>} />
             <Route path="/help-page" element ={<div><Navbar /><Help_Page /></div>} />
-            <Route path="/error-page" element ={<Error_Page />} />
             <Route path="/about-us" element ={
             <Protected isLoggedIn={JSON.parse(sessionStorage.getItem("isLoggedIn"))}>
               <div><Navbar /><About_Us /></div>
@@ -34,7 +54,18 @@ function App() {
           </Routes>
         </BrowserRouter>
     </>
-  );
+  )};
+
+  return (
+      <>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Error_Page />} />
+          </Routes>
+        </BrowserRouter>
+    </>
+
+  )
 }
 
 export default App;
