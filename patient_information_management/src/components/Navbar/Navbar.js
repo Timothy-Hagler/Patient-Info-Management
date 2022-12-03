@@ -1,3 +1,11 @@
+/*
+Authors: Timothy Hagler, Sydney Keller, Ben Stone, Laurel Strelzoff
+CS 499-01
+Senior Design Final Deliverable
+Professor Adam Colwell
+Fall 2022
+*/
+
 import logo from '../images/PIMS_emblem.png';
 
 export default function Navbar(){
