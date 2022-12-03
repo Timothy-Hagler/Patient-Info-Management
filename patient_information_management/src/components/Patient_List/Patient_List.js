@@ -187,6 +187,11 @@ function Patient_List() {
       setShowUpdateWarn(false);
       window.location.reload();
     }
+    const handleHideAddWarn = () => {
+      SaveDataToPerson()
+      handleHideSave(false);
+      window.location.reload();
+    }
     const handleDeletePatient = () => {
       RemoveRow("PIMS", "Patients", "personID", person.personID)
       setShowDeleteWarn(false);
@@ -1141,7 +1146,7 @@ function Patient_List() {
   
           <Modal.Footer>
             <Button variant="secondary" onClick={handleHideSave}>Cancel</Button>
-            <Button variant="primary" onClick={SaveDataToPerson}>Yes</Button>
+            <Button variant="primary" onClick={handleHideAddWarn}>Yes</Button>
           </Modal.Footer>
         </Modal>
         </>
