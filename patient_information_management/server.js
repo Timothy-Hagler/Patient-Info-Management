@@ -90,7 +90,7 @@ app.post('/api/removeRow', (req, res) => {
 
   // update the sql safe updates to ensure proper deletion
   connection.query("SET SQL_SAFE_UPDATES = 0");
-  
+ 
   // query the database
   connection.query(query, function (err, result, fields) {
       if (err) throw err;
