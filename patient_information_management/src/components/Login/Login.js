@@ -23,18 +23,6 @@ export default function Login() {
     navigate("/help-page");
   };
 
-  const navigateToLogin = () => {
-    navigate("/");
-  };
-
-  const navigateToPatientList = () => {
-    navigate("/patient-list");
-  };
-
-  const navigateToAboutUs = () => {
-    navigate("/about-us");
-  };
-
   //hooks used for username and password
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
