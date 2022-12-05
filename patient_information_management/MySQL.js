@@ -13,7 +13,7 @@ This function initializes the connection to the database.
 */
 function createConnection(username, password, database) {
   return __createConnection({
-    host: "24.42.199.116",
+    host: "24.42.199.116", // change to your public ipv4 or localhost
     user: username,
     password: password,
     database: database,
