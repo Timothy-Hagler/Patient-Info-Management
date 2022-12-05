@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json())
 
 // Initializes connection using code in MySQL.js
-let connection = createConnection("admindb", "password", "PIMS")
+let connection = createConnection("admindb", "password", "PIMS") // format: username, password, schema
 connect(connection)
 
 app.listen(8080, () => console.log('API is running on http://localhost:8080/'));
