@@ -550,7 +550,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="tel"
                       placeholder={person.homePhone}
                       onChange={(e) => GetUpdatedDataInfo(e, "homePhone")}
                     />
@@ -563,7 +563,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="tel"
                       placeholder={person.workPhone}
                       onChange={(e) => GetUpdatedDataInfo(e, "workPhone")}
                     />
@@ -580,7 +580,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="tel"
                       placeholder={person.cellPhone}
                       onChange={(e) => GetUpdatedDataInfo(e, "cellPhone")}
                     />
@@ -616,7 +616,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="tel"
                       placeholder={person.emergencyContactPhone_1}
                       onChange={(e) =>
                         GetUpdatedDataInfo(e, "emergencyContactPhone_1")
@@ -654,7 +654,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="tel"
                       placeholder={person.emergencyContactPhone_2}
                       onChange={(e) =>
                         GetUpdatedDataInfo(e, "emergencyContactPhone_2")
@@ -1361,7 +1361,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="tel"
                     onChange={(e) => GetAddedDataInfo(e, "homePhone")}
                   />
                 </Col>
@@ -1373,7 +1373,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="tel"
                     onChange={(e) => GetAddedDataInfo(e, "workPhone")}
                   />
                 </Col>
@@ -1385,7 +1385,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="tel"
                     onChange={(e) => GetAddedDataInfo(e, "cellPhone")}
                   />
                 </Col>
@@ -1419,7 +1419,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="tel"
                     onChange={(e) =>
                       GetAddedDataInfo(e, "emergencyContactPhone_1")
                     }
@@ -1455,7 +1455,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="tel"
                     onChange={(e) =>
                       GetAddedDataInfo(e, "emergencyContactPhone_2")
                     }
