@@ -1368,6 +1368,7 @@ function Patient_List() {
                 <Col>
                   <Form.Control
                     type="number"
+                    placeholder="1234567890"
                     onChange={(e) => GetAddedDataInfo(e, "homePhone")}
                   />
                 </Col>
@@ -1380,6 +1381,7 @@ function Patient_List() {
                 <Col>
                   <Form.Control
                     type="number"
+                    placeholder="1234567890"
                     onChange={(e) => GetAddedDataInfo(e, "workPhone")}
                   />
                 </Col>
@@ -1392,6 +1394,7 @@ function Patient_List() {
                 <Col>
                   <Form.Control
                     type="number"
+                    placeholder="1234567890"
                     onChange={(e) => GetAddedDataInfo(e, "cellPhone")}
                   />
                 </Col>
@@ -1426,6 +1429,7 @@ function Patient_List() {
                 <Col>
                   <Form.Control
                     type="number"
+                    placeholder="1234567890"
                     onChange={(e) =>
                       GetAddedDataInfo(e, "emergencyContactPhone_1")
                     }
@@ -1462,6 +1466,7 @@ function Patient_List() {
                 <Col>
                   <Form.Control
                     type="number"
+                    placeholder="1234567890"
                     onChange={(e) =>
                       GetAddedDataInfo(e, "emergencyContactPhone_2")
                     }
