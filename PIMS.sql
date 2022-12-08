@@ -2,7 +2,7 @@ CREATE DATABASE  IF NOT EXISTS `PIMS` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `PIMS`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
--- Host: 24.42.199.116    Database: PIMS
+-- Database: PIMS
 -- ------------------------------------------------------
 -- Server version	5.5.5-10.3.36-MariaDB-0+deb10u1
 
@@ -148,7 +148,7 @@ CREATE DATABASE  IF NOT EXISTS `Accounts` /*!40100 DEFAULT CHARACTER SET utf8mb4
 USE `Accounts`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
--- Host: 24.42.199.116    Database: Accounts
+-- Database: Accounts
 -- ------------------------------------------------------
 -- Server version	5.5.5-10.3.36-MariaDB-0+deb10u1
 
