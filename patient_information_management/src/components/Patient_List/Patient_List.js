@@ -485,7 +485,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="date"
                       placeholder={person.dateOfBirth}
                       onChange={(e) => GetUpdatedDataInfo(e, "dateOfBirth")}
                     />
@@ -673,7 +673,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="date"
                       placeholder={person.dateOfAdmittance}
                       onChange={(e) =>
                         GetUpdatedDataInfo(e, "dateOfAdmittance")
@@ -797,7 +797,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="date"
                       placeholder={person.dateOfDischarge}
                       onChange={(e) => GetUpdatedDataInfo(e, "dateOfDischarge")}
                     />
@@ -1307,7 +1307,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="date"
                     onChange={(e) => GetAddedDataInfo(e, "dateOfBirth")}
                   />
                 </Col>
@@ -1484,7 +1484,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="date"
                     onChange={(e) => GetAddedDataInfo(e, "dateOfAdmittance")}
                   />
                 </Col>
@@ -1596,7 +1596,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="date"
                     onChange={(e) => GetAddedDataInfo(e, "dateOfDischarge")}
                   />
                 </Col>
