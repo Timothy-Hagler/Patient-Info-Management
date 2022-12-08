@@ -1583,7 +1583,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-										type="email"
+										type="date"
 										onChange={(e) => GetAddedDataInfo(e, "dateOfDischarge")}
 									/>
 								</Col>
