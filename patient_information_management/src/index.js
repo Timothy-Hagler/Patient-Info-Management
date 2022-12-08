@@ -1,11 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './components/App/App.js';
-import reportWebVitals from './reportWebVitals.js';
-import "bootstrap/dist/css/bootstrap.min.css"
+/*
+Authors: Timothy Hagler, Sydney Keller, Ben Stone, Laurel Strelzoff
+CS 499-01
+Senior Design Final Deliverable
+Professor Adam Colwell
+Fall 2022
+*/
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+//import libraries
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./components/App/App.js";
+import reportWebVitals from "./reportWebVitals.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+//put everything created by react in DOM to be rendered in HTML
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />

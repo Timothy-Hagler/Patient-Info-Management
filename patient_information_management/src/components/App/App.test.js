@@ -1,17 +1,14 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
-import userEvent from '@testing-library/user-event';
-import fireEvent from '@testing-library/user-event';
-
-
+import { render, screen } from "@testing-library/react";
+import App from "./App";
+import userEvent from "@testing-library/user-event";
+import fireEvent from "@testing-library/user-event";
 
 // tests whether the links render their respective pages
-describe('BrowserRouter Tests', () => {
-
-  test('login page renders by default', () => {
+describe("BrowserRouter Tests", () => {
+  test("login page renders by default", () => {
     render(<App />);
-    const header = screen.getByText('Login');
-    const note = screen.getByText('Credentials');
+    const header = screen.getByText("Login");
+    const note = screen.getByText("Credentials");
     expect(header).toBeInTheDocument();
     expect(note).toBeInTheDocument();
   });
