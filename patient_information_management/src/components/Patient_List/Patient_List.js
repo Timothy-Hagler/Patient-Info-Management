@@ -537,7 +537,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="number"
                       placeholder={person.zip}
                       onChange={(e) => GetUpdatedDataInfo(e, "zip")}
                     />
@@ -754,7 +754,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="number"
                       placeholder={person.floor}
                       onChange={(e) => GetUpdatedDataInfo(e, "floor")}
                     />
@@ -767,7 +767,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="number"
                       placeholder={person.roomNumber}
                       onChange={(e) => GetUpdatedDataInfo(e, "roomNumber")}
                     />
@@ -780,7 +780,7 @@ function Patient_List() {
                   </Form.Label>
                   <Col>
                     <Form.Control
-                      type="email"
+                      type="number"
                       placeholder={person.bedNumber}
                       onChange={(e) => GetUpdatedDataInfo(e, "bedNumber")}
                     />
@@ -1355,7 +1355,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="number"
                     onChange={(e) => GetAddedDataInfo(e, "zip")}
                   />
                 </Col>
@@ -1556,7 +1556,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="number"
                     onChange={(e) => GetAddedDataInfo(e, "floor")}
                   />
                 </Col>
@@ -1568,7 +1568,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="number"
                     onChange={(e) => GetAddedDataInfo(e, "roomNumber")}
                   />
                 </Col>
@@ -1580,7 +1580,7 @@ function Patient_List() {
                 </Form.Label>
                 <Col>
                   <Form.Control
-                    type="email"
+                    type="number"
                     onChange={(e) => GetAddedDataInfo(e, "bedNumber")}
                   />
                 </Col>
