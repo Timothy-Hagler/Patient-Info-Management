@@ -30,22 +30,6 @@ if (accountType === "volunteer") {
 }
 
 function Patient_List() {
-<<<<<<< Updated upstream
-	const [search_results, setSearchResults] = useState([{}]);
-	const [highestID, setHighestID] = useState(0);
-	const [dataRetrieved, setDataRetrieved] = useState(false);
-	const [person, setPerson] = useState({});
-	const [show, setShow] = useState(false);
-	const [show2, setShow2] = useState(false);
-	const [showView, setShowView] = useState(false);
-	const [showEdit, setShowEdit] = useState(false);
-	const [showDeleteWarn, setShowDeleteWarn] = useState(false);
-	const [showUpdateWarn, setShowUpdateWarn] = useState(false);
-	const handleCancel = () => setShow(false);
-	const handleCancelView = () => setShowView(false);
-	//Navigation functions
-	const navigate = useNavigate();
-=======
 	// Create hooks for the page
 	const [search_results, setSearchResults] = useState([{}]); // search results hook handles who shows up in patient-list
 	const [highestID, setHighestID] = useState(0); // final patient added hook
@@ -61,7 +45,6 @@ function Patient_List() {
 	// Create events to handle different button presses
 	const handleCancel = () => setShow(false);
 	const handleCancelView = () => setShowView(false);
->>>>>>> Stashed changes
 
 	// hook to close the modal of editing patient-list data and update the data from the database since nothing was updated
 	const handleCancelEdit = () => {
@@ -74,15 +57,6 @@ function Patient_List() {
 		setShow2(false);
 	};
 
-<<<<<<< Updated upstream
-	const handleShow = (personID) => {
-		setShow(true);
-	};
-
-	const handleClose2 = () => setShow2(false);
-
-=======
->>>>>>> Stashed changes
 	// once the Search for Patient button is clicked, this renders the modal
 	const SearchPatientModalShow = () => {
 		setShow2(true);
@@ -91,15 +65,12 @@ function Patient_List() {
 	// function to close modal button on patient-search modal
 	const handleSearchModalCancel = () => setShow2(false);
 
-<<<<<<< Updated upstream
-=======
 	// Function to open the add patient modal
 	function AddNewPatient() {
 		setShow(true);
 	}
 
 	// Insert a row into the database based on the user input
->>>>>>> Stashed changes
 	function InsertRow(schema, table, headers, values) {
 		Axios.post(`http://localhost:8080/api/insertRow/`, {
 			schema: schema,
@@ -110,25 +81,16 @@ function Patient_List() {
 		addedPersonData = {};
 	}
 
-<<<<<<< Updated upstream
-	function GetHighestPersonID() {
-		let url = `http://localhost:8080/api/getHighestPersonID/?schema=PIMS&table=Patients`;
-		Axios.get(url).then((response) => {
-			// this will set the highest id based on the database
-=======
+	// this will set the highest id based on the database
 	// Get the highest ID of the last person in the database and set it to the hook
 	function GetHighestPersonID() {
 		let url = `http://localhost:8080/api/getHighestPersonID/?schema=PIMS&table=Patients`;
 		Axios.get(url).then((response) => {
->>>>>>> Stashed changes
 			setHighestID(response.data[0]["MAX(personID)"]);
 		});
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Update data in the database based on what a user change in the edit modal
->>>>>>> Stashed changes
 	function UpdateData(
 		schema,
 		table,
@@ -150,10 +112,7 @@ function Patient_List() {
 		updatedPersonData = {};
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Get the keys of the changed data then update the data
->>>>>>> Stashed changes
 	function SaveUpdatedDataToPerson() {
 		let keys = Object.keys(updatedPersonData);
 		UpdateData(
@@ -166,22 +125,15 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-	function SaveDataToPerson() {
-=======
 	// Save data to a person in the database when adding a new patient
 	function SaveDataToPerson() {
 		// Ensure there was data input
->>>>>>> Stashed changes
 		if (Object.keys(addedPersonData).length === 0) {
 			window.location.reload();
 			return;
 		}
 
-<<<<<<< Updated upstream
-=======
 		// Ensure the patient has a first and last name input
->>>>>>> Stashed changes
 		if (
 			addedPersonData["firstName"] == null ||
 			addedPersonData["lastName"] == null
@@ -190,15 +142,10 @@ function Patient_List() {
 			return;
 		}
 
-<<<<<<< Updated upstream
-		addedPersonData["personID"] = highestID + 1;
-
-=======
 		// Set the new patient's ID to the highest ID + 1
 		addedPersonData["personID"] = highestID + 1;
 
 		// Make an empty middle name if there is not one. Keeps search functionality from failing
->>>>>>> Stashed changes
 		if (addedPersonData["middleName"] == null) {
 			addedPersonData["middleName"] = "";
 		}
@@ -207,10 +154,7 @@ function Patient_List() {
 		let values = Object.values(addedPersonData);
 		let dataString = ``;
 
-<<<<<<< Updated upstream
-=======
 		// append each added value to a string in order to add the patient
->>>>>>> Stashed changes
 		for (let i = 0; i < values.length; i++) {
 			dataString = dataString + `'${values[i]}'`;
 			if (i + 1 < values.length) {
@@ -219,15 +163,9 @@ function Patient_List() {
 		}
 
 		InsertRow("PIMS", "Patients", keys, dataString);
-<<<<<<< Updated upstream
-		//window.location.reload();
-	}
-
-=======
 	}
 
 	// Remove a patient from the database
->>>>>>> Stashed changes
 	function RemoveRow(schema, table, location, data) {
 		Axios.post(`http://localhost:8080/api/removeRow/`, {
 			schema: schema,
@@ -237,47 +175,23 @@ function Patient_List() {
 		}).then((response) => {});
 	}
 
-<<<<<<< Updated upstream
-=======
 	// hide the save confirmation modal and reset the addedPersonData
->>>>>>> Stashed changes
 	function handleHideSave() {
 		addedPersonData = {};
 		setShowSave(false);
 	}
 
-<<<<<<< Updated upstream
-	const [showWarn, setShowWarn] = useState(false);
-
-	// const handleShowWarn = () => {
-	//   setShow(false);
-	//   setShowWarn(true);
-	// }
-
-=======
 	// hide the edit modal and show the confirmation modal
->>>>>>> Stashed changes
 	const handleDeleteWarn = () => {
 		setShowEdit(false);
 		setShowDeleteWarn(true);
 	};
-<<<<<<< Updated upstream
-=======
 
 	// hide the edit modal and show the confirmation modal
->>>>>>> Stashed changes
 	const handleUpdateWarn = () => {
 		setShowEdit(false);
 		setShowUpdateWarn(true);
 	};
-<<<<<<< Updated upstream
-	const handleHideDeleteWarn = () => {
-		setShowDeleteWarn(false);
-	};
-	const handleHideUpdateWarn = () => {
-		setShowUpdateWarn(false);
-	};
-=======
 
 	// hide the confirmation modal
 	const handleHideDeleteWarn = () => {
@@ -290,14 +204,11 @@ function Patient_List() {
 	};
 
 	// Update the patient's data, hide the modal, reload the page to show the new data
->>>>>>> Stashed changes
 	const handleHideUpdateWarnWithUpdate = () => {
 		SaveUpdatedDataToPerson();
 		setShowUpdateWarn(false);
 		window.location.reload();
 	};
-<<<<<<< Updated upstream
-=======
 
 	// Add the new patient's data, hide the modal, reload the page to show the new data
 	const handleHideAddWarn = () => {
@@ -307,60 +218,40 @@ function Patient_List() {
 	};
 
 	// Delete the patient from the database, hide the modal, reload the page to show changes
->>>>>>> Stashed changes
 	const handleDeletePatient = () => {
 		RemoveRow("PIMS", "Patients", "personID", person.personID);
 		setShowDeleteWarn(false);
 		window.location.reload();
 	};
 
-<<<<<<< Updated upstream
-	// const handleHideWarn = () => setShowWarn(false);
-
-	const [showSave, setShowSave] = useState(false);
-
-=======
 	// hook for showing confirmation of adding a patient
 	const [showSave, setShowSave] = useState(false);
 
 	// show confirmation window for adding patient
->>>>>>> Stashed changes
 	const handleShowSave = () => {
 		setShow(false);
 		setShowSave(true);
 	};
 
-<<<<<<< Updated upstream
-=======
 	// hide add patient modal and reset the added data
->>>>>>> Stashed changes
 	const handleHideModal = () => {
 		addedPersonData = {};
 		setShow(false);
 	};
 
-<<<<<<< Updated upstream
-=======
 	// Open the view patient modal. Patient is based on the given person ID
->>>>>>> Stashed changes
 	function OpenViewPatient(personID) {
 		SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID);
 		setShowView(true);
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Open the edit patient modal. Patient is based on the given person ID
->>>>>>> Stashed changes
 	function OpenEditPatient(personID) {
 		SetPersonToPatientData("*", "PIMS", "Patients", "personID", personID);
 		setShowEdit(true);
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Create the view button on each patient based on the given person ID
->>>>>>> Stashed changes
 	function CreateViewButton(personID) {
 		return (
 			<Button class="viewButton" onClick={() => OpenViewPatient(personID)}>
@@ -369,10 +260,7 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Create the edit button on each patient based on the given person ID. Volunteers cannot see this button
->>>>>>> Stashed changes
 	function CreateEditButton(personID) {
 		return (
 			<Button
@@ -385,13 +273,9 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-	function SearchForData(selection, schema, table, location) {
-=======
 	// Search for a patient based on the given information in the search modal
 	function SearchForData(selection, schema, table) {
 		// Get the locations and data for searching
->>>>>>> Stashed changes
 		let information = GetDataFromFields();
 		let locations = information[0];
 		let data = information[1];
@@ -400,23 +284,6 @@ function Patient_List() {
 		let url = `http://localhost:8080/api/searchData/?selection=${selection}&schema=${schema}&table=${table}&locations=${[
 			locations,
 		]}&data=${data}`;
-<<<<<<< Updated upstream
-		Axios.get(url).then((response) => {
-			// this will insert the data of each patient reaching the search criteria
-			let patients = response.data;
-			for (let i = 0; i < patients.length; i++) {
-				let patientData = {};
-				for (let info in patients[i]) {
-					patientData[info] = patients[i][info];
-				}
-				people.push(patientData);
-			}
-			setSearchResults(people);
-		});
-		setShow2(false);
-	}
-
-=======
 
 		Axios.get(url).then((response) => {
 			let patients = response.data;
@@ -443,22 +310,10 @@ function Patient_List() {
 	}
 
 	// Get the data from the search fields
->>>>>>> Stashed changes
 	function GetDataFromFields() {
 		let data = [];
 		let fields = ["FirstName", "MiddleName", "LastName"];
 		let locations = ["firstName", "middleName", "lastName"];
-<<<<<<< Updated upstream
-		for (let i = 0; i < fields.length; i++) {
-			data.push(document.getElementById(fields[i]).value);
-		}
-		return [locations, data];
-	}
-
-	function SetPersonToPatientData(selection, schema, table, location, data) {
-		let url = `http://localhost:8080/api/getPatientInformation/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`;
-		let patientData = {};
-=======
 
 		// get the data based on the ID of the field
 		for (let i = 0; i < fields.length; i++) {
@@ -474,7 +329,6 @@ function Patient_List() {
 		let url = `http://localhost:8080/api/getPatientInformation/?selection=${selection}&schema=${schema}&table=${table}&location=${location}&data=${data}`;
 		let patientData = {};
 
->>>>>>> Stashed changes
 		Axios.get(url).then((response) => {
 			// this will insert the data of the patient
 			let data = response.data[0];
@@ -485,20 +339,11 @@ function Patient_List() {
 		});
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Create the patient search modal
->>>>>>> Stashed changes
 	function CreatePatientSearchModal() {
 		return (
 			<>
 				<div class="col-sm2">
-<<<<<<< Updated upstream
-					<head>
-						<a href="/css/style.css"></a>
-					</head>
-=======
->>>>>>> Stashed changes
 					<Modal
 						class="col-sm2"
 						show={show2}
@@ -552,10 +397,7 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Create the edit patient modal
->>>>>>> Stashed changes
 	function CreateEditModal() {
 		return (
 			<>
@@ -629,11 +471,6 @@ function Patient_List() {
 										Date of Birth
 									</Form.Label>
 									<Col>
-<<<<<<< Updated upstream
-										{/* <input type="date" id="start" name="trip-start"></input> */}
-
-=======
->>>>>>> Stashed changes
 										<Form.Control
 											type="date"
 											placeholder={person.dateOfBirth}
@@ -687,11 +524,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.zip}
 											onChange={(e) => GetUpdatedDataInfo(e, "zip")}
 										/>
@@ -704,11 +537,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.homePhone}
 											onChange={(e) => GetUpdatedDataInfo(e, "homePhone")}
 										/>
@@ -721,11 +550,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.workPhone}
 											onChange={(e) => GetUpdatedDataInfo(e, "workPhone")}
 										/>
@@ -742,11 +567,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.cellPhone}
 											onChange={(e) => GetUpdatedDataInfo(e, "cellPhone")}
 										/>
@@ -782,11 +603,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.emergencyContactPhone_1}
 											onChange={(e) =>
 												GetUpdatedDataInfo(e, "emergencyContactPhone_1")
@@ -824,11 +641,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.emergencyContactPhone_2}
 											onChange={(e) =>
 												GetUpdatedDataInfo(e, "emergencyContactPhone_2")
@@ -847,11 +660,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="date"
->>>>>>> Stashed changes
 											placeholder={person.dateOfAdmittance}
 											onChange={(e) =>
 												GetUpdatedDataInfo(e, "dateOfAdmittance")
@@ -870,11 +679,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="time"
->>>>>>> Stashed changes
 											placeholder={person.timeOfAdmittance}
 											onChange={(e) =>
 												GetUpdatedDataInfo(e, "timeOfAdmittance")
@@ -936,11 +741,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.floor}
 											onChange={(e) => GetUpdatedDataInfo(e, "floor")}
 										/>
@@ -953,11 +754,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.roomNumber}
 											onChange={(e) => GetUpdatedDataInfo(e, "roomNumber")}
 										/>
@@ -970,11 +767,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
->>>>>>> Stashed changes
 											placeholder={person.bedNumber}
 											onChange={(e) => GetUpdatedDataInfo(e, "bedNumber")}
 										/>
@@ -991,11 +784,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="date"
->>>>>>> Stashed changes
 											placeholder={person.dateOfDischarge}
 											onChange={(e) => GetUpdatedDataInfo(e, "dateOfDischarge")}
 										/>
@@ -1012,11 +801,7 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="time"
->>>>>>> Stashed changes
 											placeholder={person.timeOfDischarge}
 											onChange={(e) => GetUpdatedDataInfo(e, "timeOfDischarge")}
 										/>
@@ -1109,13 +894,9 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
 											min="0.01"
 											step="0.01"
->>>>>>> Stashed changes
 											placeholder={person.amountPaid}
 											onChange={(e) => GetUpdatedDataInfo(e, "amountPaid")}
 										/>
@@ -1132,13 +913,9 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
 											min="0.01"
 											step="0.01"
->>>>>>> Stashed changes
 											placeholder={person.amountOwed}
 											onChange={(e) => GetUpdatedDataInfo(e, "amountOwed")}
 										/>
@@ -1155,13 +932,9 @@ function Patient_List() {
 									</Form.Label>
 									<Col>
 										<Form.Control
-<<<<<<< Updated upstream
-											type="email"
-=======
 											type="number"
 											min="0.01"
 											step="0.01"
->>>>>>> Stashed changes
 											placeholder={person.amountPaidByInsurance}
 											onChange={(e) =>
 												GetUpdatedDataInfo(e, "amountPaidByInsurance")
@@ -1279,10 +1052,7 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Create the view patient modal
->>>>>>> Stashed changes
 	function CreateViewModal() {
 		return (
 			<div class="col-sm2">
@@ -1459,10 +1229,7 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-=======
 	// Create the add patient modal
->>>>>>> Stashed changes
 	function CreateAddPatientModal() {
 		GetHighestPersonID();
 		return (
@@ -1575,11 +1342,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "zip")}
 									/>
 								</Col>
@@ -1591,12 +1354,8 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										placeholder="1234567890"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "homePhone")}
 									/>
 								</Col>
@@ -1608,12 +1367,8 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										placeholder="1234567890"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "workPhone")}
 									/>
 								</Col>
@@ -1625,12 +1380,8 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										placeholder="1234567890"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "cellPhone")}
 									/>
 								</Col>
@@ -1664,12 +1415,8 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										placeholder="1234567890"
->>>>>>> Stashed changes
 										onChange={(e) =>
 											GetAddedDataInfo(e, "emergencyContactPhone_1")
 										}
@@ -1705,12 +1452,8 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										placeholder="1234567890"
->>>>>>> Stashed changes
 										onChange={(e) =>
 											GetAddedDataInfo(e, "emergencyContactPhone_2")
 										}
@@ -1728,11 +1471,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="date"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "dateOfAdmittance")}
 									/>
 								</Col>
@@ -1748,11 +1487,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="time"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "timeOfAdmittance")}
 									/>
 								</Col>
@@ -1808,11 +1543,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "floor")}
 									/>
 								</Col>
@@ -1824,11 +1555,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "roomNumber")}
 									/>
 								</Col>
@@ -1840,11 +1567,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "bedNumber")}
 									/>
 								</Col>
@@ -1876,11 +1599,7 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="time"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "timeOfDischarge")}
 									/>
 								</Col>
@@ -1960,13 +1679,9 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										min="0.01"
 										step="0.01"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "amountPaid")}
 									/>
 								</Col>
@@ -1978,13 +1693,9 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										min="0.01"
 										step="0.01"
->>>>>>> Stashed changes
 										onChange={(e) => GetAddedDataInfo(e, "amountOwed")}
 									/>
 								</Col>
@@ -2000,13 +1711,9 @@ function Patient_List() {
 								</Form.Label>
 								<Col>
 									<Form.Control
-<<<<<<< Updated upstream
-										type="email"
-=======
 										type="number"
 										min="0.01"
 										step="0.01"
->>>>>>> Stashed changes
 										onChange={(e) =>
 											GetAddedDataInfo(e, "amountPaidByInsurance")
 										}
@@ -2090,11 +1797,7 @@ function Patient_List() {
 						<Button variant="secondary" onClick={handleHideSave}>
 							Cancel
 						</Button>
-<<<<<<< Updated upstream
-						<Button variant="primary" onClick={SaveDataToPerson}>
-=======
 						<Button variant="primary" onClick={handleHideAddWarn}>
->>>>>>> Stashed changes
 							Yes
 						</Button>
 					</Modal.Footer>
@@ -2103,29 +1806,17 @@ function Patient_List() {
 		);
 	}
 
-<<<<<<< Updated upstream
-	function AddNewPatient() {
-		setShow(true);
-	}
-
-=======
 	// This function gets all of the patients stored in the database
->>>>>>> Stashed changes
 	function GetPatientsFromDatabase() {
 		if (dataRetrieved === false) {
 			let people = [];
 
 			let url = "http://localhost:8080/api/getFullPatientTable/";
 			Axios.get(url).then((response) => {
-<<<<<<< Updated upstream
-				// this will insert the data of each patient reaching the search criteria
-				let patients = response.data;
-=======
 				// This inserts the data of every patient in the database
 				let patients = response.data;
 
 				// iterates through the entire database
->>>>>>> Stashed changes
 				for (let i = 0; i < patients.length; i++) {
 					let patientData = {};
 					for (let info in patients[i]) {
@@ -2133,48 +1824,32 @@ function Patient_List() {
 					}
 					people.push(patientData);
 				}
-<<<<<<< Updated upstream
-=======
 
 				// sets the results of the search and allows the data to be retrieved
->>>>>>> Stashed changes
 				setSearchResults(people);
 				setDataRetrieved(true);
 			});
 		}
 	}
 
-<<<<<<< Updated upstream
-=======
 	// This function loads data from the database and creates table entries for each person.
->>>>>>> Stashed changes
 	function LoadData() {
 		let data = [];
 
 		GetPatientsFromDatabase();
 
-<<<<<<< Updated upstream
-		for (let i = 0; i < search_results.length; i++) {
-			data.push(
-				<tr>
-					{/* entry for patient */}
-=======
 		// Iterates through all patients in the database
 		for (let i = 0; i < search_results.length; i++) {
 			data.push(
 				<tr>
 					{/* This is an entry for an individual patient */}
->>>>>>> Stashed changes
 					<td>{search_results[i].firstName}</td>
 					<td>{search_results[i].middleName}</td>
 					<td>{search_results[i].lastName}</td>
 					<td>{search_results[i].sex}</td>
 					<td>{search_results[i].dateOfBirth}</td>
-<<<<<<< Updated upstream
-=======
 
 					{/*These calls create the view button and edit button corresponding to the person received from the database */}
->>>>>>> Stashed changes
 					<td>{CreateViewButton(search_results[i].personID)}</td>
 					{CreateEditButton(search_results[i].personID)}
 					<hr></hr>
@@ -2184,28 +1859,19 @@ function Patient_List() {
 		return data;
 	}
 
-<<<<<<< Updated upstream
-=======
 	// This function gets the user's input when adding a patient.
->>>>>>> Stashed changes
 	function GetAddedDataInfo(event, field) {
 		addedPersonData[field] = event.target.value;
 	}
 
-<<<<<<< Updated upstream
-=======
 	// This function gets updated data from the database and renders it
->>>>>>> Stashed changes
 	function GetUpdatedDataInfo(event, field) {
 		updatedPersonData[field] = event.target.value;
 	}
 
-<<<<<<< Updated upstream
-=======
 	/*
   This function generates a clone of the html view card and generates a print call that allows the user to print the view modal card as a report.
   */
->>>>>>> Stashed changes
 	function printElement(elem) {
 		var domClone = elem.cloneNode(true);
 
@@ -2217,10 +1883,7 @@ function Patient_List() {
 			document.body.appendChild($printSection);
 		}
 
-<<<<<<< Updated upstream
-=======
 		// Appends the dom clone to an innerHTML value and generates the browser's default print dialogue
->>>>>>> Stashed changes
 		$printSection.innerHTML = "";
 		$printSection.appendChild(domClone);
 		window.print();
@@ -2228,45 +1891,6 @@ function Patient_List() {
 
 	return (
 		<>
-<<<<<<< Updated upstream
-			<head>
-				<a href="/css/style.css"></a>
-			</head>
-			<div id="addPatient">
-				<Button
-					class="addPatientButton"
-					onClick={() => AddNewPatient()}
-					style={{ display: volunteer ? "none" : "?" }}
-				>
-					Add new Patient
-				</Button>
-			</div>
-			<div id="searchForPatient">
-				<Button
-					class="searchForPatientButton"
-					onClick={() => SearchPatientModalShow()}
-				>
-					Search for Patient
-				</Button>
-			</div>
-			<Card border="primary" className="PatientListCard">
-				<Card.Header id="cardHeader">
-					<h4>Patient List</h4>
-				</Card.Header>
-				<Card.Body>
-					<tr id="colLabels">
-						<td>First Name</td>
-						<td>Middle Name</td>
-						<td>Last Name</td>
-						<td>Sex</td>
-						<td>Date Of Birth</td>
-					</tr>
-					{LoadData()}
-				</Card.Body>
-			</Card>
-			{CreatePatientSearchModal()}{" "}
-			{/* create a modal behind the scenes but the hook setShow2 calls to show the modal*/}
-=======
 			{/*This div initializes the addPatient and searchForPatient buttons */}
 			<div className="buttonDiv">
 				<div id="addPatient">
@@ -2311,7 +1935,6 @@ function Patient_List() {
 
 			{/*These calls generate the html for the modal dialogues, but it keeps them hidden until their corresponding hooks have been called. */}
 			{CreatePatientSearchModal()}
->>>>>>> Stashed changes
 			{CreateAddPatientModal()}
 			{CreateViewModal()}
 			{CreateEditModal()}

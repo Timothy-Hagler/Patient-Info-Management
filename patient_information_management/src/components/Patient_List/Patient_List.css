@@ -77,14 +77,11 @@ td {
 	margin-right: 50px;
 	margin-top: 11px;
 	padding: 0px 0px;
-<<<<<<< Updated upstream
-=======
 }
 
 .buttonDiv {
 	padding-bottom: 9px;
 	padding-top: 3px;
->>>>>>> Stashed changes
 }
 
 #colLabels {
@@ -120,16 +117,10 @@ label {
 	display: block;
 	font: 1rem "Fira Sans", sans-serif;
 }
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 input,
 label {
 	margin: 0.4rem 0;
 }
-<<<<<<< Updated upstream
-=======
 .dropdown-container {
 	text-align: left;
 	border: 1px solid #ccc;
@@ -143,4 +134,3 @@ label {
 	justify-content: space-between;
 	/*user-select: none;*/
 }
->>>>>>> Stashed changes
