@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIMS Preview</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    .tab-active { border-bottom: 2px solid #2563eb; color: #2563eb; }
+    .tab-inactive { border-bottom: 2px solid transparent; color: #6b7280; }
+    .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.2s ease; }
+    .accordion-body.open { max-height: 300px; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- ─── DEMO SHELL ─────────────────────────────────────────────────────────── -->
+<div class="fixed bottom-4 right-4 z-[200] flex flex-col gap-2 items-end">
+  <div class="bg-gray-900 text-white text-xs rounded-xl px-4 py-3 shadow-xl flex flex-col gap-1.5">
+    <p class="font-semibold text-gray-300 mb-0.5 text-[11px] uppercase tracking-wide">Jump to page</p>
+    <button onclick="showPage('login')"       class="demo-btn">Login</button>
+    <button onclick="showPage('patients')"    class="demo-btn">Patients (Doctor)</button>
+    <button onclick="showPage('patients-vol')"class="demo-btn">Patients (Volunteer)</button>
+    <button onclick="showPage('help')"        class="demo-btn">Help &amp; Info</button>
+  </div>
+</div>
+<style>
+  .demo-btn { text-align:left; padding:4px 10px; border-radius:6px; font-size:12px; color:#e5e7eb; transition:background .15s; }
+  .demo-btn:hover { background:#374151; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     PAGE: LOGIN
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div id="page-login" class="page min-h-screen flex">
+  <!-- Left brand panel -->
+  <div class="hidden lg:flex flex-col justify-center items-center bg-blue-700 text-white w-2/5 p-12">
+    <div class="w-20 h-20 mb-6 rounded-full bg-blue-500 flex items-center justify-center">
+      <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+          d="M4.5 12.75l6 6 9-13.5" />
+      </svg>
+    </div>
+    <h1 class="text-4xl font-bold mb-3 tracking-tight">PIMS</h1>
+    <p class="text-blue-200 text-center text-sm leading-relaxed max-w-xs">
+      Patient Information Management System — secure, role-based access to patient records for healthcare professionals.
+    </p>
+  </div>
+
+  <!-- Right form panel -->
+  <div class="flex-1 flex items-center justify-center bg-gray-50 p-8">
+    <div class="w-full max-w-sm">
+      <div class="mb-8">
+        <h2 class="text-2xl font-semibold text-gray-900">Sign in</h2>
+        <p class="text-sm text-gray-500 mt-1">Enter the credentials provided by your administrator</p>
+      </div>
+      <form onsubmit="showPage('patients'); return false;" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Username</label>
+          <input type="text" value="drhagler"
+            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
+          <input type="password" value="haglerpassword"
+            class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" />
+        </div>
+        <button type="submit"
+          class="w-full py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors mt-2">
+          Sign in
+        </button>
+      </form>
+      <p class="mt-8 text-xs text-gray-400 text-center">Need an account? Contact your system administrator.</p>
+      <!-- demo hint -->
+      <p class="mt-3 text-xs text-blue-400 text-center">(Click Sign in to see the Patients page)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     SHARED NAVBAR (Doctor)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<template id="navbar-doctor">
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-14 items-center justify-between">
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+            </div>
+            <span class="font-semibold text-gray-900 text-sm">PIMS</span>
+          </div>
+          <div class="flex items-center gap-0.5" id="nav-links-doctor"></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-100 text-blue-700">Doctor</span>
+          <a href="#" onclick="showPage('login'); return false;" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<template id="navbar-volunteer">
+  <nav class="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-14 items-center justify-between">
+        <div class="flex items-center gap-6">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+            </div>
+            <span class="font-semibold text-gray-900 text-sm">PIMS</span>
+          </div>
+          <div class="flex items-center gap-0.5" id="nav-links-vol"></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-amber-100 text-amber-700">Volunteer</span>
+          <a href="#" onclick="showPage('login'); return false;" class="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sign out</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     PAGE: PATIENTS (DOCTOR)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div id="page-patients" class="page hidden">
+  <div id="patients-navbar"></div>
+
+  <div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">Patients</h1>
+          <p class="text-sm text-gray-500 mt-0.5" id="patient-count">5 patients</p>
+        </div>
+        <button onclick="openAddModal()"
+          class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Add Patient
+        </button>
+      </div>
+
+      <!-- Search -->
+      <div class="relative mb-4">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input type="text" id="search-input" oninput="filterPatients(this.value)"
+          placeholder="Search patients by name…"
+          class="w-full sm:w-80 pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" />
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-100">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Name</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide hidden sm:table-cell">Sex</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide hidden md:table-cell">Date of Birth</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Room</th>
+              <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="patient-tbody" class="divide-y divide-gray-50"></tbody>
+        </table>
+        <div id="no-results" class="hidden text-center py-12 text-sm text-gray-400">No patients match your search.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     PAGE: PATIENTS (VOLUNTEER)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div id="page-patients-vol" class="page hidden">
+  <div id="patients-vol-navbar"></div>
+
+  <div class="min-h-screen bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <div>
+          <h1 class="text-2xl font-semibold text-gray-900">Patients</h1>
+          <p class="text-sm text-gray-500 mt-0.5">5 patients</p>
+        </div>
+        <!-- No Add Patient for volunteer -->
+      </div>
+
+      <div class="relative mb-4">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input type="text" placeholder="Search patients by name…"
+          class="w-full sm:w-80 pl-9 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white" />
+      </div>
+
+      <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-100">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Name</th>
+              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">Room</th>
+              <th class="px-4 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3 text-sm font-medium text-gray-900">John A. Doe</td><td class="px-4 py-3 text-sm text-gray-600">101</td><td class="px-4 py-3 text-right"><button onclick="openViewModalVol()" class="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md">View</button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3 text-sm font-medium text-gray-900">Jane M. Smith</td><td class="px-4 py-3 text-sm text-gray-600">204</td><td class="px-4 py-3 text-right"><button class="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md">View</button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3 text-sm font-medium text-gray-900">Robert L. Johnson</td><td class="px-4 py-3 text-sm text-gray-600">312</td><td class="px-4 py-3 text-right"><button class="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md">View</button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3 text-sm font-medium text-gray-900">Mary K. Williams</td><td class="px-4 py-3 text-sm text-gray-600">107</td><td class="px-4 py-3 text-right"><button class="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md">View</button></td></tr>
+            <tr class="hover:bg-gray-50"><td class="px-4 py-3 text-sm font-medium text-gray-900">David C. Brown</td><td class="px-4 py-3 text-sm text-gray-600">209</td><td class="px-4 py-3 text-right"><button class="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     PAGE: HELP
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div id="page-help" class="page hidden">
+  <div id="help-navbar"></div>
+
+  <div class="min-h-screen bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <h1 class="text-2xl font-semibold text-gray-900 mb-1">Help &amp; Info</h1>
+      <p class="text-sm text-gray-500 mb-8">Answers to common questions about using PIMS.</p>
+
+      <!-- FAQ -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-gray-800 mb-4">Frequently Asked Questions</h2>
+        <div class="space-y-2" id="faq-list"></div>
+      </section>
+
+      <!-- About -->
+      <section class="mb-10">
+        <h2 class="text-base font-semibold text-gray-800 mb-4">About PIMS</h2>
+        <div class="bg-white rounded-xl border border-gray-200 p-5">
+          <p class="text-sm text-gray-600 leading-relaxed">
+            The Patient Information Management System (PIMS) allows doctors, nurses, office staff, and volunteers to access patient records based on their role.
+            Doctors can view and edit all information including clinical notes. Nurses can view all information and edit nurse notes.
+            Office staff can manage administrative and insurance details. Volunteers have limited access to patient name and location.
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section>
+        <h2 class="text-base font-semibold text-gray-800 mb-4">Contact the Administrators</h2>
+        <div class="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100">
+          <div class="flex items-center justify-between px-5 py-3"><span class="text-sm font-medium text-gray-800">Timothy Hagler</span><a href="#" class="text-sm text-blue-600 hover:underline">trh0030@uah.edu</a></div>
+          <div class="flex items-center justify-between px-5 py-3"><span class="text-sm font-medium text-gray-800">Sydney Keller</span><a href="#" class="text-sm text-blue-600 hover:underline">smk0023@uah.edu</a></div>
+          <div class="flex items-center justify-between px-5 py-3"><span class="text-sm font-medium text-gray-800">Benjamin Stone</span><a href="#" class="text-sm text-blue-600 hover:underline">bas0043@uah.edu</a></div>
+          <div class="flex items-center justify-between px-5 py-3"><span class="text-sm font-medium text-gray-800">Laurel Strelzoff</span><a href="#" class="text-sm text-blue-600 hover:underline">lcs0018@uah.edu</a></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     MODAL: VIEW/EDIT PATIENT (Doctor)
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div id="view-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900">John A. Doe</h2>
+        <p class="text-sm text-gray-400">Patient ID: 1001</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="toggleEditMode()" id="edit-toggle-btn"
+          class="px-3 py-1.5 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+          Edit
+        </button>
+        <button onclick="closeViewModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex border-b border-gray-100 px-6 overflow-x-auto" id="modal-tabs">
+      <button onclick="switchTab('Personal')"    class="modal-tab tab-active  px-4 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors">Personal</button>
+      <button onclick="switchTab('Emergency')"   class="modal-tab tab-inactive px-4 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors">Emergency</button>
+      <button onclick="switchTab('Admission')"   class="modal-tab tab-inactive px-4 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors">Admission</button>
+      <button onclick="switchTab('Insurance')"   class="modal-tab tab-inactive px-4 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors">Insurance &amp; Billing</button>
+      <button onclick="switchTab('Medical')"     class="modal-tab tab-inactive px-4 py-3 text-sm font-medium border-b-2 whitespace-nowrap transition-colors">Medical</button>
+    </div>
+
+    <!-- Body -->
+    <div class="flex-1 overflow-y-auto px-6 py-4">
+      <!-- Personal Tab -->
+      <div id="tab-Personal" class="modal-tab-body grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">First Name</p>   <p id="field-firstName"   class="view-val text-sm text-gray-900 py-1.5">John</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="John"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Middle Name</p>  <p id="field-middleName"  class="view-val text-sm text-gray-900 py-1.5">A.</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="A."/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Last Name</p>    <p id="field-lastName"    class="view-val text-sm text-gray-900 py-1.5">Doe</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Doe"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Sex</p>          <p id="field-sex"         class="view-val text-sm text-gray-900 py-1.5">Male</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Male"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Date of Birth</p><p id="field-dob"         class="view-val text-sm text-gray-900 py-1.5">1968-03-14</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" type="date" value="1968-03-14"/></div>
+        <div class="col-span-full mt-1 mb-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Address</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Street</p>  <p class="view-val text-sm text-gray-900 py-1.5">123 Main St</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="123 Main St"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">City</p>    <p class="view-val text-sm text-gray-900 py-1.5">Huntsville</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Huntsville"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">State</p>   <p class="view-val text-sm text-gray-900 py-1.5">AL</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="AL"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Zip Code</p><p class="view-val text-sm text-gray-900 py-1.5">35801</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="35801"/></div>
+        <div class="col-span-full mt-1 mb-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Phone Numbers</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Home Phone</p>  <p class="view-val text-sm text-gray-900 py-1.5">(256) 555-0101</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="2565550101"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Cell Phone</p>  <p class="view-val text-sm text-gray-900 py-1.5">(256) 555-0199</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="2565550199"/></div>
+      </div>
+
+      <!-- Emergency Tab -->
+      <div id="tab-Emergency" class="modal-tab-body hidden grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+        <div class="col-span-full mb-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Emergency Contact 1</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Name</p> <p class="view-val text-sm text-gray-900 py-1.5">Jane Doe</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Jane Doe"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Phone</p><p class="view-val text-sm text-gray-900 py-1.5">(256) 555-0102</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="2565550102"/></div>
+        <div class="col-span-full mb-2 mt-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Emergency Contact 2</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Name</p> <p class="view-val text-sm text-gray-900 py-1.5">Tom Doe</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Tom Doe"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Phone</p><p class="view-val text-sm text-gray-900 py-1.5">(256) 555-0103</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="2565550103"/></div>
+        <div class="col-span-full mb-2 mt-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Other</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Family Doctor</p><p class="view-val text-sm text-gray-900 py-1.5">Dr. Sarah Lee</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Dr. Sarah Lee"/></div>
+      </div>
+
+      <!-- Admission Tab -->
+      <div id="tab-Admission" class="modal-tab-body hidden grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+        <div class="col-span-full mb-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Admitted</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Date Admitted</p><p class="view-val text-sm text-gray-900 py-1.5">2024-01-10</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" type="date" value="2024-01-10"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Time Admitted</p><p class="view-val text-sm text-gray-900 py-1.5">09:30</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" type="time" value="09:30"/></div>
+        <div class="col-span-full mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Reason</p><p class="view-val text-sm text-gray-900 py-1.5">Chest pain, shortness of breath</p><textarea class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows="2">Chest pain, shortness of breath</textarea></div>
+        <div class="col-span-full mb-2 mt-1 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Location</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Facility</p>    <p class="view-val text-sm text-gray-900 py-1.5">Huntsville Hospital</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="Huntsville Hospital"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Floor</p>       <p class="view-val text-sm text-gray-900 py-1.5">3</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="3"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Room Number</p><p class="view-val text-sm text-gray-900 py-1.5">101</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="101"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Bed Number</p> <p class="view-val text-sm text-gray-900 py-1.5">2</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="2"/></div>
+      </div>
+
+      <!-- Insurance Tab -->
+      <div id="tab-Insurance" class="modal-tab-body hidden grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+        <div class="col-span-full mb-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Insurance</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Insurance Carrier</p>  <p class="view-val text-sm text-gray-900 py-1.5">BlueCross BlueShield</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="BlueCross BlueShield"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Group Number</p>       <p class="view-val text-sm text-gray-900 py-1.5">GRP-44821</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="GRP-44821"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Account Number</p>     <p class="view-val text-sm text-gray-900 py-1.5">ACC-99203</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="ACC-99203"/></div>
+        <div class="col-span-full mb-2 mt-1 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Billing</div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Amount Paid</p>              <p class="view-val text-sm text-gray-900 py-1.5">$500.00</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="500.00"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Amount Owed</p>              <p class="view-val text-sm text-gray-900 py-1.5">$1,200.00</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="1200.00"/></div>
+        <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Amount Paid by Insurance</p> <p class="view-val text-sm text-gray-900 py-1.5">$3,400.00</p><input class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" value="3400.00"/></div>
+      </div>
+
+      <!-- Medical Tab -->
+      <div id="tab-Medical" class="modal-tab-body hidden">
+        <div class="mb-4">
+          <p class="text-xs font-medium text-gray-500 mb-1">Doctor's Notes</p>
+          <p class="view-val text-sm text-gray-900 py-1.5 leading-relaxed">Patient presents with acute chest pain. ECG performed — no ST elevation. Troponin levels normal. Recommend stress test follow-up.</p>
+          <textarea class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows="3">Patient presents with acute chest pain. ECG performed — no ST elevation. Troponin levels normal. Recommend stress test follow-up.</textarea>
+        </div>
+        <div class="mb-4">
+          <p class="text-xs font-medium text-gray-500 mb-1">Nurse's Notes <span class="text-gray-300 font-normal">(read-only for doctor)</span></p>
+          <p class="view-val text-sm text-gray-900 py-1.5 leading-relaxed">Vitals stable. BP 128/82, HR 74. Patient resting comfortably. IV fluids administered.</p>
+          <textarea class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-50 text-gray-500" rows="3" readonly>Vitals stable. BP 128/82, HR 74. Patient resting comfortably. IV fluids administered.</textarea>
+        </div>
+        <div class="mb-4">
+          <p class="text-xs font-medium text-gray-500 mb-1">Scheduled Procedures</p>
+          <p class="view-val text-sm text-gray-900 py-1.5">Stress test — 2024-01-12 at 10:00am</p>
+          <textarea class="edit-val hidden w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows="2">Stress test — 2024-01-12 at 10:00am</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex items-center justify-between px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-xl">
+      <div id="modal-footer-left">
+        <!-- delete button appears in edit mode -->
+      </div>
+      <div class="flex items-center gap-2" id="modal-footer-right">
+        <button onclick="window.print()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">Print</button>
+        <button onclick="closeViewModal()" class="px-4 py-2 text-sm font-medium bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: VOLUNTEER VIEW (limited fields) -->
+<div id="view-modal-vol" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-md flex flex-col">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900">John A. Doe</h2>
+        <p class="text-sm text-gray-400">Patient ID: 1001</p>
+      </div>
+      <button onclick="closeVolModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="flex border-b border-gray-100 px-6">
+      <div class="px-4 py-3 text-sm font-medium border-b-2 border-blue-600 text-blue-600">Personal</div>
+    </div>
+    <div class="px-6 py-4 grid grid-cols-2 gap-x-6">
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">First Name</p><p class="text-sm text-gray-900">John</p></div>
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Middle Name</p><p class="text-sm text-gray-900">A.</p></div>
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Last Name</p><p class="text-sm text-gray-900">Doe</p></div>
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Sex</p><p class="text-sm text-gray-900">Male</p></div>
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Date of Birth</p><p class="text-sm text-gray-900">1968-03-14</p></div>
+      <div class="col-span-2 mb-2 mt-1 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Location</div>
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Room</p><p class="text-sm text-gray-900">101</p></div>
+      <div class="mb-3"><p class="text-xs font-medium text-gray-500 mb-1">Bed</p><p class="text-sm text-gray-900">2</p></div>
+    </div>
+    <div class="bg-amber-50 border-t border-amber-100 rounded-b-xl px-6 py-3 text-xs text-amber-700 flex items-center gap-2">
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 3a9 9 0 100 18A9 9 0 0012 3z"/></svg>
+      Volunteer access — some fields are restricted.
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ADD PATIENT -->
+<div id="add-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/40">
+  <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-900" id="add-modal-title">Add New Patient</h2>
+      <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-100">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Form step -->
+    <div id="add-form-step" class="flex-1 overflow-y-auto px-6 py-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+        <div class="col-span-full mb-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Personal Information</div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">First Name *</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="First name"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Middle Name</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Middle name"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Last name"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Sex</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Male / Female / Other"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label><input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"/></div>
+        <div class="col-span-full mb-2 mt-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Contact</div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Street</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Street address"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">City</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="City"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">State</label><input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="State"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Zip Code</label><input type="number" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="12345"/></div>
+        <div class="col-span-full mb-2 mt-2 text-xs uppercase tracking-wide text-gray-400 font-semibold border-b border-gray-100 pb-1.5">Facility</div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Room Number</label><input type="number" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="101"/></div>
+        <div class="mb-3"><label class="block text-sm font-medium text-gray-700 mb-1">Bed Number</label><input type="number" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="1"/></div>
+      </div>
+    </div>
+
+    <!-- Confirm step (hidden) -->
+    <div id="add-confirm-step" class="hidden flex-1 flex flex-col items-center justify-center p-10 text-center">
+      <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-5">
+        <svg class="w-8 h-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 mb-1">Add this patient?</h3>
+      <p class="text-sm text-gray-500 mb-6">This will create a new patient record in the database.</p>
+      <div class="flex gap-3">
+        <button onclick="backToForm()" class="px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50">Back</button>
+        <button onclick="closeAddModal()" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">Yes, Add Patient</button>
+      </div>
+    </div>
+
+    <div id="add-form-footer" class="flex justify-end gap-2 px-6 py-4 border-t border-gray-100 bg-gray-50 rounded-b-xl">
+      <button onclick="closeAddModal()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
+      <button onclick="showConfirmStep()" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Add Patient</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════════════════════════ -->
+<script>
+const PATIENTS = [
+  { id:1001, first:"John",   mid:"A.", last:"Doe",      sex:"Male",   dob:"1968-03-14", room:"101" },
+  { id:1002, first:"Jane",   mid:"M.", last:"Smith",    sex:"Female", dob:"1975-07-22", room:"204" },
+  { id:1003, first:"Robert", mid:"L.", last:"Johnson",  sex:"Male",   dob:"1952-11-05", room:"312" },
+  { id:1004, first:"Mary",   mid:"K.", last:"Williams", sex:"Female", dob:"1989-02-18", room:"107" },
+  { id:1005, first:"David",  mid:"C.", last:"Brown",    sex:"Male",   dob:"1963-09-30", room:"209" },
+];
+
+let editMode = false;
+
+const FAQS = [
+  ["How do system administrators add users?","System administrators generate a username and password for each user, which is stored in the database. Contact an administrator to request a new account."],
+  ["How do I log in?","Navigate to the PIMS login page, enter the username and password provided by your administrator, and click Sign in."],
+  ["How do I search for a patient?","On the Patients page, use the search bar at the top to filter patients by first, middle, or last name in real time. No additional steps needed."],
+  ["How do I edit a patient's information?","Click View next to a patient's name, then click Edit inside the modal. Make your changes and click Save Changes."],
+  ["How do I add a new patient?","On the Patients page, click the Add Patient button. Fill in the required information and confirm."],
+  ["How do I delete a patient?","Open a patient's record and enter edit mode. A Delete Patient button appears at the bottom (Doctors only)."],
+  ["How do I print a report?","Open a patient's record and click Print in the modal footer."],
+  ["How do I log out?","Click Sign out in the top-right corner of the navigation bar."],
+];
+
+function makeNavLinks(currentPage, idSuffix) {
+  const pages = [['patients','Patients'],['help','Help & Info']];
+  const el = document.getElementById(`nav-links-${idSuffix}`);
+  if(!el) return;
+  el.innerHTML = pages.map(([pg, label]) => `
+    <a href="#" onclick="showPage('${pg}'); return false;"
+      class="px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${currentPage===pg ? 'bg-blue-50 text-blue-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}">
+      ${label}
+    </a>`).join('');
+}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+  const el = document.getElementById(`page-${name}`);
+  if(el) el.classList.remove('hidden');
+
+  if(name === 'patients') {
+    document.getElementById('patients-navbar').innerHTML =
+      document.getElementById('navbar-doctor').innerHTML;
+    makeNavLinks('patients','doctor');
+    renderTable(PATIENTS);
+  }
+  if(name === 'patients-vol') {
+    document.getElementById('patients-vol-navbar').innerHTML =
+      document.getElementById('navbar-volunteer').innerHTML;
+    makeNavLinks('patients-vol','vol');
+  }
+  if(name === 'help') {
+    document.getElementById('help-navbar').innerHTML =
+      document.getElementById('navbar-doctor').innerHTML;
+    makeNavLinks('help','doctor');
+    buildFAQ();
+  }
+  window.scrollTo(0,0);
+}
+
+function renderTable(list) {
+  const tbody = document.getElementById('patient-tbody');
+  const noRes = document.getElementById('no-results');
+  const count = document.getElementById('patient-count');
+  if(list.length === 0) {
+    tbody.innerHTML = '';
+    noRes.classList.remove('hidden');
+    count.textContent = '0 patients';
+    return;
+  }
+  noRes.classList.add('hidden');
+  count.textContent = `${list.length} of ${PATIENTS.length} patient${PATIENTS.length!==1?'s':''}`;
+  tbody.innerHTML = list.map(p => `
+    <tr class="hover:bg-gray-50 transition-colors">
+      <td class="px-4 py-3"><span class="text-sm font-medium text-gray-900">${p.first} ${p.mid} ${p.last}</span></td>
+      <td class="px-4 py-3 text-sm text-gray-600 hidden sm:table-cell">${p.sex}</td>
+      <td class="px-4 py-3 text-sm text-gray-600 hidden md:table-cell">${p.dob}</td>
+      <td class="px-4 py-3 text-sm text-gray-600">${p.room}</td>
+      <td class="px-4 py-3 text-right">
+        <button onclick="openViewModal()" class="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors">View</button>
+      </td>
+    </tr>`).join('');
+}
+
+function filterPatients(q) {
+  const lower = q.toLowerCase();
+  const filtered = PATIENTS.filter(p =>
+    p.first.toLowerCase().includes(lower) ||
+    p.last.toLowerCase().includes(lower) ||
+    p.mid.toLowerCase().includes(lower)
+  );
+  renderTable(filtered);
+}
+
+function openViewModal() {
+  editMode = false;
+  applyEditMode(false);
+  const m = document.getElementById('view-modal');
+  m.classList.remove('hidden');
+  m.classList.add('flex');
+}
+function closeViewModal() {
+  const m = document.getElementById('view-modal');
+  m.classList.add('hidden');
+  m.classList.remove('flex');
+  editMode = false;
+  applyEditMode(false);
+}
+
+function openViewModalVol() {
+  const m = document.getElementById('view-modal-vol');
+  m.classList.remove('hidden');
+  m.classList.add('flex');
+}
+function closeVolModal() {
+  const m = document.getElementById('view-modal-vol');
+  m.classList.add('hidden');
+  m.classList.remove('flex');
+}
+
+function openAddModal() {
+  document.getElementById('add-form-step').classList.remove('hidden');
+  document.getElementById('add-confirm-step').classList.add('hidden');
+  document.getElementById('add-form-footer').classList.remove('hidden');
+  document.getElementById('add-modal-title').textContent = 'Add New Patient';
+  const m = document.getElementById('add-modal');
+  m.classList.remove('hidden');
+  m.classList.add('flex');
+}
+function closeAddModal() {
+  const m = document.getElementById('add-modal');
+  m.classList.add('hidden');
+  m.classList.remove('flex');
+}
+function showConfirmStep() {
+  document.getElementById('add-form-step').classList.add('hidden');
+  document.getElementById('add-form-footer').classList.add('hidden');
+  document.getElementById('add-confirm-step').classList.remove('hidden');
+  document.getElementById('add-modal-title').textContent = 'Confirm New Patient';
+}
+function backToForm() {
+  document.getElementById('add-form-step').classList.remove('hidden');
+  document.getElementById('add-form-footer').classList.remove('hidden');
+  document.getElementById('add-confirm-step').classList.add('hidden');
+  document.getElementById('add-modal-title').textContent = 'Add New Patient';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.modal-tab-body').forEach(t => t.classList.add('hidden'));
+  document.getElementById(`tab-${name}`).classList.remove('hidden');
+  document.querySelectorAll('.modal-tab').forEach(btn => {
+    const active = btn.textContent.trim().replace(' & Billing','') === name ||
+                   (name === 'Insurance' && btn.textContent.includes('Insurance'));
+    btn.className = btn.className.replace(/tab-active|tab-inactive/g, '').trim();
+    btn.className += ' ' + (active ? 'tab-active' : 'tab-inactive');
+  });
+}
+
+function toggleEditMode() {
+  editMode = !editMode;
+  applyEditMode(editMode);
+}
+
+function applyEditMode(on) {
+  document.querySelectorAll('#view-modal .view-val').forEach(el => el.classList.toggle('hidden', on));
+  document.querySelectorAll('#view-modal .edit-val').forEach(el => el.classList.toggle('hidden', !on));
+
+  const btn = document.getElementById('edit-toggle-btn');
+  if(on) {
+    btn.textContent = '';
+    btn.classList.remove('text-blue-600','hover:bg-blue-50');
+    btn.classList.add('text-gray-400','hover:bg-gray-100');
+  } else {
+    btn.textContent = 'Edit';
+    btn.classList.add('text-blue-600','hover:bg-blue-50');
+    btn.classList.remove('text-gray-400','hover:bg-gray-100');
+  }
+
+  const left = document.getElementById('modal-footer-left');
+  const right = document.getElementById('modal-footer-right');
+  if(on) {
+    left.innerHTML = `
+      <div id="delete-zone" class="flex items-center gap-2">
+        <button onclick="showDeleteConfirm()" class="px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">Delete Patient</button>
+      </div>`;
+    right.innerHTML = `
+      <button onclick="toggleEditMode()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">Cancel</button>
+      <button onclick="toggleEditMode()" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">Save Changes</button>`;
+  } else {
+    left.innerHTML = '';
+    right.innerHTML = `
+      <button onclick="window.print()" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-200 rounded-lg transition-colors">Print</button>
+      <button onclick="closeViewModal()" class="px-4 py-2 text-sm font-medium bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors">Close</button>`;
+  }
+}
+
+function showDeleteConfirm() {
+  document.getElementById('delete-zone').innerHTML = `
+    <div class="flex items-center gap-2">
+      <span class="text-sm text-red-600">Delete this patient?</span>
+      <button onclick="closeViewModal()" class="px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700">Yes, delete</button>
+      <button onclick="cancelDelete()" class="px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-200 rounded-lg">Cancel</button>
+    </div>`;
+}
+function cancelDelete() {
+  document.getElementById('delete-zone').innerHTML =
+    `<button onclick="showDeleteConfirm()" class="px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors">Delete Patient</button>`;
+}
+
+function buildFAQ() {
+  const container = document.getElementById('faq-list');
+  if(container.children.length > 0) return;
+  container.innerHTML = FAQS.map((faq,i) => `
+    <div class="border border-gray-200 rounded-lg overflow-hidden">
+      <button onclick="toggleAccordion(${i})"
+        class="w-full flex items-center justify-between px-5 py-4 text-left text-sm font-medium text-gray-800 hover:bg-gray-50 transition-colors">
+        ${faq[0]}
+        <svg id="acc-icon-${i}" class="w-4 h-4 text-gray-400 flex-shrink-0 ml-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      <div id="acc-body-${i}" class="accordion-body">
+        <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-3">${faq[1]}</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleAccordion(i) {
+  const body = document.getElementById(`acc-body-${i}`);
+  const icon = document.getElementById(`acc-icon-${i}`);
+  const isOpen = body.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+  document.querySelectorAll('[id^="acc-icon-"]').forEach(ic => ic.style.transform = '');
+  if(!isOpen) {
+    body.classList.add('open');
+    icon.style.transform = 'rotate(180deg)';
+  }
+}
+
+// Close modals on backdrop click
+['view-modal','view-modal-vol','add-modal'].forEach(id => {
+  document.getElementById(id).addEventListener('click', function(e) {
+    if(e.target === this) {
+      if(id === 'view-modal') closeViewModal();
+      else if(id === 'view-modal-vol') closeVolModal();
+      else closeAddModal();
+    }
+  });
+});
+
+// Boot on login page
+showPage('login');
+</script>
+</body>
+</html>
